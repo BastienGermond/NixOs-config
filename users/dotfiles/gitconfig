@@ -16,8 +16,5 @@
 	required = true
 [gpg]
 	program = gpg2
-[sendemail]
-	smtpserver = smtp.office365.com
-	smtpserverport = 587
-	smtpencryption = STARTTLS
-#	smtpuser = bastien.germond@epita.fr
+[core]
+	editor = vim

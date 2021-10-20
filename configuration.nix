@@ -19,6 +19,7 @@
 
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
   environment.variables.TERM = "alacritty";
+  environment.variables.EDITOR = "vim";
   # environment.variables.WINIT_X11_SCALE_FACTOR = "1";
 
   networking.hostName = "synapze-pc"; # Define your hostname.
@@ -70,6 +71,13 @@
   #   keyMap = "us";
   # };
 
+  # Yubikey
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+  programs.ssh.startAgent = false;
+  
+  # Required to use smart card mode (CCID)
+  services.pcscd.enable = true;
+
   # Manage backlight without xserver e.g light -U 30 (darker) light -A 30
   # (lighter)
   programs.light.enable = true;
@@ -117,10 +125,10 @@
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
 
