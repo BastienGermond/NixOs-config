@@ -20,7 +20,10 @@
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
   environment.variables.TERM = "alacritty";
   environment.variables.EDITOR = "vim";
-  # environment.variables.WINIT_X11_SCALE_FACTOR = "1";
+
+  environment.interactiveShellInit = ''
+    alias gs='git status'
+  '';
 
   networking.hostName = "synapze-pc"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
