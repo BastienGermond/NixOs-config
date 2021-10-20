@@ -1,0 +1,280 @@
+" My vimrc ~ Synapze
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" We are running Vim not Vi (plugin need)
+set nocompatible
+
+" Sets the history size
+set history=500
+
+" Display command being written
+set showcmd
+
+" Enables syntax highlighting
+syntax on
+
+" Enables filetype detection
+filetype on
+
+" Enable filetype-specific indenting
+filetype indent on
+
+" Enable filetype-specific plugins
+filetype plugin on
+
+" Set to auto read when a file is changed from outside
+set autoread
+
+" Set line number
+set number
+
+" Underline current line
+set cursorline
+
+" Highlight current line clearly
+" highlight CursorLine cterm=None ctermfg=None ctermbg=lightgray
+" highlight clear CursorLine
+highlight CursorLine cterm=Underline ctermfg=None ctermbg=None
+
+" Set column delimiter
+set colorcolumn=80
+
+" Disable swapfiles
+set noswapfile
+
+" Enable title
+set title
+
+" Disable bell completely
+set visualbell
+set t_vb=
+
+" Disable Ex Mode
+map Q <Nop>
+
+" Enable folding indent
+set foldmethod=indent
+
+" Unfold everything by default
+set foldlevelstart=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+
+" Use ctrl-[hjkl] to select the active split!
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
+
+" Set filetype to json for .schema file
+autocmd BufNewFile,BufRead *.schema setfiletype json
+
+let g:spellfile_URL = 'http://ftp.vim.org/vim/runtime/spell'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" User interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Set the minimal amount of lignes under and above the cursor
+" Useful for keeping context when moving with j/k
+set scrolloff=5
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Search options
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Hightlight search
+set hlsearch
+
+" Show the best match so far as typed
+set incsearch
+
+" Clever search, make it case insensitive unless case
+set ignorecase smartcase
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Buffer options
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Write the file when we leave the buffer
+set autowrite
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Identation options
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Display whitespace characters
+set list
+set listchars=tab:>─,eol:¬,trail:\ ,nbsp:¤
+
+set fillchars=vert:│
+
+" Expand tab to spaces
+set expandtab
+
+" Auto/smart indent 
+set autoindent smartindent
+
+" Use previous indent when copying
+set copyindent
+
+" Tab key transform to spaces
+set softtabstop=4
+
+" Tab is # spaces
+set tabstop=4
+
+" The # of spaces for indenting
+set shiftwidth=4
+
+set textwidth=79
+
+" 80 column limit
+highlight OverLength ctermbg=blue ctermfg=white guibg=#592929
+
+" Highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+
+function Hightlights_matches()
+    match ExtraWhitespace /\s\+\%#\@<!$/ 
+    match OverLength /\%80v.\+/
+endfunction
+
+autocmd BufEnter,InsertLeave * call Hightlights_matches()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Open the quickfix window if there are errors, or close it if there are no
+" errors left
+noremap <leader>cw :botright :cw<cr>
+
+" Run make silently, then skip the 'Press ENTER to continue'
+noremap <leader>m :silent! :make! \| :redraw!<cr>
+
+" Write as root, when you forgot to sudoedit
+cnoreabbrev w!! w !sudo tee % >/dev/null
+
+" removes search highlighting
+nnoremap <silent> <C-g> :nohl<CR><C-l>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'vim-python/python-syntax'
+Plug 'rust-lang/rust.vim'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/vim-easy-align'
+Plug 'rhysd/vim-clang-format'
+Plug 'kergoth/vim-bitbake'
+
+Plug 'alpertuna/vim-header'
+
+" Highlight similar words
+Plug 'RRethy/vim-illuminate'
+
+" Close quickfix or location list when attached buffer is closed
+Plug 'romainl/vim-qf'
+
+" Plug 'zivyangll/git-blame.vim'
+
+Plug 'stevearc/vim-arduino'
+
+Plug 'tpope/vim-fugitive'
+Plug 'vim-scripts/DoxygenToolkit.vim'
+Plug 'stephpy/vim-yaml'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+call plug#end()
+
+" vim-arduino
+function! ArduinoStatusLine()
+  let port = arduino#GetPort()
+  let line = '[' . g:arduino_board . '] [' . g:arduino_programmer . ']'
+  if !empty(port)
+    let line = line . ' (' . port . ':' . g:arduino_serial_baud . ')'
+  endif
+  return line
+endfunction
+
+autocmd BufNewFile,BufRead *.ino let g:airline_section_x='%{ArduinoStatusLine()}'
+autocmd BufNewFile,BufRead *.ino nnoremap <buffer> <leader>am :ArduinoVerify<CR>
+
+" nnoremap <buffer> <leader>am :ArduinoVerify<CR>
+" nnoremap <buffer> <leader>au :ArduinoUpload<CR>
+" nnoremap <buffer> <leader>ad :ArduinoUploadAndSerial<CR>
+" nnoremap <buffer> <leader>ab :ArduinoChooseBoard<CR>
+" nnoremap <buffer> <leader>ap :ArduinoChooseProgrammer<CR>
+
+" NERDTree
+map <C-n> :NERDTreeToggle<CR>
+let g:NERDTreeDirArrowExpandable = '>'
+let g:NERDTreeDirArrowCollapsible = 'v'
+
+" Coc.nvim
+" let g:airline#extensions#coc#enabled = 1
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Use K to show documentation in preview window.
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+" 
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   elseif (coc#rpc#ready())
+"     call CocActionAsync('doHover')
+"   else
+"     execute '!' . &keywordprg . " " . expand('<cword>')
+"   endif
+" endfunction
+" "
+" " Use `[g` and `]g` to navigate diagnostics
+" " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Make boxes
+vmap ,mb !boxes -d stone<CR>
+nmap ,mb !!boxes -d stone<CR>
+vmap ,cb !boxes -d stone -r<CR>
+nmap ,cb !!boxes -d stone -r<CR>
+
+" makes Ascii art font
+nmap <leader>F :.!toilet -w 200 -f standard<CR>
+nmap <leader>f :.!toilet -w 200 -f small<CR>
+" makes Ascii border
+nmap <leader>1 :.!toilet -w 200 -f term -F border<CR>
+
+let g:tex_comment_nospell= 1
+
+" Header configuration
+let g:header_field_author = 'Bastien Germond'
+let g:header_field_author_email = 'bastien.germond@epita.fr'
+let g:header_auto_add_header = 0
+
+" Suda
+let g:suda_smart_edit = 1

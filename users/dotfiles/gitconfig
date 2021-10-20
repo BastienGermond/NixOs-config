@@ -1,0 +1,23 @@
+[user]
+	email = bastien.germond@epita.fr
+	name = Bastien Germond
+	signingkey = 030DD35F6457EE71
+[push]
+	followTags = true
+[commit]
+	verbose = true
+	gpgsign = true
+[init]
+	defaultBranch = master
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[gpg]
+	program = gpg2
+[sendemail]
+	smtpserver = smtp.office365.com
+	smtpserverport = 587
+	smtpencryption = STARTTLS
+#	smtpuser = bastien.germond@epita.fr
