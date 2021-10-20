@@ -12,4 +12,7 @@
     enable = true;
     enableSSHSupport = true;
   };
+
+  programs.nm-applet.enable = true;
+  programs.nm-applet.indicator = true;
 }

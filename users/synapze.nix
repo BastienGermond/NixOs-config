@@ -19,7 +19,8 @@
     "git/config".source = ./dotfiles/gitconfig;
     "dunst/dunstrc".source = ./dotfiles/dunstrc;
     "i3/config".source = ./dotfiles/i3;
-    "polybar/config".source = ./dotfiles/polybar;
+    "polybar/config".source = ./dotfiles/polybar/config;
+    "polybar/launch.sh".source = ./dotfiles/polybar/launch.sh;
   };
 
   programs.alacritty = {

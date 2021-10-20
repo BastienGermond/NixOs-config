@@ -15,10 +15,10 @@
     arandr
     bind
     brave
-    evince
     cryptsetup
     ctags
     curl
+    evince
     flameshot
     gcc
     git
@@ -27,8 +27,11 @@
     gparted
     gzip
     htop
+    killall
     neovim
+    networkmanagerapplet
     parted
+    pavucontrol
     ripgrep
     thunderbird-91
     tree
@@ -36,6 +39,5 @@
     wget
     xsel
     zip
-    pavucontrol
   ];
 }

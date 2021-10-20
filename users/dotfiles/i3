@@ -209,4 +209,4 @@ set_from_resource $term_color15    color15
 
 bindsym $mod+Shift+Return exec --no-startup-id $BROWSER
 
-exec --no-startup-id polybar default
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
