@@ -1,8 +1,8 @@
 [global]
     monitor = 0
-    font = Terminus (TTF) 15
+    font = Terminus (TTF) 13
     follow = keyboard
-    geometry = "500x100-15+20"
+    geometry = "600x100-15+20"
     indicate_hidden = yes
     shrink = yes
     transparency = 14
