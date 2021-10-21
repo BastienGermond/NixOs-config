@@ -13,6 +13,9 @@
   environment.systemPackages = with pkgs; [
     alacritty
     arandr
+    aspell
+    aspellDicts.en
+    aspellDicts.fr
     bind
     brave
     cryptsetup
