@@ -14,6 +14,10 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 99;
+  };
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/f6f82b66-c89a-40a0-83c6-923cc95753e7";
       fsType = "ext4";
@@ -29,7 +33,12 @@
       fsType = "vfat";
     };
 
-  swapDevices = [ ];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/0fc371fc-423b-4cc7-82c0-29e4bd54be56";
+
+    }
+  ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
