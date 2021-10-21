@@ -27,6 +27,7 @@
     gparted
     gzip
     htop
+    iftop
     killall
     neovim
     networkmanagerapplet
@@ -39,5 +40,6 @@
     wget
     xsel
     zip
+    zsh
   ];
 }

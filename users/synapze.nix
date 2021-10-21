@@ -30,6 +30,23 @@
       env.TERM = "xterm-256color";
       font.size = 8.0;
       debug.log_level = "INFO";
+      shell.program = "/usr/bin/env";
+      shell.args = [ "zsh" ];
+    };
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    # enableSyntaxHighlighting = true;
+    shellAliases = {
+      gs = "git status";
+    };
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "sudo" ];
+      theme = "re5et";
     };
   };
 
