@@ -36,6 +36,9 @@ bindsym Print exec --no-startup-id i3-scrot
 # bindsym XF86MonBrightnessUp exec "light -A 10; notify-send 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "light -U 10; notify-send 'brightness down'"
 
+# dunst shortcuts
+bindsym $mod+0 exec --no-startup-id dunstctl history-pop
+
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
