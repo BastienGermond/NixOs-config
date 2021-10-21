@@ -13,6 +13,7 @@ in
     createHome = true;
     home = "/home/synapze";
     extraGroups = [ "synapze" "wheel" "networkmanager" "audio" ];
+    shell = pkgs.zsh;
   };
 
   users.groups.synapze.gid = 1000;
