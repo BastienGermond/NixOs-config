@@ -120,8 +120,10 @@
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
+    any-nix-shell
     bat
     binutils
+    clipit
     discord
     dunst
     dunst
@@ -134,6 +136,5 @@
     rofi
     scrot
     slack
-    any-nix-shell
   ];
 }
