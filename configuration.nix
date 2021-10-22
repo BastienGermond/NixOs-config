@@ -29,6 +29,8 @@
 
   environment.pathsToLink = [ "/share/zsh" ];
 
+  virtualisation.docker.enable = true;
+
   networking.hostName = "synapze-pc"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
