@@ -12,13 +12,16 @@ in
     isNormalUser = true;
     createHome = true;
     home = "/home/synapze";
-    extraGroups = [ "synapze" "wheel" "networkmanager" "audio" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" ];
     shell = pkgs.zsh;
   };
 
   services.xserver.displayManager.autoLogin.user = "synapze";
 
-  users.groups.synapze.gid = 1000;
+  security.sudo.extraConfig = ''
+synapze ALL = (root) NOPASSWD: ${pkgs.wireguard.out}/bin/wg
+  '';
+
   home-manager.users.synapze = import ./synapze.nix;
   home-manager.users.root = import ./root.nix;
 }

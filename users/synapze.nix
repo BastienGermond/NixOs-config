@@ -21,6 +21,7 @@
     "i3/config".source = ./dotfiles/i3;
     "polybar/config".source = ./dotfiles/polybar/config;
     "polybar/launch.sh".source = ./dotfiles/polybar/launch.sh;
+    "polybar/polybar-wireguard.sh".source = ./dotfiles/polybar/polybar-wireguard;
     "signature".source = ./dotfiles/signature;
   };
 

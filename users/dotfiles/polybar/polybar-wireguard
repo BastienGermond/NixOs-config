@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+# https://github.com/polybar/polybar/wiki/Formatting#format-tags-inside-polybar-config
+green=#55aa55
+
+connected_interface=$(sudo wg | grep interface | cut -d " " -f2)
+ip=$(ip a show "$connected_interface" | grep inet | awk '{ print $2 }' | cut -d '/' -f 1)
+
+print() {
+    if [[ -n "$connected_interface" ]]
+    then
+        echo %{u"$green"}%{+u}%{F"$green"}旅%{F-}" $connected_interface $ip"
+    else
+        echo %{u"$green"}%{+u}%{F"$green"}旅%{F-}" wg nc."
+    fi
+}
+
+case "$1" in
+    *)
+        print
+        ;;
+esac
