@@ -1,6 +1,8 @@
 { pkgs, lib, ... }:
 
 {
+  nixpkgs.config = import ../pkgs/nixpkgs-config.nix;
+
   xdg.enable = true;
 
   xdg.userDirs = {
@@ -118,8 +120,6 @@
     # };
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   home.packages = with pkgs; [
     any-nix-shell
     bat
@@ -137,5 +137,6 @@
     rofi
     scrot
     slack
+    spotibar
   ];
 }

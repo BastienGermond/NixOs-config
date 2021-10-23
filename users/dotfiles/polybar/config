@@ -57,6 +57,7 @@ font-0 = TerminessTTF Nerd Font
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 
 modules-left = i3
+modules-center = spotibar-currently-playing spotibar-previous-track spotibar-toggle-playback spotibar-next-track
 modules-right = filesystem eth cpu memory wireguard wlan date pulseaudio temperature battery powermenu
 
 tray-position = right
@@ -402,5 +403,39 @@ type = custom/script
 exec = ~/.config/polybar/polybar-wireguard.sh
 tail = false
 interval = 5
+
+# Spotify
+
+[module/spotibar-previous-track]
+type = custom/script
+exec = echo ""
+click-left = spotibar --previous-track
+exec-if = [ $(spotibar --is-live) = "True" ]
+format-underline = #1db954
+format-padding = 1
+
+[module/spotibar-next-track]
+type = custom/script
+exec = echo ""
+click-left = spotibar --next-track
+exec-if = [ $(spotibar --is-live) = "True" ]
+format-underline = #1db954
+format-padding = 1
+
+[module/spotibar-toggle-playback]
+type = custom/script
+exec = echo " "
+click-left = spotibar --toggle-playback
+exec-if = "pgrep spotify"
+format-underline = #1db954
+format-padding = 1
+
+[module/spotibar-currently-playing]
+type = custom/script
+exec = spotibar --get-currently-playing
+click-left = i3-msg '[class="Spotify"] focus'
+exec-if = [ $(spotibar --is-live) = "True" ]
+format-underline = #1db954
+format-padding = 0
 
 ; vim:ft=dosini
