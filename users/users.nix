@@ -16,6 +16,8 @@ in
     shell = pkgs.zsh;
   };
 
+  services.xserver.displayManager.autoLogin.user = "synapze";
+
   users.groups.synapze.gid = 1000;
   home-manager.users.synapze = import ./synapze.nix;
   home-manager.users.root = import ./root.nix;
