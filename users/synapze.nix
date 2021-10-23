@@ -123,7 +123,7 @@
     any-nix-shell
     bat
     binutils
-    clipit
+    cura
     discord
     dunst
     dunst
