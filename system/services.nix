@@ -11,6 +11,7 @@
     extraPackages = with pkgs; [
       i3lock
       polybarFull
+      at-spi2-core
     ];
   };
 
@@ -21,7 +22,9 @@
 
   # Configure keymap in X11
   services.xserver.layout = "us";
-  services.xserver.xkbVariant = "intl"; # does weird things but it works
+  services.xserver.xkbVariant = "alt-intl";
+
+  services.xserver.displayManager.autoLogin.enable = true;
 
   # Yubikey
   services.udev.packages = [ pkgs.yubikey-personalization ];
@@ -29,10 +32,10 @@
   # Required to use smart card mode (CCID)
   services.pcscd.enable = true;
 
-  # Brightness key for keyboard
   services.actkbd = {
     enable = true;
     bindings = [
+      # Brightness keys
       { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
       { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
     ];
