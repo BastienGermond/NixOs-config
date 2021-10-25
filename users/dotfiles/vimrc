@@ -41,6 +41,7 @@ highlight CursorLine cterm=Underline ctermfg=None ctermbg=None
 
 " Set column delimiter
 set colorcolumn=80
+set nowrap
 
 " Disable swapfiles
 set noswapfile
@@ -175,6 +176,9 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
+
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
@@ -196,77 +200,117 @@ Plug 'romainl/vim-qf'
 
 " Plug 'zivyangll/git-blame.vim'
 
-Plug 'stevearc/vim-arduino'
-
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'stephpy/vim-yaml'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+" Nvim suggestion
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+
 call plug#end()
 
-" Init tree-sitter
 lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "python", "latex" },
-  ignore_install = { }, -- List of parsers to ignore installing
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = { },  -- list of language that will be disabled
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
+    local lsp_installer = require("nvim-lsp-installer")
+
+    lsp_installer.on_server_ready(function(server)
+        local opts = {}
+
+        -- (optional) Customize the options passed to the server
+        -- if server.name == "tsserver" then
+        --     opts.root_dir = function() ... end
+        -- end
+
+        -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+        server:setup(opts)
+        vim.cmd [[ do User LspAttachBuffers ]]
+    end)
 EOF
 
-" vim-arduino
-function! ArduinoStatusLine()
-  let port = arduino#GetPort()
-  let line = '[' . g:arduino_board . '] [' . g:arduino_programmer . ']'
-  if !empty(port)
-    let line = line . ' (' . port . ':' . g:arduino_serial_baud . ')'
-  endif
-  return line
-endfunction
+set completeopt=menu,menuone,noselect
 
-autocmd BufNewFile,BufRead *.ino let g:airline_section_x='%{ArduinoStatusLine()}'
-autocmd BufNewFile,BufRead *.ino nnoremap <buffer> <leader>am :ArduinoVerify<CR>
+" setting with vim-lsp
+if executable('ccls')
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'ccls',
+      \ 'cmd': {server_info->['ccls']},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(
+      \   lsp#utils#find_nearest_parent_file_directory(
+      \     lsp#utils#get_buffer_path(), ['.ccls', 'compile_commands.json', '.git/']))},
+      \ 'initialization_options': {
+      \   'highlight': { 'lsRanges' : v:true },
+      \   'cache': {'directory': stdpath('cache') . '/ccls' },
+      \ },
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+      \ })
+endif
 
-" nnoremap <buffer> <leader>am :ArduinoVerify<CR>
-" nnoremap <buffer> <leader>au :ArduinoUpload<CR>
-" nnoremap <buffer> <leader>ad :ArduinoUploadAndSerial<CR>
-" nnoremap <buffer> <leader>ab :ArduinoChooseBoard<CR>
-" nnoremap <buffer> <leader>ap :ArduinoChooseProgrammer<CR>
+if executable('rnix-lsp')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rnix-lsp',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'rnix-lsp']},
+        \ 'whitelist': ['nix'],
+        \ })
+endif
+
+lua <<EOF
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
+
+  cmp.setup({
+    mapping = {
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  local nvim_lsp = require('lspconfig')
+ 
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local servers = { "pyright", "ccls" }
+  for _, lsp in ipairs(servers) do
+      nvim_lsp[lsp].setup {
+          on_attach = on_attach,
+          capabilities = capabilities,
+          flags = {
+              debounce_text_changes = 150,
+              }
+          }
+  end
+  
+  -- Init tree-sitter
+  require'nvim-treesitter.configs'.setup {
+      ensure_installed = { "c", "python", "latex", "nix" },
+      ignore_install = { }, -- List of parsers to ignore installing
+      highlight = {
+      enable = true,              -- false will disable the whole extension
+      disable = { },  -- list of language that will be disabled
+      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+      -- Using this option may slow down your editor, and you may see some duplicate highlights.
+      -- Instead of true it can also be a list of languages
+      additional_vim_regex_highlighting = false,
+      },
+  }
+EOF
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '>'
 let g:NERDTreeDirArrowCollapsible = 'v'
-
-" Coc.nvim
-" let g:airline#extensions#coc#enabled = 1
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Use K to show documentation in preview window.
-" nnoremap <silent> K :call <SID>show_documentation()<CR>
-" 
-" function! s:show_documentation()
-"   if (index(['vim','help'], &filetype) >= 0)
-"     execute 'h '.expand('<cword>')
-"   elseif (coc#rpc#ready())
-"     call CocActionAsync('doHover')
-"   else
-"     execute '!' . &keywordprg . " " . expand('<cword>')
-"   endif
-" endfunction
-" "
-" " Use `[g` and `]g` to navigate diagnostics
-" " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-" nmap <silent> [g <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)

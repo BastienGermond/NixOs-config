@@ -83,6 +83,11 @@
     extraPackages = with pkgs; [
       tree-sitter
       ctags
+
+      # LSP
+      pyright
+      rnix-lsp
+      ccls
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -134,9 +139,13 @@
     inkscape
     jq
     libnotify
+    libreoffice
     rofi
     scrot
     slack
     spotibar
+    super-slicer
+    ccls
+    rnix-lsp
   ];
 }
