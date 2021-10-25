@@ -65,7 +65,16 @@
 
 
   documentation = {
-    man.enable = true;
+    enable = true;
+    info.enable = true;
+    doc.enable = true;
+    dev.enable = true;
+    nixos.enable = true;
+
+    man = {
+      enable = true;
+      generateCaches = true;
+    };
   };
 
   # Configure network proxy if necessary

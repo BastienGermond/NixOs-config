@@ -33,6 +33,9 @@
     htop
     iftop
     killall
+    libcgroup
+    man-pages
+    man-pages-posix
     neovim
     networkmanagerapplet
     parted
