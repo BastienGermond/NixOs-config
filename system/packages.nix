@@ -45,6 +45,7 @@
     tree
     unzip
     wget
+    whois
     xsel
     zip
     zsh

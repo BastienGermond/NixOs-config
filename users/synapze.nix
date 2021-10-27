@@ -147,5 +147,6 @@
     super-slicer
     ccls
     rnix-lsp
+    freecad
   ];
 }
