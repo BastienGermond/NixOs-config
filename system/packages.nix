@@ -8,9 +8,12 @@
     terminus_font_ttf
     termsyn
     font-awesome
+    roboto
+    noto-fonts
   ];
 
   environment.systemPackages = with pkgs; [
+    adapta-gtk-theme
     alacritty
     arandr
     aspell
@@ -23,6 +26,7 @@
     ctags
     curl
     evince
+    feh
     flameshot
     gcc
     git
@@ -41,9 +45,12 @@
     parted
     pavucontrol
     ripgrep
+    teamviewer
+    thermald
     thunderbird-91
     tree
     unzip
+    usbutils
     wget
     whois
     xsel

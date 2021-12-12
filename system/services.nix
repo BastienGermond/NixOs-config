@@ -26,9 +26,6 @@
 
   services.xserver.displayManager.autoLogin.enable = true;
 
-  # Yubikey
-  services.udev.packages = [ pkgs.yubikey-personalization ];
-
   # Required to use smart card mode (CCID)
   services.pcscd.enable = true;
 
@@ -41,6 +38,27 @@
     ];
   };
 
+  services.udev = {
+    extraRules = ''
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374a", \
+    MODE:="0666", \
+    SYMLINK+="stlinkv2-1_%n"
+
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", \
+        MODE:="0666", \
+        SYMLINK+="stlinkv2-1_%n"
+
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3752", \
+        MODE:="0666", \
+        SYMLINK+="stlinkv2-1_%n"
+        '';
+    packages = [ pkgs.yubikey-personalization pkgs.platformio ];
+  };
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  services.thermald.enable = true;
+
+  services.teamviewer.enable = false;
 }

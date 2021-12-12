@@ -84,6 +84,9 @@
       tree-sitter
       ctags
 
+      # Fzf
+      fzf
+
       # LSP
       pyright
       rnix-lsp
@@ -148,5 +151,12 @@
     ccls
     rnix-lsp
     freecad
+    fzf
+    clang-tools
+    picocom
+    kicad-unstable
+    stm32cubemx
+    docker-buildx
+    signal-desktop
   ];
 }

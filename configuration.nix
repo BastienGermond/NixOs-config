@@ -19,10 +19,19 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.cleanTmpDir = true;
 
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
   environment.variables.TERM = "alacritty";
   environment.variables.EDITOR = "vim";
+
+  environment.extraInit = ''
+    # these are the defaults, but some applications are buggy so we set them
+    # here anyway
+    export XDG_CONFIG_HOME=$HOME/.config
+    export XDG_DATA_HOME=$HOME/.local/share
+    export XDG_CACHE_HOME=$HOME/.cache
+  '';
 
   environment.interactiveShellInit = ''
     alias gs='git status'
@@ -30,9 +39,16 @@
 
   environment.pathsToLink = [ "/share/zsh" ];
 
+
+  virtualisation.virtualbox.host.enable = true;
   virtualisation.docker.enable = true;
 
+  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+
   networking.hostName = "synapze-pc"; # Define your hostname.
+  networking.extraHosts = ''
+    127.0.0.1   gitea droneci
+  '';
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.

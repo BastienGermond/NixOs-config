@@ -10,9 +10,6 @@ set nocompatible
 " Sets the history size
 set history=500
 
-" Display command being written
-set showcmd
-
 " Enables syntax highlighting
 syntax on
 
@@ -177,11 +174,12 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'ray-x/lsp_signature.nvim'
+
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'L3MON4D3/LuaSnip'
 
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 " Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'vim-python/python-syntax'
@@ -199,12 +197,17 @@ Plug 'RRethy/vim-illuminate'
 " Close quickfix or location list when attached buffer is closed
 Plug 'romainl/vim-qf'
 
+" Fzf
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
 " Plug 'zivyangll/git-blame.vim'
 
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'stephpy/vim-yaml'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'lewis6991/spellsitter.nvim'
 
 " Nvim suggestion
 Plug 'neovim/nvim-lspconfig'
@@ -212,7 +215,82 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
 
+Plug 'vim-scripts/DoxygenToolkit.vim'
+
+" File explorer
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+
 call plug#end()
+
+let g:nvim_tree_gitignore = 1 "0 by default
+let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
+let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
+let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
+let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
+let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
+let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
+let g:nvim_tree_symlink_arrow = ' ➛ ' " defaults to ' ➛ '. used as a separator between symlinks' source and target.
+let g:nvim_tree_respect_buf_cwd = 1 "0 by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
+let g:nvim_tree_create_in_closed_folder = 0 "1 by default, When creating files, sets the path of a file when cursor is on a closed folder to the parent folder when 0, and inside the folder when 1.
+let g:nvim_tree_refresh_wait = 500 "1000 by default, control how often the tree can be refreshed, 1000 means the tree can be refresh once per 1000ms.
+let g:nvim_tree_window_picker_exclude = {
+    \   'filetype': [
+    \     'notify',
+    \     'packer',
+    \     'qf'
+    \   ],
+    \   'buftype': [
+    \     'terminal'
+    \   ]
+    \ }
+" Dictionary of buffer option names mapped to a list of option values that
+" indicates to the window picker that the buffer's window should not be
+" selectable.
+let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
+let g:nvim_tree_show_icons = {
+    \ 'git': 1,
+    \ 'folders': 0,
+    \ 'files': 0,
+    \ 'folder_arrows': 0,
+    \ }
+"If 0, do not show the icons for one of 'git' 'folder' and 'files'
+"1 by default, notice that if 'files' is 1, it will only display
+"if nvim-web-devicons is installed and on your runtimepath.
+"if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
+"but this will not work when you set indent_markers (because of UI conflict)
+
+" default will show icon by default if no icon is provided
+" default shows no icon by default
+let g:nvim_tree_icons = {
+    \ 'default': '',
+    \ 'symlink': '',
+    \ 'git': {
+    \   'unstaged': "✗",
+    \   'staged': "✓",
+    \   'unmerged': "",
+    \   'renamed': "➜",
+    \   'untracked': "★",
+    \   'deleted': "",
+    \   'ignored': "◌"
+    \   },
+    \ 'folder': {
+    \   'arrow_open': "",
+    \   'arrow_closed': "",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   }
+    \ }
+
+nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>n :NvimTreeFindFile<CR>
 
 lua <<EOF
     local lsp_installer = require("nvim-lsp-installer")
@@ -223,6 +301,58 @@ lua <<EOF
         server:setup(opts)
         vim.cmd [[ do User LspAttachBuffers ]]
     end)
+
+    require('spellsitter').setup()
+
+    -- following options are the default
+    -- each of these are documented in `:help nvim-tree.OPTION_NAME`
+    require'nvim-tree'.setup {
+      disable_netrw       = true,
+      hijack_netrw        = true,
+      open_on_setup       = false,
+      ignore_ft_on_setup  = {},
+      auto_close          = true,
+      open_on_tab         = false,
+      hijack_cursor       = false,
+      update_cwd          = false,
+      update_to_buf_dir   = {
+        enable = true,
+        auto_open = true,
+      },
+      diagnostics = {
+        enable = false,
+        icons = {
+          hint = "",
+          info = "",
+          warning = "",
+          error = "",
+        }
+      },
+      update_focused_file = {
+        enable      = false,
+        update_cwd  = false,
+        ignore_list = {}
+      },
+      system_open = {
+        cmd  = nil,
+        args = {}
+      },
+      filters = {
+        dotfiles = false,
+        custom = {}
+      },
+      view = {
+        width = 30,
+        height = 30,
+        hide_root_folder = false,
+        side = 'left',
+        auto_resize = false,
+        mappings = {
+          custom_only = false,
+          list = {}
+        }
+      }
+    }
 EOF
 
 set completeopt=menu,menuone,noselect
@@ -287,9 +417,36 @@ lua <<EOF
 
   require('lspconfig').fsautocomplete.setup{}
 
+  local on_attach = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    local opts = { noremap=true, silent=true }
+
+    require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
+
+
+    -- Show documentation
+    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
+    -- LSP navigation
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+
+    -- Diagnostic actions 
+    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+
+  end
+
+
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  local servers = { "pyright", "ccls" }
+  local servers = { "pyright", "clangd" }
   for _, lsp in ipairs(servers) do
       nvim_lsp[lsp].setup {
           on_attach = on_attach,
@@ -316,10 +473,68 @@ lua <<EOF
   }
 EOF
 
-" NERDTree
-map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeDirArrowExpandable = '>'
-let g:NERDTreeDirArrowCollapsible = 'v'
+lua <<EOF
+  -- https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
+  vim.g.gutentags_ctags_exclude = {
+        '*.git', '*.svg', '*.hg',
+        '*/tests/*',
+        'build',
+        'dist',
+        '*sites/*/files/*',
+        'bin',
+        'node_modules',
+        'bower_components',
+        'cache',
+        'compiled',
+        'docs',
+        'example',
+        'bundle',
+        'vendor',
+        '*.md',
+        '*-lock.json',
+        '*.lock',
+        '*bundle*.js',
+        '*build*.js',
+        '.*rc*',
+        '*.json',
+        '*.min.*',
+        '*.map',
+        '*.bak',
+        '*.zip',
+        '*.pyc',
+        '*.class',
+        '*.sln',
+        '*.Master',
+        '*.csproj',
+        '*.tmp',
+        '*.csproj.user',
+        '*.cache',
+        '*.pdb',
+        'tags*',
+        'cscope.*',
+        -- '*.css',
+        -- '*.less',
+        -- '*.scss',
+        '*.exe', '*.dll',
+        '*.mp3', '*.ogg', '*.flac',
+        '*.swp', '*.swo',
+        '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+        '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+        '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
+        }
+
+  vim.g.gutentags_add_default_project_roots = false
+  vim.g.gutentags_project_root = {'package.json', '.git'}
+  vim.g.gutentags_cache_dir = vim.fn.expand('~/.cache/nvim/ctags/')
+  vim.g.gutentags_generate_on_new = true
+  vim.g.gutentags_generate_on_missing = true
+  vim.g.gutentags_generate_on_write = true
+  vim.g.gutentags_generate_on_empty_buffer = true
+  vim.cmd([[command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')]])
+  vim.g.gutentags_ctags_extra_args = {'--tag-relative=yes', '--fields=+ailmnS', }
+EOF
+
+autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -345,6 +560,9 @@ let g:tex_comment_nospell= 1
 let g:header_field_author = 'Bastien Germond'
 let g:header_field_author_email = 'bastien.germond@epita.fr'
 let g:header_auto_add_header = 0
+
+" Fzf
+nnoremap f :Files<CR>
 
 " Suda
 let g:suda_smart_edit = 1
