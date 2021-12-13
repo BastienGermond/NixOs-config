@@ -30,6 +30,8 @@
     flameshot
     gcc
     git
+    gnome.dconf-editor
+    gnome.nautilus
     gnumake
     gnupg
     gparted

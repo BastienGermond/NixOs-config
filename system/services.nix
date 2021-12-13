@@ -61,4 +61,7 @@
   services.thermald.enable = true;
 
   services.teamviewer.enable = false;
+
+  # Enable for Nautilus https://nixos.wiki/wiki/Nautilus
+  services.gvfs.enable = true;
 }
