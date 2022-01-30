@@ -221,9 +221,11 @@ Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
+" Language Tool
+Plug 'vigoux/LanguageTool.nvim'
+
 call plug#end()
 
-let g:nvim_tree_gitignore = 1 "0 by default
 let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
 let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
@@ -446,7 +448,7 @@ lua <<EOF
 
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  local servers = { "pyright", "clangd" }
+  local servers = { "pyright", "clangd", "texlab" }
   for _, lsp in ipairs(servers) do
       nvim_lsp[lsp].setup {
           on_attach = on_attach,
@@ -563,6 +565,7 @@ let g:header_auto_add_header = 0
 
 " Fzf
 nnoremap f :Files<CR>
+let $FZF_DEFAULT_COMMAND = 'rg --files'
 
 " Suda
 let g:suda_smart_edit = 1

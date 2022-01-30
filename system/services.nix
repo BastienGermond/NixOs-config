@@ -24,7 +24,7 @@
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "alt-intl";
 
-  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.enable = false;
 
   # Required to use smart card mode (CCID)
   services.pcscd.enable = true;
@@ -52,7 +52,7 @@
         MODE:="0666", \
         SYMLINK+="stlinkv2-1_%n"
         '';
-    packages = [ pkgs.yubikey-personalization pkgs.platformio ];
+    packages = [ pkgs.yubikey-personalization pkgs.platformio pkgs.openocd ];
   };
 
   # Enable the OpenSSH daemon.
@@ -60,8 +60,11 @@
 
   services.thermald.enable = true;
 
-  services.teamviewer.enable = false;
+  services.teamviewer.enable = true;
 
   # Enable for Nautilus https://nixos.wiki/wiki/Nautilus
   services.gvfs.enable = true;
+
+  services.printing.enable = true;
+  services.printing.drivers = [ pkgs.hplipWithPlugin ];
 }

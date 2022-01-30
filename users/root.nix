@@ -1,9 +1,9 @@
 { pkgs, lib, ... }:
 
 {
-  nixpkgs.config.allowUnfree = true;
-
   xdg.enable = true;
+
+  home.username = "root";
 
   xdg.userDirs = {
     download = "\$HOME/Downloads";
@@ -29,12 +29,6 @@
       debug.log_level = "INFO";
     };
   };
-
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    }))
-  ];
 
   programs.neovim = {
     enable = true;

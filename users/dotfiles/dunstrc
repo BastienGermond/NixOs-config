@@ -2,11 +2,12 @@
     monitor = 0
     font = Terminus (TTF) 13
     follow = keyboard
-    geometry = "600x100-15+20"
+    # geometry = "600x100-15+20"
+    width = 600
+    height = 100
     indicate_hidden = yes
     shrink = yes
     transparency = 14
-    notification_height = 24
     separator_height = 1
     padding = 10
     horizontal_padding = 8
@@ -52,23 +53,16 @@
     sticky_history = yes
     history_length = 20
     dmenu = /usr/bin/env bemenu -p dunst:
-    browser = /usr/bin/env qutebrowser
+    browser = /usr/bin/env brave
 
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true
 
     title = Dunst
     class = Dunst
-    startup_notification = false
     force_xinerama = false
 [experimental]
     per_monitor_dpi = false
-
-[shortcuts]
-    close = ctrl+space
-    close_all = ctrl+shift+space
-    #history = ctrl+colon
-    context = ctrl+shift+period
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
@@ -79,10 +73,10 @@
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
-#[urgency_normal]
-#    background = "#458588"
-#    foreground = "#ebdbb2"
-#    timeout = 5
+[urgency_normal]
+    background = "#458588"
+    foreground = "#ebdbb2"
+    timeout = 5
 
 [urgency_critical]
     background = "#cc2421"

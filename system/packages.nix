@@ -49,7 +49,7 @@
     ripgrep
     teamviewer
     thermald
-    thunderbird-91
+    thunderbird
     tree
     unzip
     usbutils

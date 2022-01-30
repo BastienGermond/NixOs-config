@@ -1,7 +1,10 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
   nixpkgs.config = import ../pkgs/nixpkgs-config.nix;
+
+  home.username = "synapze";
+  # home.homeDirectory = "/home/synapze";
 
   xdg.enable = true;
 
@@ -70,12 +73,6 @@
     };
   };
 
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    }))
-  ];
-
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly;
@@ -91,6 +88,7 @@
       pyright
       rnix-lsp
       ccls
+      texlab
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -132,31 +130,32 @@
     any-nix-shell
     bat
     binutils
+    ccls
+    clang-tools
     cura
     discord
+    docker-buildx
     dunst
     dunst
     file
+    freecad
+    fzf
     gimp
     gtop
     inkscape
     jq
+    kicad-unstable
+    languagetool
     libnotify
     libreoffice
+    picocom
+    rnix-lsp
     rofi
     scrot
-    slack
-    spotibar
-    super-slicer
-    ccls
-    rnix-lsp
-    freecad
-    fzf
-    clang-tools
-    picocom
-    kicad-unstable
-    stm32cubemx
-    docker-buildx
     signal-desktop
+    slack
+    stm32cubemx
+    super-slicer
+    texlab
   ];
 }
