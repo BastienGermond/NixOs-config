@@ -24,7 +24,7 @@
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "alt-intl";
 
-  services.xserver.displayManager.autoLogin.enable = false;
+  services.xserver.displayManager.autoLogin.enable = true;
 
   # Required to use smart card mode (CCID)
   services.pcscd.enable = true;

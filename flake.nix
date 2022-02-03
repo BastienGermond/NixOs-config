@@ -14,7 +14,7 @@
         system = "x86_64-linux";
         modules = [
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ inputs.neovim-nightly-overlay.overlay ]; })
-          ./configuration.nix
+          ./hosts/synapze-pc/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

@@ -15,12 +15,12 @@
   imports =
     [
       ./hardware-configuration.nix
-      ./system/fs.nix
+      ./fs.nix
       ./system/hardware.nix
       ./system/services.nix
       ./system/programs.nix
       ./system/packages.nix
-      ./users/users.nix
+      ../../users/users.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
