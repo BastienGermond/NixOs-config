@@ -1,8 +1,6 @@
 { pkgs, lib, inputs, ... }:
 
 {
-  nixpkgs.config = import ../pkgs/nixpkgs-config.nix;
-
   home.username = "synapze";
   # home.homeDirectory = "/home/synapze";
 
