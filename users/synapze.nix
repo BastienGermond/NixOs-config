@@ -136,6 +136,7 @@
     dunst
     dunst
     file
+    firefox
     freecad
     fzf
     gimp
