@@ -10,6 +10,9 @@
     font-awesome
     roboto
     noto-fonts
+    fira
+    fira-mono
+    fira-code
   ];
 
   environment.systemPackages = with pkgs; [
