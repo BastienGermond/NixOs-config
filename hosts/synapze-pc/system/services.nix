@@ -66,5 +66,5 @@
   services.gvfs.enable = true;
 
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplipWithPlugin ];
+  services.printing.drivers = with pkgs; [ hplipWithPlugin canon-cups-ufr2 carps-cups cups-bjnp gutenprintBin cnijfilter2 ];
 }

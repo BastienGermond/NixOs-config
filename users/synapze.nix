@@ -28,6 +28,8 @@
     "signature".source = ./dotfiles/signature;
   };
 
+  programs.go.enable = true;
+
   programs.alacritty = {
     enable = true;
     settings = {
@@ -87,6 +89,7 @@
       rnix-lsp
       ccls
       texlab
+      gopls
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -156,5 +159,8 @@
     stm32cubemx
     super-slicer
     texlab
+    teams
+    drawio
+    gopls
   ];
 }

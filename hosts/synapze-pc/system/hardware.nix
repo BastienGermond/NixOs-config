@@ -8,6 +8,11 @@
     ##for bluetooth headset support
     pulseaudio.package = pkgs.pulseaudioFull;
     pulseaudio.enable = true;
+    # Scanner
+    sane = {
+        enable = true;
+        extraBackends = [ pkgs.sane-airscan ];
+    };
   };
 
   sound.enable = true;

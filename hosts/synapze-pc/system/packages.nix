@@ -61,5 +61,6 @@
     xsel
     zip
     zsh
+    xsane
   ];
 }

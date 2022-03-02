@@ -8,7 +8,7 @@
     isNormalUser = true;
     createHome = true;
     home = "/home/synapze";
-    extraGroups = [ "wheel" "networkmanager" "audio" "vboxusers" "plugdev" "dialout" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "vboxusers" "plugdev" "dialout" "scanner" "lp" ];
     shell = pkgs.zsh;
   };
 
