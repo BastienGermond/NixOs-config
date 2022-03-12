@@ -5,23 +5,11 @@
 { config, pkgs, ... }:
 
 {
-  nix = {
-    package = pkgs.nixUnstable; # or versioned attributes like nix_2_4
-    extraOptions = ''
-    experimental-features = nix-command flakes
-    '';
-  };
-
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./fs.nix
-      ./system/hardware.nix
-      ./system/services.nix
-      ./system/programs.nix
-      ./system/packages.nix
-      ../../users/users.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./fs.nix
+    ./system
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -38,24 +26,24 @@
     export XDG_CONFIG_HOME=$HOME/.config
     export XDG_DATA_HOME=$HOME/.local/share
     export XDG_CACHE_HOME=$HOME/.cache
-  '';
+    '';
 
-  environment.interactiveShellInit = ''
+    environment.interactiveShellInit = ''
     alias gs='git status'
-  '';
+    '';
 
-  environment.pathsToLink = [ "/share/zsh" ];
+    environment.pathsToLink = [ "/share/zsh" ];
 
 
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.docker.enable = true;
+    virtualisation.virtualbox.host.enable = true;
+    virtualisation.docker.enable = true;
 
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+    users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
-  networking.hostName = "synapze-pc"; # Define your hostname.
-  networking.extraHosts = ''
+    networking.hostName = "synapze-pc"; # Define your hostname.
+    networking.extraHosts = ''
     127.0.0.1   gitea droneci
-  '';
+    '';
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
@@ -66,9 +54,9 @@
   networking.interfaces.wlp0s20f3.useDHCP = true;
 
   networking.networkmanager.enable = true;
-  
+
   networking.nat.internalInterfaces = [ "wg0" ];
- 
+
   networking.wireguard.interfaces = {
     wg0 = {
       ips = [ "10.100.10.3/32" ];

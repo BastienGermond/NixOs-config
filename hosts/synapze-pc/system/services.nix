@@ -52,7 +52,7 @@
         MODE:="0666", \
         SYMLINK+="stlinkv2-1_%n"
         '';
-    packages = [ pkgs.yubikey-personalization pkgs.platformio pkgs.openocd ];
+    packages = [ pkgs.yubikey-personalization pkgs.platformio pkgs.openocd pkgs.android-udev-rules ];
   };
 
   # Enable the OpenSSH daemon.

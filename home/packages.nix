@@ -1,0 +1,43 @@
+{ config, pkgs, inputs, ... }:
+
+{
+  home.packages = with pkgs; [
+    any-nix-shell
+    bat
+    binutils
+    ccls
+    clang-tools
+    cura
+    discord
+    docker-buildx
+    drawio
+    dunst
+    dunst
+    file
+    firefox
+    freecad
+    fzf
+    gimp
+    gopls
+    gtop
+    inkscape
+    jq
+    kicad-unstable
+    languagetool
+    libnotify
+    libreoffice
+    nodePackages.eslint
+    nodePackages.prettier
+    nodePackages.typescript-language-server
+    picocom
+    rnix-lsp
+    rofi
+    scrot
+    signal-desktop
+    slack
+    stm32cubemx
+    super-slicer
+    teams
+    texlab
+  ];
+}

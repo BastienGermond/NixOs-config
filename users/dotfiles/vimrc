@@ -167,69 +167,7 @@ nnoremap <silent> <C-g> :nohl<CR><C-l>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin('~/.vim/plugged')
-
-Plug 'neovim/nvim-lspconfig'
-Plug 'ray-x/lsp_signature.nvim'
-
-Plug 'williamboman/nvim-lsp-installer'
-Plug 'L3MON4D3/LuaSnip'
-
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'vim-airline/vim-airline'
-" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-Plug 'vim-python/python-syntax'
-Plug 'rust-lang/rust.vim'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'junegunn/vim-easy-align'
-Plug 'rhysd/vim-clang-format'
-Plug 'kergoth/vim-bitbake'
-
-Plug 'alpertuna/vim-header'
-
-" Highlight similar words
-Plug 'RRethy/vim-illuminate'
-
-" Close quickfix or location list when attached buffer is closed
-Plug 'romainl/vim-qf'
-
-" Fzf
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-
-" Plug 'zivyangll/git-blame.vim'
-
-Plug 'tpope/vim-fugitive'
-Plug 'vim-scripts/DoxygenToolkit.vim'
-Plug 'stephpy/vim-yaml'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'lewis6991/spellsitter.nvim'
-
-" Nvim suggestion
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/nvim-cmp'
-
-Plug 'vim-scripts/DoxygenToolkit.vim'
-
-" File explorer
-Plug 'kyazdani42/nvim-web-devicons' " for file icons
-Plug 'kyazdani42/nvim-tree.lua'
-
-" Language Tool
-Plug 'vigoux/LanguageTool.nvim'
-
-" Go
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
-call plug#end()
+lua require('plugins')
 
 let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
