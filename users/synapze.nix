@@ -90,6 +90,9 @@
       ccls
       texlab
       gopls
+      nodePackages.typescript-language-server
+      nodePackages.prettier
+      nodePackages.eslint
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -136,6 +139,7 @@
     cura
     discord
     docker-buildx
+    drawio
     dunst
     dunst
     file
@@ -143,6 +147,7 @@
     freecad
     fzf
     gimp
+    gopls
     gtop
     inkscape
     jq
@@ -150,6 +155,7 @@
     languagetool
     libnotify
     libreoffice
+    nodePackages.typescript-language-server
     picocom
     rnix-lsp
     rofi
@@ -158,9 +164,9 @@
     slack
     stm32cubemx
     super-slicer
-    texlab
     teams
-    drawio
-    gopls
+    texlab
+    nodePackages.prettier
+    nodePackages.eslint
   ];
 }
