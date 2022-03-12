@@ -5,6 +5,8 @@
     enable = true;
     package = pkgs.neovim-nightly;
     vimAlias = true;
+    viAlias = true;
+    vimdiffAlias = true;
     extraPackages = with pkgs; [
       tree-sitter
       ctags
@@ -24,7 +26,7 @@
     ];
 
     plugins = with pkgs.vimPlugins; [
-      vim-plug
+      vim-packer
       vim-which-key
       vim-nix
       suda-vim
@@ -34,4 +36,6 @@
       (lib.strings.fileContents ../users/dotfiles/vimrc)
     ];
   };
+
+  home.sessionVariables.EDITOR = "nvim";
 }

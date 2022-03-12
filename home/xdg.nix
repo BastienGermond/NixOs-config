@@ -21,5 +21,6 @@
     "polybar/launch.sh".source = ../users/dotfiles/polybar/launch.sh;
     "polybar/polybar-wireguard.sh".source = ../users/dotfiles/polybar/polybar-wireguard;
     "signature".source = ../users/dotfiles/signature;
+    "nvim/lua/plugins.lua".source = ../users/dotfiles/vim/lua/plugins.lua;
   };
 }

@@ -1,21 +1,18 @@
 -- Packer
+
+local fn = vim.fn
+
 vim.g.package_home = fn.stdpath("data") .. "/site/pack/packer/"
-local packer_install_dir = vim.g.package_home .. "/opt/packer.nvim"
 
-local plug_url_format = ""
-if vim.g.is_linux then
-    plug_url_format = "https://hub.fastgit.xyz/%s"
-else
-    plug_url_format = "https://github.com/%s"
-end
+local packer_install_dir = vim.g.package_home .. "opt/packer.nvim"
 
-local packer_repo = string.format(plug_url_format, "wbthomason/packer.nvim")
-local install_cmd = string.format("10split |term git clone --depth=1 %s %s", packer_repo, packer_install_dir)
+local plug_url_format = "https://hub.fastgit.xyz/%s"
 
 -- Auto-install packer in case it hasn't been installed.
+local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 if fn.glob(packer_install_dir) == "" then
-    vim.api.nvim_echo({ { "Installing packer.nvim", "Type" } }, true, {})
-    vim.cmd(install_cmd)
+    vim.api.nvim_echo({ { "Installing packer.nvim in " .. install_path , "Type" } }, true, {})
+    packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 -- Load packer.nvim
@@ -23,61 +20,80 @@ vim.cmd("packadd packer.nvim")
 
 -- PLUGINS
 
-return require('packer').startup(function()
-    use 'nvim-lua/plenary.nvim'
+local util = require('packer.util')
 
-    use 'neovim/nvim-lspconfig'
-    use 'ray-x/lsp_signature.nvim'
+require('packer').startup({
+    function(use)
+        use 'nvim-lua/plenary.nvim'
 
-    use 'williamboman/nvim-lsp-installer'
-    use 'L3MON4D3/LuaSnip'
+        use 'neovim/nvim-lspconfig'
+        use 'ray-x/lsp_signature.nvim'
 
-    use 'ludovicchabant/vim-gutentags'
-    use 'vim-airline/vim-airline'
-    use 'vim-python/python-syntax'
-    use 'rust-lang/rust.vim'
-    use 'junegunn/vim-easy-align'
-    use 'rhysd/vim-clang-format'
-    use 'kergoth/vim-bitbake'
-    use 'ftan84/vim-khaled-ipsum'
+        use 'williamboman/nvim-lsp-installer'
+        use 'L3MON4D3/LuaSnip'
 
-    use 'alpertuna/vim-header'
+        use 'ludovicchabant/vim-gutentags'
+        use 'vim-airline/vim-airline'
+        use 'vim-python/python-syntax'
+        use 'rust-lang/rust.vim'
+        use 'junegunn/vim-easy-align'
+        use 'rhysd/vim-clang-format'
+        use 'kergoth/vim-bitbake'
+        use 'ftan84/vim-khaled-ipsum'
 
-    -- Highlight similar words
-    use 'RRethy/vim-illuminate'
+        use 'alpertuna/vim-header'
 
-    -- Close quickfix or location list when attached buffer is closed
-    use 'romainl/vim-qf'
+        -- Highlight similar words
+        use 'RRethy/vim-illuminate'
 
-    -- Fzf
-    use 'junegunn/fzf'
-    use 'junegunn/fzf.vim'
+        -- Close quickfix or location list when attached buffer is closed
+        use 'romainl/vim-qf'
 
-    use 'tpope/vim-fugitive'
-    use 'vim-scripts/DoxygenToolkit.vim'
-    use 'stephpy/vim-yaml'
-    use 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    use 'lewis6991/spellsitter.nvim'
+        -- Fzf
+        use 'junegunn/fzf'
+        use 'junegunn/fzf.vim'
 
-    -- Nvim suggestion
-    use 'neovim/nvim-lspconfig'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/nvim-cmp'
+        use 'tpope/vim-fugitive'
+        use 'vim-scripts/DoxygenToolkit.vim'
+        use 'stephpy/vim-yaml'
+        use {
+            'nvim-treesitter/nvim-treesitter',
+            run = ':TSUpdate'
+        }
+        use 'lewis6991/spellsitter.nvim'
 
-    use 'vim-scripts/DoxygenToolkit.vim'
+        -- Nvim suggestion
+        use 'hrsh7th/cmp-nvim-lsp'
+        use 'hrsh7th/cmp-buffer'
+        use 'hrsh7th/nvim-cmp'
 
-    -- File explorer
-    use 'kyazdani42/nvim-web-devicons' -- for file icons
-    use 'kyazdani42/nvim-tree.lua'
+        -- File explorer
+        use 'kyazdani42/nvim-web-devicons' -- for file icons
+        use 'kyazdani42/nvim-tree.lua'
 
-    -- Language Tool
-    use 'vigoux/LanguageTool.nvim'
+        -- Language Tool
+        use 'vigoux/LanguageTool.nvim'
 
-    -- Go
-    use 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+        -- Go
+        use {
+            'fatih/vim-go',
+            run = ':GoUpdateBinaries'
+        }
 
-    -- TypeScript
-    use 'jose-elias-alvarez/null-ls.nvim'
-    use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-end)
+        -- TypeScript
+        use 'jose-elias-alvarez/null-ls.nvim'
+        use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+    end,
+    config = {
+        max_jobs = 16,
+        compile_path = util.join_paths(vim.fn.stdpath('config'), 'lua', 'packer_compiled.lua'),
+        git = {
+            default_url_format = plug_url_format,
+        },
+    },
+})
+
+local status, _ = pcall(require, 'packer_compiled')
+if not status then
+    vim.notify("Error requiring packer_compiled.lua: run PackerSync to fix!")
+end
