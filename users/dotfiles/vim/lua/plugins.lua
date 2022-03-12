@@ -4,13 +4,11 @@ local fn = vim.fn
 
 vim.g.package_home = fn.stdpath("data") .. "/site/pack/packer/"
 
-local packer_install_dir = vim.g.package_home .. "opt/packer.nvim"
-
 local plug_url_format = "https://hub.fastgit.xyz/%s"
 
 -- Auto-install packer in case it hasn't been installed.
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
-if fn.glob(packer_install_dir) == "" then
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.glob(install_path) == "" then
     vim.api.nvim_echo({ { "Installing packer.nvim in " .. install_path , "Type" } }, true, {})
     packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
@@ -24,12 +22,13 @@ local util = require('packer.util')
 
 require('packer').startup({
     function(use)
+        use 'wbthomason/packer.nvim'
+
         use 'nvim-lua/plenary.nvim'
 
         use 'neovim/nvim-lspconfig'
         use 'ray-x/lsp_signature.nvim'
 
-        use 'williamboman/nvim-lsp-installer'
         use 'L3MON4D3/LuaSnip'
 
         use 'ludovicchabant/vim-gutentags'
@@ -60,16 +59,14 @@ require('packer').startup({
             'nvim-treesitter/nvim-treesitter',
             run = ':TSUpdate'
         }
+        
+        -- Enable Neovim's builtin spellchecker for buffers with tree-sitter highlighting.
         use 'lewis6991/spellsitter.nvim'
 
         -- Nvim suggestion
         use 'hrsh7th/cmp-nvim-lsp'
         use 'hrsh7th/cmp-buffer'
         use 'hrsh7th/nvim-cmp'
-
-        -- File explorer
-        use 'kyazdani42/nvim-web-devicons' -- for file icons
-        use 'kyazdani42/nvim-tree.lua'
 
         -- Language Tool
         use 'vigoux/LanguageTool.nvim'
@@ -83,6 +80,10 @@ require('packer').startup({
         -- TypeScript
         use 'jose-elias-alvarez/null-ls.nvim'
         use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
+        if packer_bootstrap then
+            require('packer').sync()
+        end
     end,
     config = {
         max_jobs = 16,

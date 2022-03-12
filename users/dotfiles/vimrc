@@ -6,303 +6,163 @@
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" We are running Vim not Vi (plugin need)
-set nocompatible
+lua <<EOF
 
-" Sets the history size
-set history=500
+local set = vim.opt
 
-" Enables syntax highlighting
-syntax on
+-- We are running Vim not Vi (plugin need)
+set.compatible = false
 
-" Enables filetype detection
-filetype on
+-- Sets the history size
+set.history = 500
 
-" Enable filetype-specific indenting
-filetype indent on
+-- Enable to auto read when a file is changed from outside
+set.autoread = true
 
-" Enable filetype-specific plugins
-filetype plugin on
+-- Enable line number
+set.number = true
 
-" Set to auto read when a file is changed from outside
-set autoread
+-- Enable underline current line
+set.cursorline = true
 
-" Set line number
-set number
+-- Highlight current line clearly
+-- highlight CursorLine cterm=None ctermfg=None ctermbg=lightgray
+-- highlight clear CursorLine
+vim.cmd([[highlight CursorLine cterm=Underline ctermfg=None ctermbg=None]])
 
-" Underline current line
-set cursorline
+-- Set column delimiter
+-- set.colorcolumn = 80
+set.wrap = false
 
-" Highlight current line clearly
-" highlight CursorLine cterm=None ctermfg=None ctermbg=lightgray
-" highlight clear CursorLine
-highlight CursorLine cterm=Underline ctermfg=None ctermbg=None
+-- Disable swapfiles
+set.swapfile = false
 
-" Set column delimiter
-set colorcolumn=80
-set nowrap
+-- Enable title
+set.title = true
 
-" Disable swapfiles
-set noswapfile
+-- Disable bell completely
+vim.cmd([[set vb t_vb=]])
 
-" Enable title
-set title
+-- Disable Ex Mode
+vim.cmd([[map Q <Nop>]])
 
-" Disable bell completely
-set visualbell
-set t_vb=
+-- Enable folding indent
+set.foldmethod = "indent"
 
-" Disable Ex Mode
-map Q <Nop>
+-- Unfold everything by default
+set.foldlevelstart = 99
 
-" Enable folding indent
-set foldmethod=indent
+-- Enable folding with the spacebar
+vim.cmd([[nnoremap <space> za]])
 
-" Unfold everything by default
-set foldlevelstart=99
+-- Insert mode completion configuration
+set.completeopt = "menu,menuone,noselect"
 
-" Enable folding with the spacebar
-nnoremap <space> za
+-- Use ctrl-[hjkl] to select the active split!
+vim.cmd([[
+  nmap <silent> <c-k> :wincmd k<CR>
+  nmap <silent> <c-j> :wincmd j<CR>
+  nmap <silent> <c-h> :wincmd h<CR>
+  nmap <silent> <c-l> :wincmd l<CR>
+]])
 
-" Use ctrl-[hjkl] to select the active split!
-nmap <silent> <c-k> :wincmd k<CR>
-nmap <silent> <c-j> :wincmd j<CR>
-nmap <silent> <c-h> :wincmd h<CR>
-nmap <silent> <c-l> :wincmd l<CR>
+-- Set filetype to json for .schema file
+vim.cmd([[autocmd BufNewFile,BufRead *.schema setfiletype json]])
 
-" Set filetype to json for .schema file
-autocmd BufNewFile,BufRead *.schema setfiletype json
+vim.g.spellfile_URL = "https://ftp.nluug.nl/vim/runtime/spell/"
 
-let g:spellfile_URL = 'http://ftp.vim.org/vim/runtime/spell'
+--------------------------------------------------------------------------------
+-- User interface
+--------------------------------------------------------------------------------
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" User interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+-- Set the minimal amount of lignes under and above the cursor
+-- Useful for keeping context when moving with j/k
+set.scrolloff = 5
 
-" Set the minimal amount of lignes under and above the cursor
-" Useful for keeping context when moving with j/k
-set scrolloff=5
+--------------------------------------------------------------------------------
+-- Search options
+--------------------------------------------------------------------------------
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Search options
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+-- Hightlight search
+set.hlsearch = true
 
-" Hightlight search
-set hlsearch
+-- Show the best match so far as typed
+set.incsearch = true
 
-" Show the best match so far as typed
-set incsearch
+-- Clever search, make it case insensitive unless case
+set.ignorecase = true
+set.smartcase = true
 
-" Clever search, make it case insensitive unless case
-set ignorecase smartcase
+--------------------------------------------------------------------------------
+-- Buffer options
+--------------------------------------------------------------------------------
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Buffer options
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+-- Write the file when we leave the buffer
+set.autowrite = true
 
-" Write the file when we leave the buffer
-set autowrite
+--------------------------------------------------------------------------------
+-- Identation options
+--------------------------------------------------------------------------------
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Identation options
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+-- Display whitespace characters
+set.list = true
+set.listchars = {tab = ">─", eol = "¬", trail = "·", nbsp = "¤"}
 
-" Display whitespace characters
-set list
-set listchars=tab:>─,eol:¬,trail:\ ,nbsp:¤
+set.fillchars = {vert = "|"}
 
-set fillchars=vert:│
+-- Expand tab to spaces
+set.expandtab = true
 
-" Expand tab to spaces
-set expandtab
+-- Enable auto indent
+set.autoindent = true
+set.smartindent = true
 
-" Auto/smart indent 
-set autoindent smartindent
+-- Use previous indent when copying
+set.copyindent = true
 
-" Use previous indent when copying
-set copyindent
+-- Tab key transform to spaces
+set.softtabstop = 4
 
-" Tab key transform to spaces
-set softtabstop=4
+-- Tab is # spaces
+set.tabstop = 4
 
-" Tab is # spaces
-set tabstop=4
+-- The # of spaces for indenting
+set.shiftwidth = 4
 
-" The # of spaces for indenting
-set shiftwidth=4
+set.textwidth = 79
 
-set textwidth=79
+-------------------------------------------------------------------------------
+-- Mappings
+-------------------------------------------------------------------------------
 
-" 80 column limit
-highlight OverLength ctermbg=blue ctermfg=white guibg=#592929
+-- Open the quickfix window if there are errors, or close it if there are no
+-- errors left
+vim.cmd([[noremap <leader>cw :botright :cw<cr>]])
 
-" Highlight trailing whitespace
-highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+-- Run make silently, then skip the 'Press ENTER to continue'
+vim.cmd([[noremap <leader>m :silent! :make! \| :redraw!<cr>]])
 
-function Hightlights_matches()
-    match ExtraWhitespace /\s\+\%#\@<!$/ 
-    match OverLength /\%80v.\+/
-endfunction
+-- Write as root, when you forgot to sudoedit
+vim.cmd([[cnoreabbrev w!! w !sudo tee % >/dev/null]])
 
-autocmd BufEnter,InsertLeave * call Hightlights_matches()
+-- removes search highlighting
+vim.cmd([[nnoremap <silent> <C-g> :nohl<CR><C-l>]])
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Open the quickfix window if there are errors, or close it if there are no
-" errors left
-noremap <leader>cw :botright :cw<cr>
-
-" Run make silently, then skip the 'Press ENTER to continue'
-noremap <leader>m :silent! :make! \| :redraw!<cr>
-
-" Write as root, when you forgot to sudoedit
-cnoreabbrev w!! w !sudo tee % >/dev/null
-
-" removes search highlighting
-nnoremap <silent> <C-g> :nohl<CR><C-l>
+EOF
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Load plugins with packer.nvim
 lua require('plugins')
 
-let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
-let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
-let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
-let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
-let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
-let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
-let g:nvim_tree_symlink_arrow = ' ➛ ' " defaults to ' ➛ '. used as a separator between symlinks' source and target.
-let g:nvim_tree_respect_buf_cwd = 1 "0 by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
-let g:nvim_tree_create_in_closed_folder = 0 "1 by default, When creating files, sets the path of a file when cursor is on a closed folder to the parent folder when 0, and inside the folder when 1.
-let g:nvim_tree_refresh_wait = 500 "1000 by default, control how often the tree can be refreshed, 1000 means the tree can be refresh once per 1000ms.
-let g:nvim_tree_window_picker_exclude = {
-    \   'filetype': [
-    \     'notify',
-    \     'packer',
-    \     'qf'
-    \   ],
-    \   'buftype': [
-    \     'terminal'
-    \   ]
-    \ }
-" Dictionary of buffer option names mapped to a list of option values that
-" indicates to the window picker that the buffer's window should not be
-" selectable.
-let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
-let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 0,
-    \ 'files': 0,
-    \ 'folder_arrows': 0,
-    \ }
-"If 0, do not show the icons for one of 'git' 'folder' and 'files'
-"1 by default, notice that if 'files' is 1, it will only display
-"if nvim-web-devicons is installed and on your runtimepath.
-"if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
-"but this will not work when you set indent_markers (because of UI conflict)
+" Enable Neovim's builtin spellchecker for buffers with tree-sitter highlighting.
+lua require('spellsitter').setup()
 
-" default will show icon by default if no icon is provided
-" default shows no icon by default
-let g:nvim_tree_icons = {
-    \ 'default': '',
-    \ 'symlink': '',
-    \ 'git': {
-    \   'unstaged': "✗",
-    \   'staged': "✓",
-    \   'unmerged': "",
-    \   'renamed': "➜",
-    \   'untracked': "★",
-    \   'deleted': "",
-    \   'ignored': "◌"
-    \   },
-    \ 'folder': {
-    \   'arrow_open': "",
-    \   'arrow_closed': "",
-    \   'default': "",
-    \   'open': "",
-    \   'empty': "",
-    \   'empty_open': "",
-    \   'symlink': "",
-    \   'symlink_open': "",
-    \   }
-    \ }
-
-nnoremap <C-n> :NvimTreeToggle<CR>
-nnoremap <leader>r :NvimTreeRefresh<CR>
-nnoremap <leader>n :NvimTreeFindFile<CR>
-
-lua <<EOF
-    local lsp_installer = require("nvim-lsp-installer")
-
-    lsp_installer.on_server_ready(function(server)
-        local opts = {}
-        -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-        server:setup(opts)
-        vim.cmd [[ do User LspAttachBuffers ]]
-    end)
-
-    require('spellsitter').setup()
-
-    -- following options are the default
-    -- each of these are documented in `:help nvim-tree.OPTION_NAME`
-    require'nvim-tree'.setup {
-      disable_netrw       = true,
-      hijack_netrw        = true,
-      open_on_setup       = false,
-      ignore_ft_on_setup  = {},
-      auto_close          = true,
-      open_on_tab         = false,
-      hijack_cursor       = false,
-      update_cwd          = false,
-      update_to_buf_dir   = {
-        enable = true,
-        auto_open = true,
-      },
-      diagnostics = {
-        enable = false,
-        icons = {
-          hint = "",
-          info = "",
-          warning = "",
-          error = "",
-        }
-      },
-      update_focused_file = {
-        enable      = false,
-        update_cwd  = false,
-        ignore_list = {}
-      },
-      system_open = {
-        cmd  = nil,
-        args = {}
-      },
-      filters = {
-        dotfiles = false,
-        custom = {}
-      },
-      view = {
-        width = 30,
-        height = 30,
-        hide_root_folder = false,
-        side = 'left',
-        auto_resize = false,
-        mappings = {
-          custom_only = false,
-          list = {}
-        }
-      }
-    }
-EOF
-
-set completeopt=menu,menuone,noselect
-
+" Nix lsp server configuraiton
 if executable('rnix-lsp')
-    au User lsp_setup call lsp#register_server({
+  au User lsp_setup call lsp#register_server({
         \ 'name': 'rnix-lsp',
         \ 'cmd': {server_info->[&shell, &shellcmdflag, 'rnix-lsp']},
         \ 'whitelist': ['nix'],
@@ -310,59 +170,60 @@ if executable('rnix-lsp')
 endif
 
 lua <<EOF
-  -- luasnip setup
-  local luasnip = require 'luasnip'
 
-  -- nvim-cmp setup
-  local cmp = require 'cmp'
-  cmp.setup {
-    snippet = {
-      expand = function(args)
-        require('luasnip').lsp_expand(args.body)
-      end,
+-- luasnip setup
+local luasnip = require('luasnip')
+
+-- nvim-cmp setup
+local cmp = require('cmp')
+cmp.setup {
+  snippet = {
+    expand = function(args)
+    require('luasnip').lsp_expand(args.body)
+    end,
     },
-    mapping = {
-      ['<C-p>'] = cmp.mapping.select_prev_item(),
-      ['<C-n>'] = cmp.mapping.select_next_item(),
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
       },
-      ['<Tab>'] = function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
-        else
-          fallback()
-        end
+    ['<Tab>'] = function(fallback)
+    if cmp.visible() then
+      cmp.select_next_item()
+    elseif luasnip.expand_or_jumpable() then
+      vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
+    else
+      fallback()
+      end
       end,
       ['<S-Tab>'] = function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
-        else
-          fallback()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
+      else
+        fallback()
         end
-      end,
-    },
-    sources = {
-      { name = 'nvim_lsp' },
-      { name = 'luasnip' },
-    },
-  }
+        end,
+        },
+      sources = {
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+        },
+      }
 
-  local nvim_lsp = require('lspconfig')
-  local null_ls = require("null-ls")
+    local nvim_lsp = require('lspconfig')
+    local null_ls = require("null-ls")
 
-  require('lspconfig').fsautocomplete.setup{}
+    require('lspconfig').fsautocomplete.setup{}
 
-  local on_attach = function(client, bufnr)
+    local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -388,127 +249,88 @@ lua <<EOF
     if client.resolved_capabilities.document_formatting then
       vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
     end
-  end
+      end
 
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  local servers = { "pyright", "texlab", "gopls", "clangd" }
-  for _, lsp in ipairs(servers) do
-      nvim_lsp[lsp].setup {
+      -- Setup lspconfig.
+      local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+      local servers = { "pyright", "texlab", "gopls", "clangd" }
+      for _, lsp in ipairs(servers) do
+        nvim_lsp[lsp].setup {
           on_attach = on_attach,
           capabilities = capabilities,
           flags = {
-              debounce_text_changes = 150,
-              }
+            debounce_text_changes = 150,
+            }
           }
-  end
+        end
 
-  local buf_map = function(bufnr, mode, lhs, rhs, opts)
-    vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
-        silent = true,
-    })
-  end
+        local buf_map = function(bufnr, mode, lhs, rhs, opts)
+        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+          silent = true,
+          })
+        end
 
-  nvim_lsp.tsserver.setup({
-    on_attach = function(client, bufnr)
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
-      local ts_utils = require("nvim-lsp-ts-utils")
-      ts_utils.setup({})
-      ts_utils.setup_client(client)
-      buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
-      buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
-      buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
+        nvim_lsp.tsserver.setup({
+        on_attach = function(client, bufnr)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+        local ts_utils = require("nvim-lsp-ts-utils")
+        ts_utils.setup({})
+        ts_utils.setup_client(client)
+        buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
+        buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
+        buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
 
-      on_attach(client, bufnr)
-    end,
-  })
+        on_attach(client, bufnr)
+        end,
+        })
 
-  -- null_ls
-  null_ls.setup({
+      -- null_ls
+      null_ls.setup({
       sources = {
-          null_ls.builtins.diagnostics.eslint,
-          null_ls.builtins.code_actions.eslint,
-          null_ls.builtins.formatting.prettier,
-      },
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.code_actions.eslint,
+        null_ls.builtins.formatting.prettier,
+        },
       on_attach = on_attach,
-  })
-  
-  -- Init tree-sitter
-  require'nvim-treesitter.configs'.setup {
+      })
+
+    -- Init tree-sitter
+    require'nvim-treesitter.configs'.setup {
       ensure_installed = { "c", "python", "latex", "nix", "go", "typescript" },
       ignore_install = { }, -- List of parsers to ignore installing
       highlight = {
-      enable = true,              -- false will disable the whole extension
-      disable = { },  -- list of language that will be disabled
-      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-      -- Using this option may slow down your editor, and you may see some duplicate highlights.
-      -- Instead of true it can also be a list of languages
-      additional_vim_regex_highlighting = false,
-      },
-  }
-EOF
+        enable = true,              -- false will disable the whole extension
+        disable = { },  -- list of language that will be disabled
+        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+        -- Using this option may slow down your editor, and you may see some duplicate highlights.
+        -- Instead of true it can also be a list of languages
+        additional_vim_regex_highlighting = false,
+        },
+      }
 
-lua <<EOF
-  -- https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
-  vim.g.gutentags_ctags_exclude = {
-        '*.git', '*.svg', '*.hg',
-        '*/tests/*',
-        'build',
-        'dist',
-        '*sites/*/files/*',
-        'bin',
-        'node_modules',
-        'bower_components',
-        'cache',
-        'compiled',
-        'docs',
-        'example',
-        'bundle',
-        'vendor',
-        '*.md',
-        '*-lock.json',
-        '*.lock',
-        '*bundle*.js',
-        '*build*.js',
-        '.*rc*',
-        '*.json',
-        '*.min.*',
-        '*.map',
-        '*.bak',
-        '*.zip',
-        '*.pyc',
-        '*.class',
-        '*.sln',
-        '*.Master',
-        '*.csproj',
-        '*.tmp',
-        '*.csproj.user',
-        '*.cache',
-        '*.pdb',
-        'tags*',
-        'cscope.*',
-        -- '*.css',
-        -- '*.less',
-        -- '*.scss',
-        '*.exe', '*.dll',
-        '*.mp3', '*.ogg', '*.flac',
-        '*.swp', '*.swo',
-        '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
-        '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
-        '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
-        }
+    -- https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
+    vim.g.gutentags_ctags_exclude = { '*.git', '*.svg', '*.hg', '*/tests/*',
+    'build', 'dist', '*sites/*/files/*', 'bin', 'node_modules',
+    'bower_components', 'cache', 'compiled', 'docs', 'example', 'bundle',
+    'vendor', '*.md', '*-lock.json', '*.lock', '*bundle*.js', '*build*.js',
+    '.*rc*', '*.json', '*.min.*', '*.map', '*.bak', '*.zip', '*.pyc',
+    '*.class', '*.sln', '*.Master', '*.csproj', '*.tmp', '*.csproj.user',
+    '*.cache', '*.pdb', 'tags*', 'cscope.*', '*.css', '*.less', '*.scss',
+    '*.exe', '*.dll', '*.mp3', '*.ogg', '*.flac', '*.swp', '*.swo', '*.bmp',
+    '*.gif', '*.ico', '*.jpg', '*.png', '*.rar', '*.zip', '*.tar', '*.tar.gz',
+    '*.tar.xz', '*.tar.bz2', '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx', }
 
-  vim.g.gutentags_add_default_project_roots = false
-  vim.g.gutentags_project_root = {'package.json', '.git'}
-  vim.g.gutentags_cache_dir = vim.fn.expand('~/.cache/nvim/ctags/')
-  vim.g.gutentags_generate_on_new = true
-  vim.g.gutentags_generate_on_missing = true
-  vim.g.gutentags_generate_on_write = true
-  vim.g.gutentags_generate_on_empty_buffer = true
-  vim.cmd([[command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')]])
-  vim.g.gutentags_ctags_extra_args = {'--tag-relative=yes', '--fields=+ailmnS', }
+    vim.g.gutentags_add_default_project_roots = false
+    vim.g.gutentags_project_root = {'package.json', '.git'}
+    vim.g.gutentags_cache_dir = vim.fn.expand('~/.cache/nvim/ctags/')
+    vim.g.gutentags_generate_on_new = true
+    vim.g.gutentags_generate_on_missing = true
+    vim.g.gutentags_generate_on_write = true
+    vim.g.gutentags_generate_on_empty_buffer = true
+    vim.cmd([[command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')]])
+    vim.g.gutentags_ctags_extra_args = {'--tag-relative=yes', '--fields=+ailmnS', }
 EOF
 
 autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()
