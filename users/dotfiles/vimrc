@@ -31,7 +31,7 @@ set.cursorline = true
 vim.cmd([[highlight CursorLine cterm=Underline ctermfg=None ctermbg=None]])
 
 -- Set column delimiter
--- set.colorcolumn = 80
+set.colorcolumn = "80"
 set.wrap = false
 
 -- Disable swapfiles
