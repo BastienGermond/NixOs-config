@@ -8,4 +8,3 @@
     permitRootLogin = "no";
   };
 }
-

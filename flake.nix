@@ -37,6 +37,12 @@
         ./modules
         home-manager.nixosModule
       ];
+      "anemone".modules = [
+	./hosts/anemone
+        ./home
+        ./modules
+        home-manager.nixosModule
+      ];
     };
   };
 }

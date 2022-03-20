@@ -7,7 +7,7 @@
     useGlamor = true;
     layout = "us";
     xkbVariant = "alt-intl";
-    displayManager.autoLogin.enable = true;
+    # displayManager.autoLogin.enable = true;
 
     windowManager.i3 = {
       enable = true;
