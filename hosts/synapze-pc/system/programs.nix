@@ -1,8 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  # Disabled for gpg-agent
-  programs.ssh.startAgent = false;
+  programs.ssh = {
+    startAgent = true;
+  };
 
   # Manage backlight without xserver
   # e.g light -U 30 (darker) light -A 30 (lighter)
@@ -10,7 +11,7 @@
 
   programs.gnupg.agent = {
     enable = true;
-    enableSSHSupport = true;
+    enableSSHSupport = false;
     pinentryFlavor = "curses";
   };
 
