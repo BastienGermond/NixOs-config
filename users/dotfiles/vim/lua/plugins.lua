@@ -59,7 +59,10 @@ require('packer').startup({
             'nvim-treesitter/nvim-treesitter',
             run = ':TSUpdate'
         }
-        
+
+        -- PostgreSQL syntax
+        use 'lifepillar/pgsql.vim'
+
         -- Enable Neovim's builtin spellchecker for buffers with tree-sitter highlighting.
         use 'lewis6991/spellsitter.nvim'
 

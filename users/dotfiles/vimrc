@@ -71,6 +71,9 @@ vim.cmd([[autocmd BufNewFile,BufRead *.schema setfiletype json]])
 
 vim.g.spellfile_URL = "https://ftp.nluug.nl/vim/runtime/spell/"
 
+-- Postgres is my default sql type
+vim.g.sql_type_default = "pgsql"
+
 --------------------------------------------------------------------------------
 -- User interface
 --------------------------------------------------------------------------------
@@ -171,6 +174,11 @@ endif
 
 lua <<EOF
 
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 -- luasnip setup
 local luasnip = require('luasnip')
 
@@ -179,158 +187,160 @@ local cmp = require('cmp')
 cmp.setup {
   snippet = {
     expand = function(args)
-    require('luasnip').lsp_expand(args.body)
+      require('luasnip').lsp_expand(args.body)
     end,
     },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+    mapping = {
+      ['<C-p>'] = cmp.mapping.select_prev_item(),
+      ['<C-n>'] = cmp.mapping.select_next_item(),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm {
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = true,
       },
-    ['<Tab>'] = function(fallback)
-    if cmp.visible() then
-      cmp.select_next_item()
-    elseif luasnip.expand_or_jumpable() then
-      vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
-    else
-      fallback()
-      end
-      end,
-      ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
-      else
-        fallback()
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
         end
-        end,
-        },
-      sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        },
-      }
-
-    local nvim_lsp = require('lspconfig')
-    local null_ls = require("null-ls")
-
-    require('lspconfig').fsautocomplete.setup{}
-
-    local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-    local opts = { noremap=true, silent=true }
-
-    require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
-
-    -- Show documentation
-    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-
-    -- LSP navigation
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-
-    -- Diagnostic actions 
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-
-    if client.resolved_capabilities.document_formatting then
-      vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
-    end
-      end
-
-      -- Setup lspconfig.
-      local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-      local servers = { "pyright", "texlab", "gopls", "clangd" }
-      for _, lsp in ipairs(servers) do
-        nvim_lsp[lsp].setup {
-          on_attach = on_attach,
-          capabilities = capabilities,
-          flags = {
-            debounce_text_changes = 150,
-            }
-          }
+      end, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
         end
+      end, { "i", "s" }),
+    },
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+    },
+  }
 
-        local buf_map = function(bufnr, mode, lhs, rhs, opts)
-        vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
-          silent = true,
-          })
-        end
+local nvim_lsp = require('lspconfig')
+local null_ls = require("null-ls")
 
-        nvim_lsp.tsserver.setup({
-        on_attach = function(client, bufnr)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-        local ts_utils = require("nvim-lsp-ts-utils")
-        ts_utils.setup({})
-        ts_utils.setup_client(client)
-        buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
-        buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
-        buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
+require('lspconfig').fsautocomplete.setup{}
 
-        on_attach(client, bufnr)
-        end,
-        })
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-      -- null_ls
-      null_ls.setup({
-      sources = {
-        null_ls.builtins.diagnostics.eslint,
-        null_ls.builtins.code_actions.eslint,
-        null_ls.builtins.formatting.prettier,
-        },
-      on_attach = on_attach,
-      })
+  local opts = { noremap=true, silent=true }
 
-    -- Init tree-sitter
-    require'nvim-treesitter.configs'.setup {
-      ensure_installed = { "c", "python", "latex", "nix", "go", "typescript" },
-      ignore_install = { }, -- List of parsers to ignore installing
-      highlight = {
-        enable = true,              -- false will disable the whole extension
-        disable = { },  -- list of language that will be disabled
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-        },
-      }
+  require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
 
-    -- https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
-    vim.g.gutentags_ctags_exclude = { '*.git', '*.svg', '*.hg', '*/tests/*',
-    'build', 'dist', '*sites/*/files/*', 'bin', 'node_modules',
-    'bower_components', 'cache', 'compiled', 'docs', 'example', 'bundle',
-    'vendor', '*.md', '*-lock.json', '*.lock', '*bundle*.js', '*build*.js',
-    '.*rc*', '*.json', '*.min.*', '*.map', '*.bak', '*.zip', '*.pyc',
-    '*.class', '*.sln', '*.Master', '*.csproj', '*.tmp', '*.csproj.user',
-    '*.cache', '*.pdb', 'tags*', 'cscope.*', '*.css', '*.less', '*.scss',
-    '*.exe', '*.dll', '*.mp3', '*.ogg', '*.flac', '*.swp', '*.swo', '*.bmp',
-    '*.gif', '*.ico', '*.jpg', '*.png', '*.rar', '*.zip', '*.tar', '*.tar.gz',
-    '*.tar.xz', '*.tar.bz2', '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx', }
+  -- Show documentation
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
 
-    vim.g.gutentags_add_default_project_roots = false
-    vim.g.gutentags_project_root = {'package.json', '.git'}
-    vim.g.gutentags_cache_dir = vim.fn.expand('~/.cache/nvim/ctags/')
-    vim.g.gutentags_generate_on_new = true
-    vim.g.gutentags_generate_on_missing = true
-    vim.g.gutentags_generate_on_write = true
-    vim.g.gutentags_generate_on_empty_buffer = true
-    vim.cmd([[command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')]])
-    vim.g.gutentags_ctags_extra_args = {'--tag-relative=yes', '--fields=+ailmnS', }
+  -- LSP navigation
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+
+  -- Diagnostic actions 
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+
+  if client.resolved_capabilities.document_formatting then
+    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+  end
+end
+
+-- Setup lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local servers = { "pyright", "texlab", "gopls", "clangd" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+
+local buf_map = function(bufnr, mode, lhs, rhs, opts)
+vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
+  silent = true,
+  })
+end
+
+nvim_lsp.tsserver.setup({
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+    local ts_utils = require("nvim-lsp-ts-utils")
+    ts_utils.setup({})
+    ts_utils.setup_client(client)
+    buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
+    buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
+    buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
+
+    on_attach(client, bufnr)
+  end,
+})
+
+-- null_ls
+null_ls.setup({
+sources = {
+  null_ls.builtins.diagnostics.eslint,
+  null_ls.builtins.code_actions.eslint,
+  null_ls.builtins.formatting.prettier,
+  },
+  on_attach = on_attach,
+})
+
+-- Init tree-sitter
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "c", "python", "latex", "nix", "go", "typescript" },
+  ignore_install = { }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+    },
+  }
+
+-- https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
+vim.g.gutentags_ctags_exclude = { '*.git', '*.svg', '*.hg', '*/tests/*',
+'build', 'dist', '*sites/*/files/*', 'bin', 'node_modules',
+'bower_components', 'cache', 'compiled', 'docs', 'example', 'bundle',
+'vendor', '*.md', '*-lock.json', '*.lock', '*bundle*.js', '*build*.js',
+'.*rc*', '*.json', '*.min.*', '*.map', '*.bak', '*.zip', '*.pyc',
+'*.class', '*.sln', '*.Master', '*.csproj', '*.tmp', '*.csproj.user',
+'*.cache', '*.pdb', 'tags*', 'cscope.*', '*.css', '*.less', '*.scss',
+'*.exe', '*.dll', '*.mp3', '*.ogg', '*.flac', '*.swp', '*.swo', '*.bmp',
+'*.gif', '*.ico', '*.jpg', '*.png', '*.rar', '*.zip', '*.tar', '*.tar.gz',
+'*.tar.xz', '*.tar.bz2', '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx', }
+
+vim.g.gutentags_add_default_project_roots = false
+vim.g.gutentags_project_root = {'package.json', '.git'}
+vim.g.gutentags_cache_dir = vim.fn.expand('~/.cache/nvim/ctags/')
+vim.g.gutentags_generate_on_new = true
+vim.g.gutentags_generate_on_missing = true
+vim.g.gutentags_generate_on_write = true
+vim.g.gutentags_generate_on_empty_buffer = true
+vim.cmd([[command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')]])
+vim.g.gutentags_ctags_extra_args = {'--tag-relative=yes', '--fields=+ailmnS', }
 EOF
 
 autocmd CursorHoldI * silent! lua vim.lsp.buf.signature_help()
