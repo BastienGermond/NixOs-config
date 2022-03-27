@@ -35,10 +35,12 @@
         ./hosts/synapze-pc/system
         ./home
         ./modules
+        ./modules/xorg.nix
         home-manager.nixosModule
       ];
+
       "anemone".modules = [
-	./hosts/anemone
+        ./hosts/anemone
         ./home
         ./modules
         home-manager.nixosModule
@@ -46,24 +48,3 @@
     };
   };
 }
-
-#      nixosConfigurations = {
-#        "synapze-pc" = nixpkgs.lib.nixosSystem {
-#          system = "x86_64-linux";
-#          modules = [
-#            ({ config, pkgs, ... }: { nixpkgs.overlays = [ inputs.neovim-nightly-overlay.overlay ]; })
-#            ./hosts/synapze-pc/configuration.nix
-#            home-manager.nixosModules.home-manager
-#            {
-#              home-manager.useGlobalPkgs = true;
-#              home-manager.useUserPackages = true;
-#              home-manager.users.synapze = import ./users/synapze.nix;
-#              home-manager.users.root = import ./users/root.nix;
-#            }
-#          ];
-#        };
-#      };
-#
-#      synapze-pc = self.nixosConfigurations.synapze-pc.config.system.build.toplevel;
-#    };
-#  }
