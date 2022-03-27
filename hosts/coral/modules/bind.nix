@@ -3,7 +3,7 @@
 {
   services.bind = {
     enable = true;
-    zones = [
+    zones = {
       "synapze.fr" = {
         master = true;
         file = ../data/dns/zones/synapze.fr.db;
@@ -15,7 +15,7 @@
       "gistre.fr" = {
         master = true;
         file = ../data/dns/zones/gistre.fr.db;
-      }
-    ];
-  }
+      };
+    };
+  };
 }
