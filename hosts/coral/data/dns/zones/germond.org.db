@@ -1,0 +1,22 @@
+$TTL 1H
+
+germond.org.              IN          SOA     ns1.synapze.fr. root@synapze.fr. (
+                                                2021082901
+                                                1H
+                                                15M
+                                                2W
+                                                3M
+                                            )
+
+germond.org.              IN          A       135.181.36.15
+germond.org.              IN          NS      ns1.synapze.fr.
+
+intra                     IN          CNAME   germond.org.
+cloud                     IN          CNAME   germond.org.
+onlyoffice                IN          CNAME   germond.org.
+
+k3s                       IN          A       65.108.55.164
+cloud.k3s                 IN          CNAME   k3s
+intra.k3s                 IN          CNAME   k3s
+ics.k3s                   IN          CNAME   k3s
+*.k3s                     IN          CNAME   k3s

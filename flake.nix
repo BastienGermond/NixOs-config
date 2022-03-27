@@ -45,6 +45,13 @@
         ./modules
         home-manager.nixosModule
       ];
+
+      "coral".modules = [
+        ./hosts/coral
+        ./home
+        ./modules
+        home-manager.nixosModule
+      ];
     };
   };
 }

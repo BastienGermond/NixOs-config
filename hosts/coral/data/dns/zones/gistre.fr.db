@@ -1,0 +1,21 @@
+$TTL 1H
+
+gistre.fr.              IN          SOA     ns1.synapze.fr. root@synapze.fr. (
+                                                2021081401
+                                                1H
+                                                15M
+                                                2W
+                                                3M
+                                            )
+
+gistre.fr.              IN          A       135.181.36.15
+gistre.fr.              IN          NS      ns1.synapze.fr.
+
+doc                     IN          CNAME   ing.pages.epita.fr.
+
+esteban                 IN          CNAME   skallwar.fr.
+skallwar                IN          CNAME   skallwar.fr.
+
+lse                     IN          CNAME   lse.epita.fr.
+
+aude.gistre.fr.         IN          NS      nitram.tk.
