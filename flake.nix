@@ -10,7 +10,7 @@
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = {self, nixpkgs, flake-utils, home-manager, ...} @ inputs:
+  outputs = {self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, ...} @ inputs:
   flake-utils.lib.mkFlake {
     inherit self inputs;
 
@@ -29,11 +29,21 @@
 
     channelsConfig.allowUnfree = true;
 
+    # channels.nixpkgs.input = nixpkgs-unstable;
+
+    channels.nixpkgs.overlaysBuilder = channels: [
+      (final: prev: {
+        go_1_18 = nixpkgs-unstable.legacyPackages.${prev.system}.go_1_18;
+        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+      })
+    ];
+
     hosts = {
       "synapze-pc".modules = [
         ./hosts/synapze-pc
         ./hosts/synapze-pc/system
         ./home
+        ./home/yubikey.nix
         ./modules
         ./modules/xorg.nix
         home-manager.nixosModule
