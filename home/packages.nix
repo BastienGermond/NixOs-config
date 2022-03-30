@@ -18,7 +18,6 @@
     freecad
     fzf
     gimp
-    gopls
     gtop
     inkscape
     jq
@@ -26,6 +25,7 @@
     languagetool
     libnotify
     libreoffice
+    ncdu
     nodePackages.eslint
     nodePackages.prettier
     nodePackages.typescript-language-server

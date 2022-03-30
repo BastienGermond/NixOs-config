@@ -43,7 +43,6 @@
         ./hosts/synapze-pc
         ./hosts/synapze-pc/system
         ./home
-        ./home/yubikey.nix
         ./modules
         ./modules/xorg.nix
         home-manager.nixosModule
