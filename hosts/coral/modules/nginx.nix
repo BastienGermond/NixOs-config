@@ -12,7 +12,8 @@ let
     };
 
     installPhase = ''
-      cp -v -r site/* $out
+      mkdir $out
+      cp -r site/* $out
     '';
   };
 in
