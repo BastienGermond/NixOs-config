@@ -31,6 +31,8 @@
 
   environment.pathsToLink = [ "/share/zsh" ];
 
+  virtualisation.docker.enable = true;
+
   networking.hostName = "anemone";
 
   # Set your time zone.
