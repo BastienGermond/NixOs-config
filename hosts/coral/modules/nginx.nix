@@ -8,7 +8,7 @@ let
       owner = "BastienGermond";
       repo = "gistre.fr";
       rev = "d8e9b70600ff9f9ced2696da7deacb6eba604a7d";
-      sha256 = lib.fakeSha256;
+      sha256 = "sha256-bt0U5gSHwdLy4sUdbeSrLopCcGIqeEyEJyTGS3ETVuA=";
     };
 
     installPhase = ''
