@@ -13,6 +13,7 @@
     gparted
     gzip
     htop
+    k3s
     man-pages
     man-pages-posix
     neovim

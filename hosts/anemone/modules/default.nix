@@ -2,9 +2,10 @@
 
 {
   imports = [
-    ./ssh.nix
-    ./packages.nix
-    ./wireguard.nix
     ./docker.nix
+    ./k3s.nix
+    ./packages.nix
+    ./ssh.nix
+    ./wireguard.nix
   ];
 }
