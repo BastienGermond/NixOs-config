@@ -19,6 +19,7 @@
     neovim
     parted
     ripgrep
+    tmux
     tree
     unzip
     wget
