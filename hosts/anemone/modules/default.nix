@@ -7,5 +7,6 @@
     ./packages.nix
     ./ssh.nix
     ./wireguard.nix
+    ./zfs.nix
   ];
 }

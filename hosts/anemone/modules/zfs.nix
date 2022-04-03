@@ -1,0 +1,6 @@
+{ config, pkgs, ... }:
+
+{
+  services.zfs = {
+  };
+}

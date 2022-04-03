@@ -14,6 +14,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.cleanTmpDir = true;
 
+  environment.etc."modprobe.d/zfs.conf".text = ''
+    options zfs
+  '';
+
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
   environment.variables.EDITOR = "vim";
 

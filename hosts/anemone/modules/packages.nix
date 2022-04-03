@@ -26,5 +26,6 @@
     whois
     zip
     zsh
+    zfs
   ];
 }
