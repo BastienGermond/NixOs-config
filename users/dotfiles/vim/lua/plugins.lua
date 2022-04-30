@@ -42,6 +42,9 @@ require('packer').startup({
 
         use 'alpertuna/vim-header'
 
+        -- Git
+        use 'tpope/vim-fugitive'
+
         -- Highlight similar words
         use 'RRethy/vim-illuminate'
 
