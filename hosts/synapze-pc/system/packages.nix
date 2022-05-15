@@ -47,6 +47,7 @@
     man-pages-posix
     neovim
     networkmanagerapplet
+    nixpkgs-fmt
     parted
     pavucontrol
     ripgrep
@@ -58,9 +59,9 @@
     usbutils
     wget
     whois
+    xsane
     xsel
     zip
     zsh
-    xsane
   ];
 }
