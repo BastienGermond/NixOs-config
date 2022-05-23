@@ -5,10 +5,31 @@
     enable = true;
     settings = {
       env.TERM = "xterm-256color";
-      font.size = 8.0;
       debug.log_level = "INFO";
+      font = {
+        size = 8.0;
+        normal = {
+          family = "JuliaMono";
+        };
+        bold = {
+          family = "JuliaMono";
+        };
+        italic = {
+          family = "JuliaMono";
+        };
+        bold_italic = {
+          family = "JuliaMono";
+        };
+      };
       shell.program = "/usr/bin/env";
       shell.args = [ "zsh" ];
+      key_bindings = [
+        {
+          key = "Return";
+          mods = "Control|Shift";
+          action = "SpawnNewInstance";
+        }
+      ];
     };
   };
 }
