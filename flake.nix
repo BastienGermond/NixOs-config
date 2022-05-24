@@ -8,9 +8,10 @@
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     flake-utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = {self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, ...} @ inputs:
+  outputs = {self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nixos-hardware, ...} @ inputs:
   flake-utils.lib.mkFlake {
     inherit self inputs;
 
@@ -40,6 +41,7 @@
 
     hosts = {
       "synapze-pc".modules = [
+        nixos-hardware.nixosModules.dell-xps-13-9360
         ./hosts/synapze-pc
         ./hosts/synapze-pc/system
         ./home
