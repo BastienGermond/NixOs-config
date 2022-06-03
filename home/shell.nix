@@ -11,6 +11,7 @@
 
     initExtra = ''
     any-nix-shell zsh --info-right | source /dev/stdin
+    export GPG_TTY=$(tty)
     '';
 
     plugins = [
