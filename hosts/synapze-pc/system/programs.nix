@@ -12,8 +12,11 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = false;
+    enableBrowserSocket = true;
     pinentryFlavor = "curses";
   };
+
+  services.yubikey-agent.enable = true;
 
   programs.nm-applet.enable = true;
   programs.nm-applet.indicator = true;
