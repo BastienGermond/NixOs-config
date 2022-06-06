@@ -32,6 +32,7 @@
     evince
     feh
     flameshot
+    fritzing
     gcc
     git
     gnome.dconf-editor
