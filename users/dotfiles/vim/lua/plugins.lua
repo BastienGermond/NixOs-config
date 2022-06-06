@@ -55,7 +55,6 @@ require('packer').startup({
         use 'junegunn/fzf'
         use 'junegunn/fzf.vim'
 
-        use 'tpope/vim-fugitive'
         use 'vim-scripts/DoxygenToolkit.vim'
         use 'stephpy/vim-yaml'
         use {
