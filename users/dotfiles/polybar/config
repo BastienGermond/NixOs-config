@@ -430,7 +430,7 @@ format-padding = 1
 type = custom/script
 exec = echo " "
 click-left = spotibar --toggle-playback
-exec-if = "pgrep spotify"
+exec-if = [ $(spotibar --is-live) = "True" ]
 format-underline = #1db954
 format-padding = 1
 

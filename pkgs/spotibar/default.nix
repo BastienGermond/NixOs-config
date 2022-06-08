@@ -4,11 +4,11 @@ with python38Packages;
 
 buildPythonApplication rec {
   pname = "spotibar";
-  version = "0.2.5";
+  version = "0.2.7";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "449f83ee0d604b441e4c3ef345e09e68995941e1fdd4d0be45a2b029ca7372c2";
+    sha256 = "sha256-Hu3hfLqSBIAG9FtzUGal7kAD7GtwzqOP8yWgSfWv90s=";
   };
 
   propagatedBuildInputs = [ setuptools tkinter pylast spotipy ];

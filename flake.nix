@@ -36,6 +36,7 @@
       (final: prev: {
         go_1_18 = nixpkgs-unstable.legacyPackages.${prev.system}.go_1_18;
         unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+        spotibar = final.callPackage ./pkgs/spotibar/default.nix {};
       })
     ];
 
