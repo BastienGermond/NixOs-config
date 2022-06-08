@@ -18,7 +18,7 @@
   services.xserver.displayManager.autoLogin.user = "synapze";
 
   security.sudo.extraConfig = ''
-  synapze ALL = (root) NOPASSWD: ${pkgs.wireguard.out}/bin/wg
+  synapze ALL = (root) NOPASSWD: ${pkgs.wireguard-tools.out}/bin/wg
   '';
 
 }
