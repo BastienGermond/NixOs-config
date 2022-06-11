@@ -25,6 +25,7 @@
     languagetool
     libnotify
     libreoffice
+    spotibar
     ncdu
     nodePackages.eslint
     nodePackages.prettier
