@@ -10,6 +10,7 @@
         imports = [
           ./packages.nix
           ./xdg.nix
+          ./gpg.nix
           ./shell.nix
           ./terminal.nix
           ./neovim.nix
