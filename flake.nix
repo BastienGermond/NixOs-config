@@ -7,11 +7,11 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager = { url = "github:nix-community/home-manager"; inputs.nixpkgs.follows = "nixpkgs"; };
     flake-utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    nvim-flake = { url = "github:neovim/neovim?dir=contrib"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = {self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nixos-hardware, ...} @ inputs:
+  outputs = {self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nixos-hardware, nvim-flake, ...} @ inputs:
   flake-utils.lib.mkFlake {
     inherit self inputs;
 
@@ -25,7 +25,6 @@
     };
 
     sharedOverlays = [
-      inputs.neovim-nightly.overlay
     ];
 
     channelsConfig.allowUnfree = true;
@@ -34,9 +33,16 @@
 
     channels.nixpkgs.overlaysBuilder = channels: [
       (final: prev: {
-        go_1_18 = nixpkgs-unstable.legacyPackages.${prev.system}.go_1_18;
+        # Unstable branch
         unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+
+        # Custom packages
         spotibar = final.callPackage ./pkgs/spotibar/default.nix {};
+
+        go_1_18 = nixpkgs-unstable.legacyPackages.${prev.system}.go_1_18;
+        ltex-ls = nixpkgs-unstable.legacyPackages.${prev.system}.ltex-ls;
+
+        neovim = nvim-flake.packages.${prev.system}.neovim;
       })
     ];
 

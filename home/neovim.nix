@@ -21,7 +21,7 @@ in
 {
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-nightly;
+    package = pkgs.neovim; # pkgs.neovim-nightly;
     vimAlias = true;
     viAlias = true;
     vimdiffAlias = true;
@@ -41,6 +41,9 @@ in
       nodePackages.typescript-language-server
       nodePackages.prettier
       nodePackages.eslint
+      rust-analyzer
+      clippy
+      ltex-ls
     ];
 
     plugins = with pkgs.vimPlugins; [

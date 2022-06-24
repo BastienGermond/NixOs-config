@@ -10,6 +10,8 @@ lua <<EOF
 
 local set = vim.opt
 
+vim.cmd[[colorscheme nord]]
+
 -- We are running Vim not Vi (plugin need)
 set.compatible = false
 
@@ -81,6 +83,37 @@ vim.g.sql_type_default = "pgsql"
 -- Set the minimal amount of lignes under and above the cursor
 -- Useful for keeping context when moving with j/k
 set.scrolloff = 5
+
+-- lualine configuration
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {},
+    always_divide_middle = true,
+    globalstatus = false,
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = {}
+}
 
 --------------------------------------------------------------------------------
 -- Search options
@@ -229,7 +262,6 @@ cmp.setup {
   }
 
 local nvim_lsp = require('lspconfig')
-local null_ls = require("null-ls")
 
 require('lspconfig').fsautocomplete.setup{}
 
@@ -252,9 +284,9 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
   -- Diagnostic actions 
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 
   if client.server_capabilities.document_formatting then
     vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
@@ -274,36 +306,51 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-local buf_map = function(bufnr, mode, lhs, rhs, opts)
-vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
-  silent = true,
-  })
-end
-
-nvim_lsp.tsserver.setup({
-  on_attach = function(client, bufnr)
-    client.server_capabilities.document_formatting = false
-    client.server_capabilities.document_range_formatting = false
-    local ts_utils = require("nvim-lsp-ts-utils")
-    ts_utils.setup({})
-    ts_utils.setup_client(client)
-    buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
-    buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
-    buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
-
-    on_attach(client, bufnr)
-  end,
-})
-
--- null_ls
-null_ls.setup({
-sources = {
-  null_ls.builtins.diagnostics.eslint,
-  null_ls.builtins.code_actions.eslint,
-  null_ls.builtins.formatting.prettier,
-  },
+-- ltex-ls configuration
+require 'ltex-ls'.setup {
   on_attach = on_attach,
-})
+  capabilities = capabilities,
+  use_spellfile = true,
+  filetypes = { "latex", "tex", "plaintex", "bib", "markdown", "gitcommit", "text" },
+  settings = {
+    ltex = {
+      enabled = { "latex", "tex", "bib", "markdown", },
+      language = "auto",
+      diagnosticSeverity = "information",
+      sentenceCacheSize = 2000,
+      additionalRules = {
+        enablePickyRules = true,
+        motherTongue = "fr",
+      },
+      disabledRules = {
+         fr = { "APOS_TYP" }
+      },
+      dictionary = (function()
+        -- For dictionary, search for files in the runtime to have
+        -- and include them as externals the format for them is
+        -- dict/{LANG}.txt
+        --
+        -- Also add dict/default.txt to all of them
+        local files = {}
+        for _, file in ipairs(vim.api.nvim_get_runtime_file("dict/*", true)) do
+          local lang = vim.fn.fnamemodify(file, ":t:r")
+          local fullpath = vim.fs.normalize(file, ":p")
+          files[lang] = { ":" .. fullpath }
+        end
+
+        if files.default then
+          for lang, _ in pairs(files) do
+            if lang ~= "default" then
+              vim.list_extend(files[lang], files.default)
+            end
+          end
+          files.default = nil
+        end
+        return files
+      end)(),
+    },
+  },
+}
 
 -- Init tree-sitter
 require'nvim-treesitter.configs'.setup {

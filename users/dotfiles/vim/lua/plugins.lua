@@ -4,7 +4,8 @@ local fn = vim.fn
 
 vim.g.package_home = fn.stdpath("data") .. "/site/pack/packer/"
 
-local plug_url_format = "https://hub.fastgit.xyz/%s"
+-- local plug_url_format = "https://hub.fastgit.xyz/%s"
+local plug_url_format = 'https://github.com/%s'
 
 -- Auto-install packer in case it hasn't been installed.
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -24,21 +25,32 @@ require('packer').startup({
     function(use)
         use 'wbthomason/packer.nvim'
 
+        -- theme
+        use 'shaunsingh/nord.nvim'
+        use 'EdenEast/nightfox.nvim'
+        use "savq/melange"
+
+        -- dependency
         use 'nvim-lua/plenary.nvim'
 
+        -- LSP
         use 'neovim/nvim-lspconfig'
         use 'ray-x/lsp_signature.nvim'
-
         use 'L3MON4D3/LuaSnip'
 
         use 'ludovicchabant/vim-gutentags'
-        use 'vim-airline/vim-airline'
+
+        use {
+            'nvim-lualine/lualine.nvim',
+            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+        }
+
         use 'vim-python/python-syntax'
         use 'rust-lang/rust.vim'
         use 'junegunn/vim-easy-align'
         use 'rhysd/vim-clang-format'
-        use 'kergoth/vim-bitbake'
         use 'ftan84/vim-khaled-ipsum'
+        use 'kergoth/vim-bitbake'
 
         use 'alpertuna/vim-header'
 
@@ -75,16 +87,10 @@ require('packer').startup({
 
         -- Language Tool
         use 'vigoux/LanguageTool.nvim'
+        use { 'vigoux/ltex-ls.nvim', requires = 'neovim/nvim-lspconfig' }
 
         -- Go
-        use {
-            'fatih/vim-go',
-            run = ':GoUpdateBinaries'
-        }
-
-        -- TypeScript
-        use 'jose-elias-alvarez/null-ls.nvim'
-        use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+        use { 'fatih/vim-go' }
 
         if packer_bootstrap then
             require('packer').sync()
