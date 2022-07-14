@@ -1,6 +1,6 @@
-{ pkgs, lib, python38Packages }:
+{ pkgs, lib, python39Packages }:
 
-with python38Packages;
+with python39Packages;
 
 buildPythonApplication rec {
   pname = "spotibar";
