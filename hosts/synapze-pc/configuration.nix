@@ -88,6 +88,10 @@
     };
   };
 
+  # This service hang until timeout for 1min at each switch, disabling it temporarily until a
+  # better solution is found. (https://github.com/NixOS/nixpkgs/issues/180175)
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
