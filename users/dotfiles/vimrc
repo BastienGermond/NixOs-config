@@ -33,14 +33,15 @@ set.cursorline = true
 vim.cmd([[highlight CursorLine cterm=Underline ctermfg=None ctermbg=None]])
 
 -- Set column delimiter
-set.colorcolumn = "80"
+set.colorcolumn = "100"
 set.wrap = false
 
 -- Disable swapfiles
 set.swapfile = false
 
 -- Enable title
-set.title = true
+-- Enabling this add VERY annoying glitchies, refer to: https://github.com/neovim/neovim/issues/18573
+set.title = false
 
 -- Disable bell completely
 vim.cmd([[set vb t_vb=]])
@@ -84,6 +85,17 @@ vim.g.sql_type_default = "pgsql"
 -- Useful for keeping context when moving with j/k
 set.scrolloff = 5
 
+local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
+  return function(str)
+    local win_width = vim.fn.winwidth(0)
+    if hide_width and win_width < hide_width then return ''
+    elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
+       return str:sub(1, trunc_len) .. (no_ellipsis and '' or '...')
+    end
+    return str
+  end
+end
+
 -- lualine configuration
 require('lualine').setup {
   options = {
@@ -92,13 +104,13 @@ require('lualine').setup {
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {},
-    always_divide_middle = true,
+    always_divide_middle = false,
     globalstatus = false,
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
+    lualine_b = {{'branch', fmt = trunc(150, 15, 50)}, 'diff', 'diagnostics'},
+    lualine_c = {{'filename', path = 0}},
     lualine_x = {'encoding', 'fileformat', 'filetype'},
     lualine_y = {'progress'},
     lualine_z = {'location'}
@@ -165,7 +177,7 @@ set.tabstop = 4
 -- The # of spaces for indenting
 set.shiftwidth = 4
 
-set.textwidth = 79
+set.textwidth = 99
 
 -------------------------------------------------------------------------------
 -- Mappings
@@ -323,7 +335,7 @@ require 'ltex-ls'.setup {
         motherTongue = "fr",
       },
       disabledRules = {
-         fr = { "APOS_TYP" }
+         fr = { "APOS_TYP", "FRENCH_WHITESPACE" }
       },
       dictionary = (function()
         -- For dictionary, search for files in the runtime to have
