@@ -10,8 +10,8 @@
     pulseaudio.enable = true;
     # Scanner
     sane = {
-        enable = true;
-        extraBackends = [ pkgs.sane-airscan ];
+      enable = true;
+      extraBackends = [ pkgs.sane-airscan ];
     };
   };
 

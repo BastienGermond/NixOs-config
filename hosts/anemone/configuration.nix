@@ -13,6 +13,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.cleanTmpDir = true;
+  boot.supportedFilesystems = [ "zfs" ];
 
   environment.etc."modprobe.d/zfs.conf".text = ''
     options zfs
@@ -27,26 +28,28 @@
     export XDG_CONFIG_HOME=$HOME/.config
     export XDG_DATA_HOME=$HOME/.local/share
     export XDG_CACHE_HOME=$HOME/.cache
-    '';
+  '';
 
   environment.interactiveShellInit = ''
     alias gs='git status'
-    '';
+  '';
 
   environment.pathsToLink = [ "/share/zsh" ];
 
   virtualisation.docker.enable = true;
 
-  networking.hostName = "anemone";
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  networking = {
+    hostName = "anemone";
+    hostId = "aafe2a96";
 
-  networking.interfaces.enp8s0.useDHCP = true;
-
-  networking.networkmanager.enable = true;
+    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    interfaces.enp8s0.useDHCP = true;
+    networkmanager.enable = true;
+  };
 
   documentation = {
     enable = true;

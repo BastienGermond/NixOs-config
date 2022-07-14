@@ -40,18 +40,18 @@
 
   services.udev = {
     extraRules = ''
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374a", \
-    MODE:="0666", \
-    SYMLINK+="stlinkv2-1_%n"
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374a", \
+      MODE:="0666", \
+      SYMLINK+="stlinkv2-1_%n"
 
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", \
-        MODE:="0666", \
-        SYMLINK+="stlinkv2-1_%n"
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", \
+          MODE:="0666", \
+          SYMLINK+="stlinkv2-1_%n"
 
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3752", \
-        MODE:="0666", \
-        SYMLINK+="stlinkv2-1_%n"
-        '';
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3752", \
+          MODE:="0666", \
+          SYMLINK+="stlinkv2-1_%n"
+    '';
     packages = [ pkgs.yubikey-personalization pkgs.platformio pkgs.openocd pkgs.android-udev-rules ];
   };
 

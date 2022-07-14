@@ -26,24 +26,24 @@
     export XDG_CONFIG_HOME=$HOME/.config
     export XDG_DATA_HOME=$HOME/.local/share
     export XDG_CACHE_HOME=$HOME/.cache
-    '';
+  '';
 
-    environment.interactiveShellInit = ''
+  environment.interactiveShellInit = ''
     alias gs='git status'
-    '';
+  '';
 
-    environment.pathsToLink = [ "/share/zsh" ];
+  environment.pathsToLink = [ "/share/zsh" ];
 
 
-    virtualisation.virtualbox.host.enable = true;
-    virtualisation.docker.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.docker.enable = true;
 
-    users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
-    networking.hostName = "synapze-pc"; # Define your hostname.
-    networking.extraHosts = ''
+  networking.hostName = "synapze-pc"; # Define your hostname.
+  networking.extraHosts = ''
     127.0.0.1   gitea droneci
-    '';
+  '';
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.

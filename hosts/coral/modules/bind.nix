@@ -1,8 +1,8 @@
-{ pkgs, config, ... } :
+{ pkgs, config, ... }:
 
 {
   services.bind = {
-    enable = true;
+    enable = false;
     zones = {
       "synapze.fr" = {
         master = true;
