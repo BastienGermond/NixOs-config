@@ -3,7 +3,7 @@
 {
   xdg.enable = true;
 
-  xdg.mime.enable = true;
+  xdg.mime.enable = false;
   xdg.mimeApps = {
     enable = true;
     associations.added = {
