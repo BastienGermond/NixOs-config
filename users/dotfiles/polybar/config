@@ -58,7 +58,7 @@ font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 
 modules-left = i3
 modules-center = spotibar-currently-playing spotibar-previous-track spotibar-next-track
-modules-right = filesystem eth cpu memory wireguard wlan date pulseaudio temperature dunst battery powermenu
+modules-right = nixosfs homefs eth cpu memory wireguard wlan date pulseaudio temperature dunst battery powermenu
 
 tray-position = right
 tray-padding = 2
@@ -188,13 +188,23 @@ format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
 label = %percentage_used%%
 
-[module/filesystem]
+[module/nixosfs]
 type = internal/fs
 interval = 25
 
 mount-0 = /
 
-label-mounted = "  %free%"
+label-mounted = "❄ %free%"
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/homefs]
+type = internal/fs
+interval = 25
+
+mount-0 = /home
+
+label-mounted = " %free%"
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
