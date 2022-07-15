@@ -194,7 +194,7 @@ interval = 25
 
 mount-0 = /
 
-label-mounted = "❄ %free%"
+label-mounted = "  %free%"
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -204,7 +204,7 @@ interval = 25
 
 mount-0 = /home
 
-label-mounted = " %free%"
+label-mounted = "  %free%"
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
