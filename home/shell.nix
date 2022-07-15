@@ -12,6 +12,8 @@
     initExtra = ''
       any-nix-shell zsh --info-right | source /dev/stdin
       export GPG_TTY=$(tty)
+      export TIMER_FORMAT='[%d]'
+      export TIMER_PRECISION=2
     '';
 
     plugins = [
@@ -29,7 +31,7 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" ];
+      plugins = [ "git" "sudo" "timer" ];
       theme = "re5et";
     };
   };
