@@ -7,7 +7,7 @@
       env.TERM = "xterm-256color";
       debug.log_level = "INFO";
       font = {
-        size = 8.0;
+        size = 7.5;
         normal = {
           family = "JuliaMono";
         };
