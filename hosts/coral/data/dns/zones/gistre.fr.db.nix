@@ -2,11 +2,13 @@
 
 with dns.lib.combinators;
 
+# In case you change something don't forget to also update the serial field
+
 {
   SOA = {
     nameServer = "ns1.synapze.fr.";
     adminEmail = "root@synapze.fr";
-    serial = 2021081401;
+    serial = 2022071601; # <year><month><day><patch>
   };
 
   NS = [
