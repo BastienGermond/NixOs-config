@@ -7,10 +7,10 @@
     interfaces = [ "0.0.0.0" ];
     zones = {
       "synapze.fr" = {
-        data = pkgs.lib.readFile ../data/dns/zones/synapze.fr.db;
+        data = dns.lib.toString "synapze.fr" (import ../data/dns/zones/synapze.fr.db.nix { inherit dns; });
       };
       "germond.org" = {
-        data = pkgs.lib.readFile ../data/dns/zones/germond.org.db;
+        data = dns.lib.toString "germond.org" (import ../data/dns/zones/germond.org.db.nix { inherit dns; });
       };
       "gistre.fr" = {
         data = dns.lib.toString "gistre.fr" (import ../data/dns/zones/gistre.fr.db.nix { inherit dns; });
