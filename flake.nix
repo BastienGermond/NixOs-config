@@ -33,6 +33,7 @@
           ./modules/nix.nix
           ./modules/ssh.nix
         ];
+        extraArgs = { inherit dns; };
       };
 
       sharedOverlays = [
