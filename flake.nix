@@ -9,9 +9,20 @@
     flake-utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nvim-flake = { url = "github:neovim/neovim?dir=contrib"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    dns = { url = "github:kirelagin/dns.nix"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, flake-utils, home-manager, nixos-hardware, nvim-flake, ... } @ inputs:
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgs-unstable
+    , flake-utils
+    , home-manager
+    , nixos-hardware
+    , nvim-flake
+    , dns
+    , ...
+    } @ inputs:
     flake-utils.lib.mkFlake {
       inherit self inputs;
 
@@ -22,6 +33,7 @@
           ./modules/nix.nix
           ./modules/ssh.nix
         ];
+        extraArgs = { inherit dns; };
       };
 
       sharedOverlays = [

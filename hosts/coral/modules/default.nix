@@ -4,7 +4,8 @@
   imports = [
     ./ssh.nix
     ./packages.nix
-    ./bind.nix
+    ./nsd.nix
+    # ./bind.nix
     ./nginx.nix
     ./wireguard.nix
   ];

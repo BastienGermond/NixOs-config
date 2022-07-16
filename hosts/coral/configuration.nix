@@ -43,6 +43,8 @@
 
   networking.networkmanager.enable = true;
 
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   documentation = {
     enable = true;
     info.enable = true;
