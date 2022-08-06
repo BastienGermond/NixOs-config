@@ -10,10 +10,16 @@
   ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.cleanTmpDir = true;
-  boot.supportedFilesystems = [ "zfs" ];
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    cleanTmpDir = true;
+    supportedFilesystems = [ "zfs" ];
+  };
+
+  services.udev.extraRules = ''
+  ACTION=="add|change", KERNEL=="sd[a-z]*[0-9]*|mmcblk[0-9]*p[0-9]*|nvme[0-9]*n[0-9]*p[0-9]*", ENV{ID_FS_TYPE}=="zfs_member", ATTR{../queue/scheduler}="none"
+  ''; # zfs already has its own scheduler. without this my(@Artturin) computer froze for a second when i nix build something.
 
   environment.etc."modprobe.d/zfs.conf".text = ''
     options zfs

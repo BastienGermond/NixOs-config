@@ -8,5 +8,6 @@
     ./ssh.nix
     ./wireguard.nix
     ./zfs.nix
+    ./nfs.nix
   ];
 }
