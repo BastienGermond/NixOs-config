@@ -9,5 +9,6 @@
     ./wireguard.nix
     ./zfs.nix
     ./nfs.nix
+    ./authentik.nix
   ];
 }
