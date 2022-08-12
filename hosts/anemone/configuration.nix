@@ -17,6 +17,29 @@
     supportedFilesystems = [ "zfs" ];
   };
 
+  services.geoipupdate.settings = {
+    AccountID = 753286;
+    LicenseKey = config.sops.secrets.geoipLicenseKey.path;
+    EditionIDs = [ "GeoLite2-City" ];
+  };
+
+  services.authentik = {
+    enable = true;
+    authentikServerEnvironmentFiles = [
+      config.sops.secrets.authentik.path
+    ];
+    config = {
+      mediaFolder = "/datastore/authentik/media";
+      certsFolder = "/datastore/authentik/certs";
+      logLevel = "debug";
+    };
+    postgresBackup = {
+      enable = true;
+      location = "/datastore/postgres";
+    };
+    GeoIP.enable = true;
+  };
+
   systemd.services.NetworkManager-wait-online.enable = false;
 
   services.udev.extraRules = ''
