@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  certs_mail_addr = "bastien.germond+certs@epita.fr";
+
   gistre_fr_site = pkgs.stdenv.mkDerivation {
     name = "gistre-fr-site";
 
@@ -20,6 +22,8 @@ in
 {
   services.nginx = {
     enable = true;
+    recommendedProxySettings = true;
+
     virtualHosts = {
       "gistre.fr" = {
         forceSSL = true;
@@ -28,11 +32,21 @@ in
           root = "${gistre_fr_site}";
         };
       };
+
+      "sso.germond.org" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://10.100.10.2:9000/";
+          proxyWebsockets = true;
+        };
+      };
     };
   };
 
   security.acme.acceptTerms = true;
   security.acme.certs = {
-    "gistre.fr".email = "bastien.germond+certs@epita.fr";
+    "gistre.fr".email = certs_mail_addr;
+    "sso.germond.org".email = certs_mail_addr;
   };
 }
