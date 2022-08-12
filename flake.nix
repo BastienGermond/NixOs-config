@@ -11,6 +11,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     dns = { url = "github:kirelagin/dns.nix"; inputs.nixpkgs.follows = "nixpkgs"; };
     deploy-rs = { url = "github:serokell/deploy-rs"; inputs.nixpkgs.follows = "nixpkgs"; };
+    sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
@@ -23,27 +24,25 @@
     , nvim-flake
     , dns
     , deploy-rs
+    , sops-nix
     , ...
     } @ inputs:
+    let
+      supportedSystems = [ "x86_64-linux" ];
+    in
     flake-utils.lib.mkFlake {
       inherit self inputs;
 
-      supportedSystems = [ "x86_64-linux" ];
+      supportedSystems = supportedSystems;
 
       hostDefaults = {
         modules = [
-          ./modules/nix.nix
-          ./modules/ssh.nix
+          ./modules
         ];
         extraArgs = { inherit dns; };
       };
 
-      sharedOverlays = [
-      ];
-
       channelsConfig.allowUnfree = true;
-
-      # channels.nixpkgs.input = nixpkgs-unstable;
 
       channels.nixpkgs.overlaysBuilder = channels: [
         (final: prev: {
@@ -72,6 +71,7 @@
         ];
 
         "anemone".modules = [
+          sops-nix.nixosModules.sops
           ./hosts/anemone
           ./home
           ./modules
@@ -88,17 +88,44 @@
 
       formatter.x86_64-linux = self.pkgs.x86_64-linux.nixpkgs.nixpkgs-fmt;
 
-      deploy.nodes.anemone = {
-        hostname = "10.100.10.2";
+      deploy.nodes = {
+        anemone = {
+          hostname = "10.100.10.2";
 
-        sshUser = "synapze";
-        sshOpts = [ "-A" ];
-        magicRollback = false;
+          sshUser = "synapze";
+          sshOpts = [ "-A" ];
+          magicRollback = false;
 
-        profiles.system = {
-          user = "root";
-          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.anemone;
+          profiles.system = {
+            user = "root";
+            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.anemone;
+          };
+        };
+
+        coral = {
+          hostname = "135.181.36.15";
+
+          sshUser = "synapze";
+          sshOpts = [ "-A" ];
+          magicRollback = false;
+
+          profiles.system = {
+            user = "root";
+            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.coral;
+          };
         };
       };
+
+      outputsBuilder = channels: {
+        devShell = channels.nixpkgs.mkShell {
+          buildInputs = with channels.nixpkgs; [
+            age-plugin-yubikey
+            unstable.deploy-rs
+            sops
+          ];
+        };
+      };
+
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }

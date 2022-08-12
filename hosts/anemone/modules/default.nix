@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./sops.nix
     ./docker.nix
     ./k3s.nix
     ./packages.nix
@@ -9,6 +10,5 @@
     ./wireguard.nix
     ./zfs.nix
     ./nfs.nix
-    ./authentik.nix
   ];
 }
