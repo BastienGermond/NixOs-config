@@ -44,6 +44,8 @@
 
       channelsConfig.allowUnfree = true;
 
+      channels.nixpkgs.input = nixpkgs-unstable;
+
       channels.nixpkgs.overlaysBuilder = channels: [
         (final: prev: {
           # Unstable branch
@@ -64,7 +66,7 @@
           nixos-hardware.nixosModules.dell-xps-13-9360
           ./hosts/synapze-pc
           ./hosts/synapze-pc/system
-          ./home
+          (import ./home { })
           ./modules
           ./modules/xorg.nix
           home-manager.nixosModule
@@ -73,14 +75,14 @@
         "anemone".modules = [
           sops-nix.nixosModules.sops
           ./hosts/anemone
-          ./home
+          (import ./home { isMinimal = true; })
           ./modules
           home-manager.nixosModule
         ];
 
         "coral".modules = [
           ./hosts/coral
-          ./home
+          (import ./home { isMinimal = true; })
           ./modules
           home-manager.nixosModule
         ];

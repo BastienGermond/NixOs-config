@@ -1,3 +1,4 @@
+{ isMinimal ? false }:
 { config, pkgs, inputs, ... }:
 
 {
@@ -8,7 +9,7 @@
       synapze = {
         home.stateVersion = "22.05";
         imports = [
-          ./packages.nix
+          (import ./packages.nix { inherit isMinimal; })
           ./xdg.nix
           ./gpg.nix
           ./shell.nix

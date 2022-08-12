@@ -1,44 +1,52 @@
-{ config, pkgs, inputs, ... }:
+{ isMinimal }:
+
+{ config, pkgs, lib, inputs, ... }:
 
 {
-  home.packages = with pkgs; [
-    any-nix-shell
-    bat
-    binutils
-    ccls
-    clang-tools
-    cura
-    discord
-    docker-buildx
-    drawio
-    dunst
-    dunst
-    file
-    firefox
-    freecad
-    fzf
-    gimp
-    gtop
-    inkscape
-    jq
-    kicad-unstable
-    languagetool
-    libnotify
-    libreoffice
-    spotibar
-    ncdu
-    nodePackages.eslint
-    nodePackages.prettier
-    nodePackages.typescript-language-server
-    picocom
-    rnix-lsp
-    rofi
-    scrot
-    signal-desktop
-    slack
-    stm32cubemx
-    super-slicer
-    teams
-    texlab
-  ];
+  config = {
+    home.packages = lib.mkMerge [
+      (with pkgs; [
+        any-nix-shell
+        bat
+        binutils
+        ccls
+        clang-tools
+        cura
+        discord
+        dunst
+        file
+        fzf
+        gtop
+        jq
+        libnotify
+        spotibar
+        ncdu
+        picocom
+        rnix-lsp
+        rofi
+        scrot
+      ])
+
+      (lib.mkIf (isMinimal == false) (with pkgs; [
+        docker-buildx
+        drawio
+        firefox
+        freecad
+        gimp
+        inkscape
+        kicad-unstable
+        languagetool
+        libreoffice
+        nodePackages.eslint
+        nodePackages.prettier
+        nodePackages.typescript-language-server
+        signal-desktop
+        slack
+        stm32cubemx
+        super-slicer
+        teams
+        texlab
+      ]))
+    ];
+  };
 }
