@@ -8,5 +8,8 @@
     sops.secrets.nextcloudAdminPass = {
       owner = config.users.users.nextcloud.name;
     };
+    sops.secrets.nextcloudSupwaSecrets = {
+      owner = config.users.users.nextcloud.name;
+    };
   };
 }

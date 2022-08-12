@@ -23,6 +23,8 @@
     EditionIDs = [ "GeoLite2-City" ];
   };
 
+  services.postgresql.package = pkgs.postgresql_14;
+
   services.authentik = {
     enable = true;
     authentikServerEnvironmentFiles = [
