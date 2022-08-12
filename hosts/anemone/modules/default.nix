@@ -10,5 +10,6 @@
     ./wireguard.nix
     ./zfs.nix
     ./nfs.nix
+    ./nextcloud.nix
   ];
 }

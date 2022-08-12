@@ -41,6 +41,15 @@ in
           proxyWebsockets = true;
         };
       };
+
+      "cloud.germond.org" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://10.100.10.2/";
+          proxyWebsockets = true;
+        };
+      };
     };
   };
 
@@ -48,5 +57,6 @@ in
   security.acme.certs = {
     "gistre.fr".email = certs_mail_addr;
     "sso.germond.org".email = certs_mail_addr;
+    "cloud.germond.org".email = certs_mail_addr;
   };
 }

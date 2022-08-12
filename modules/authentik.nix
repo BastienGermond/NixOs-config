@@ -28,17 +28,6 @@ in
         '';
       };
 
-      packages = {
-        postgresql = lib.mkOption {
-          type = lib.types.package;
-          default = pkgs.postgresql_14;
-          example = lib.literalExpression "pkgs.postgresql_14";
-          description = ''
-            PostgreSQL package to use.
-          '';
-        };
-      };
-
       postgresBackup = {
         enable = lib.mkEnableOption "Postgres Backup service";
         location = lib.mkOption {
@@ -160,7 +149,6 @@ in
         # PostgreSQL DB
         services.postgresql = {
           enable = true;
-          package = cfg.packages.postgresql;
           enableTCPIP = true;
           authentication = lib.mkOverride 10 ''
             local all all trust
