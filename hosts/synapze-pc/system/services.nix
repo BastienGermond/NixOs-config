@@ -29,6 +29,9 @@
   # Required to use smart card mode (CCID)
   services.pcscd.enable = true;
 
+  # Use to update Dell XPS 13 firmware
+  services.fwupd.enable = true;
+
   services.actkbd = {
     enable = true;
     bindings = [
