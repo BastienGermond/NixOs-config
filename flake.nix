@@ -37,6 +37,7 @@
 
       hostDefaults = {
         modules = [
+          sops-nix.nixosModules.sops
           ./modules
         ];
         extraArgs = { inherit dns; };
@@ -73,7 +74,6 @@
         ];
 
         "anemone".modules = [
-          sops-nix.nixosModules.sops
           ./hosts/anemone
           (import ./home { isMinimal = true; })
           ./modules

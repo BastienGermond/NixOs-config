@@ -1,5 +1,6 @@
 keys:
   - &anemone 9CBFBC534818602C8B4A6985D6A2FD9E9534E9A9
+  - &coral   B099AFEF54FCB9B55B8477E2EF8C1FDF01B61551
   - &synapze 226DA8B3D66AC3FE15E7C062FE50306EBDEFC265
 creation_rules:
   - path_regex: hosts/anemone/secrets/[^/]+\.yml$
@@ -7,4 +8,8 @@ creation_rules:
       - pgp:
         - *anemone
         - *synapze
-
+  - path_regex: hosts/coral/secrets/[^/]+\.yml$
+    key_groups:
+      - pgp:
+        - *coral
+        - *synapze

@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./sops.nix
     ./ssh.nix
     ./packages.nix
     ./nsd.nix
