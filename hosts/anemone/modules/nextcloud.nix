@@ -27,11 +27,18 @@
       https = true;
 
       extraApps = {
-        oidc_login = pkgs.fetchNextcloudApp {
+        oidc_login = pkgs.fetchNextcloudApp rec {
           name = "oidc_login";
           sha256 = "sha256-B7HLZXH0JHS8QvYsdsEqnrqQGmq92u9mwUwRxNSzhU0=";
-          url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.3.2/oidc_login.tar.gz";
+          url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v${version}/oidc_login.tar.gz";
           version = "2.3.2";
+        };
+
+        breezedark = pkgs.fetchNextcloudApp rec {
+          name = "breezedark";
+          sha256 = "sha256-NHgeCqnOrwtLuxXWSZ4ThBRkQHZmbya5DVfYRolztG8=";
+          url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v${version}/breezedark.tar.gz";
+          version = "24.0.2";
         };
       };
 
