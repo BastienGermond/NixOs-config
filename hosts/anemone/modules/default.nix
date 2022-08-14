@@ -11,5 +11,6 @@
     ./zfs.nix
     ./nfs.nix
     ./nextcloud.nix
+    ./monitoring.nix
   ];
 }

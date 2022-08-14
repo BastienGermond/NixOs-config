@@ -19,7 +19,6 @@
         gtop
         jq
         libnotify
-        spotibar
         ncdu
         picocom
         rnix-lsp
@@ -29,6 +28,7 @@
 
       (lib.mkIf (isMinimal == false) (with pkgs; [
         docker-buildx
+        spotibar
         drawio
         firefox
         freecad

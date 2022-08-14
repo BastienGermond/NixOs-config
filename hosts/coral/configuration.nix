@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -14,6 +14,15 @@
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
   boot.cleanTmpDir = true;
+
+  # Required for postgres authentication.
+  services.oidentd.enable = true;
+
+  services.postgresql.package = pkgs.postgresql_14;
+  services.postgresql.authentication = lib.mkOverride 10 ''
+    local all all ident
+    host all all 127.0.0.1/32 ident
+  '';
 
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
   environment.variables.EDITOR = "vim";

@@ -20,5 +20,6 @@ with dns.lib.combinators;
     cloud.CNAME = [ "germond.org." ];
     onlyoffice.CNAME = [ "germond.org." ];
     sso.CNAME = [ "germond.org." ];
+    grafana.CNAME = [ "germond.org." ];
   };
 }

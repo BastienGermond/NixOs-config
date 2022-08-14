@@ -20,9 +20,17 @@ let
   };
 in
 {
+  users.users.nginx.extraGroups = [ "grafana" ];
+
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
+
+    upstreams = {
+      grafana.servers = {
+        "unix:/${config.services.grafana.socket}" = { };
+      };
+    };
 
     virtualHosts = {
       "gistre.fr" = {
@@ -50,6 +58,18 @@ in
           proxyWebsockets = true;
         };
       };
+
+      "grafana.germond.org" = {
+        forceSSL = true;
+        enableACME = true;
+        root = config.services.grafana.staticRootPath;
+        locations."/".tryFiles = "$uri @grafana";
+
+        locations."@grafana" = {
+          proxyPass = "http://grafana";
+          proxyWebsockets = true;
+        };
+      };
     };
   };
 
@@ -58,5 +78,6 @@ in
     "gistre.fr".email = certs_mail_addr;
     "sso.germond.org".email = certs_mail_addr;
     "cloud.germond.org".email = certs_mail_addr;
+    "grafana.germond.org".email = certs_mail_addr;
   };
 }

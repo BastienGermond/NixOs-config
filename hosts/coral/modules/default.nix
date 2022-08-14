@@ -9,5 +9,6 @@
     # ./bind.nix
     ./nginx.nix
     ./wireguard.nix
+    ./monitoring.nix
   ];
 }
