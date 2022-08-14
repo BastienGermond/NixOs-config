@@ -12,5 +12,8 @@
     sops.secrets.grafanaOAuthSecret = {
       owner = config.users.users.grafana.name;
     };
+    sops.secrets.nginxTrapCertKey = {
+      owner = config.users.users.nginx.name;
+    };
   };
 }

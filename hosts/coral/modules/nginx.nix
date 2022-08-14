@@ -33,6 +33,17 @@ in
     };
 
     virtualHosts = {
+      # be the default to trap all the direct ip access.
+      # TODO: fail2ban almost instantly those ips
+      "trap" = {
+        default = true;
+        addSSL = true;
+        sslCertificate = ../data/nginx/trap/certificate.pem;
+        sslCertificateKey = config.sops.secrets.nginxTrapCertKey.path;
+
+        locations."/".return = "444"; # 444 with nginx close connection without response.
+      };
+
       "gistre.fr" = {
         forceSSL = true;
         enableACME = true;
