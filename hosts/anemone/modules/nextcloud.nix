@@ -48,6 +48,13 @@ in
           url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v${version}/breezedark.tar.gz";
           version = "24.0.2";
         };
+
+        files_markdown = pkgs.fetchNextcloudApp rec {
+          name = "files_markdown";
+          sha256 = "sha256-6vrPNKcPmJ4DuMXN8/oRMr/B/dTlJn2GGi/w4t2wimk=";
+          url = "https://github.com/icewind1991/files_markdown/releases/download/v${version}/files_markdown.tar.gz";
+          version = "2.3.6";
+        };
       };
 
       extraAppsEnable = true;
