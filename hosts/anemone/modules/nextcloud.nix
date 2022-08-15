@@ -1,7 +1,15 @@
 { config, pkgs, ... }:
 
+let
+  nextcloudRedisPort = 6380;
+in
 {
   config = {
+    services.redis.servers.redis-nextcloud = {
+      enable = true;
+      port = nextcloudRedisPort;
+    };
+
     services.postgresql = {
       enable = true;
       ensureUsers = [
@@ -44,6 +52,11 @@
 
       extraAppsEnable = true;
 
+      caching = {
+        redis = true;
+        apcu = true;
+      };
+
       config = {
         dbuser = "nextcloud";
         dbtype = "pgsql";
@@ -60,7 +73,9 @@
 
       extraOptions = {
         allow_user_to_change_display_name = false;
+
         lost_password_link = false;
+
         oidc_login_provider_url = "https://sso.germond.org/application/o/nextcloud/";
         oidc_login_auto_redirect = true;
         oidc_login_hide_password_form = true;
@@ -74,6 +89,14 @@
           quota = "quota";
         };
         oidc_create_groups = true;
+
+        memcache.local = "\\OC\\Memcache\\APCu";
+        memcache.locking = "\\OC\\Memcache\\Redis";
+
+        redis = {
+          host = "localhost";
+          port = nextcloudRedisPort;
+        };
       };
     };
   };
