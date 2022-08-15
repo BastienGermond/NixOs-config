@@ -7,9 +7,11 @@
     sops.secrets.geoipLicenseKey = { };
     sops.secrets.nextcloudAdminPass = {
       owner = config.users.users.nextcloud.name;
+      restartUnits = [ "nextcloud-setup.service" ];
     };
     sops.secrets.nextcloudSupwaSecrets = {
       owner = config.users.users.nextcloud.name;
+      restartUnits = [ "nextcloud-setup.service" ];
     };
   };
 }

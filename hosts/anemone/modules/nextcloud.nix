@@ -27,6 +27,10 @@ in
       "postgresql.service"
     ];
 
+    systemd.services.nextcloud-setup.wants = [
+      "postgresql.service"
+    ];
+
     services.nextcloud = {
       enable = true;
       package = pkgs.nextcloud24;
@@ -81,12 +85,14 @@ in
       extraOptions = {
         allow_user_to_change_display_name = false;
 
-        lost_password_link = false;
+        lost_password_link = "disabled";
 
+        # OIDC Login configuration
         oidc_login_provider_url = "https://sso.germond.org/application/o/nextcloud/";
-        oidc_login_auto_redirect = true;
+        oidc_login_auto_redirect = false;
         oidc_login_hide_password_form = true;
         oidc_login_scope = "openid email profile nextcloud";
+        oidc_login_end_session_redirect = false;
         oidc_login_disable_registration = false;
         oidc_login_attributes = {
           id = "preferred_username";
@@ -96,7 +102,9 @@ in
           quota = "quota";
         };
         oidc_create_groups = true;
+        oidc_login_button_text = "Germond SSO";
 
+        # Cache
         memcache.local = "\\OC\\Memcache\\APCu";
         memcache.locking = "\\OC\\Memcache\\Redis";
 
