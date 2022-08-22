@@ -1,6 +1,16 @@
 { config, pkgs, ... }:
 
 {
+  services.prometheus = {
+    exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = [ "systemd" "processes" "cpu" ];
+        port = 9002;
+      };
+    };
+  };
+
   services.promtail = {
     enable = true;
     configuration = {

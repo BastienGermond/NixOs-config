@@ -21,6 +21,35 @@
         ensureDatabases = [ grafanaDbName ];
       };
 
+      services.prometheus = {
+        enable = true;
+        port = 9001;
+        retentionTime = "15d";
+
+        exporters = {
+          node = {
+            enable = true;
+            enabledCollectors = [ "systemd" "processes" "cpu" ];
+            port = 9002;
+          };
+        };
+
+        scrapeConfigs = [
+          {
+            job_name = "anemone";
+            static_configs = [{
+              targets = [ "10.100.10.2:9002" ];
+            }];
+          }
+          {
+            job_name = "coral";
+            static_configs = [{
+              targets = [ "127.0.0.1:9002" ];
+            }];
+          }
+        ];
+      };
+
       services.grafana =
         let
           readFromFile = path: "$__file{${path}}";
