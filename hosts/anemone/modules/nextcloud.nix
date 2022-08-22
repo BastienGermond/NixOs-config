@@ -61,6 +61,44 @@ in
           url = "https://github.com/icewind1991/files_markdown/releases/download/v${version}/files_markdown.tar.gz";
           version = "2.3.6";
         };
+
+        # files_texteditor = pkgs.fetchNextcloudApp rec {
+        #   name = "files_texteditor";
+        #   sha256 = "sha256-QiOHQ+WbB0ssI0eVk5lpOfnRzBCiBHvADy5rQiVStTc=";
+        #   url = "https://github.com/nextcloud-releases/files_texteditor/releases/download/v${version}/files_texteditor.tar.gz";
+        #   version = "2.14.0";
+        # };
+
+        duplicatefinder = pkgs.fetchNextcloudApp rec {
+          name = "duplicatefinder";
+          sha256 = "sha256-3LEFbkRU7QpCCx4ziDyiQZVFBjIHwRzAO17FSGcLYBM=";
+          url = "https://github.com/PaulLereverend/NextcloudDuplicateFinder/releases/download/${version}/duplicatefinder.tar.gz";
+          version = "0.0.15";
+        };
+      };
+
+      phpOptions = {
+        short_open_tag = "Off";
+        expose_php = "Off";
+        error_reporting = "E_ALL & ~E_DEPRECATED & ~E_STRICT";
+        display_errors = "stderr";
+        "opcache.enable_cli" = "1";
+        "opcache.interned_strings_buffer" = "8";
+        "opcache.max_accelerated_files" = "10000";
+        "opcache.memory_consumption" = "128";
+        "opcache.revalidate_freq" = "1";
+        "opcache.fast_shutdown" = "1";
+        "openssl.cafile" = "/etc/ssl/certs/ca-certificates.crt";
+        catch_workers_output = "yes";
+      };
+
+      poolSettings = {
+        "pm" = "dynamic";
+        "pm.max_children" = "400"; # "32";
+        "pm.start_servers" = "10"; # "2";
+        "pm.min_spare_servers" = "10"; # "2";
+        "pm.max_spare_servers" = "25"; # "4";
+        "pm.max_requests" = "500";
       };
 
       extraAppsEnable = true;
