@@ -38,6 +38,8 @@ in
       home = "/datastore/nextcloud";
       https = true;
 
+      maxUploadSize = "10G";
+
       extraApps = {
         oidc_login = pkgs.fetchNextcloudApp rec {
           name = "oidc_login";

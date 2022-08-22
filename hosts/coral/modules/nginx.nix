@@ -67,6 +67,9 @@ in
         locations."/" = {
           proxyPass = "http://10.100.10.2/";
           proxyWebsockets = true;
+          extraConfig = ''
+            client_max_body_size 10G;
+          '';
         };
       };
 
