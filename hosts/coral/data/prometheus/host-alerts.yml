@@ -1,0 +1,11 @@
+groups:
+  - name: host-alerts
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          text: |
+            {{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.

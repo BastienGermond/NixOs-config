@@ -1,19 +1,21 @@
 { config, pkgs, ... }:
 
 {
-  config = {
-    sops.defaultSopsFile = ../secrets/secrets.yml;
-    sops.secrets.grafanaSecretKey = {
+  sops.defaultSopsFile = ../secrets/secrets.yml;
+
+  sops.secrets = {
+    grafanaSecretKey = {
       owner = config.users.users.grafana.name;
     };
-    sops.secrets.grafanaOAuthClientID = {
+    grafanaOAuthClientID = {
       owner = config.users.users.grafana.name;
     };
-    sops.secrets.grafanaOAuthSecret = {
+    grafanaOAuthSecret = {
       owner = config.users.users.grafana.name;
     };
-    sops.secrets.nginxTrapCertKey = {
+    nginxTrapCertKey = {
       owner = config.users.users.nginx.name;
     };
+    alertmanagerEnv = { };
   };
 }

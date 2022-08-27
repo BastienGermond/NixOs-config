@@ -26,6 +26,38 @@
         port = 9001;
         retentionTime = "15d";
 
+        alertmanager = {
+          enable = true;
+          environmentFile = config.sops.secrets.alertmanagerEnv.path;
+          configuration = {
+            route = {
+              receiver = "telegram";
+            };
+            receivers = [
+              {
+                name = "telegram";
+                telegram_configs = [
+                  {
+                    api_url = "https://api.telegram.org";
+                    send_resolved = true;
+                    bot_token = "\${AM_BOT_TOKEN}";
+                    chat_id = -710661185;
+                    parse_mode = "HTML";
+                  }
+                ];
+              }
+            ];
+          };
+        };
+
+        alertmanagers = [{
+          static_configs = [{
+            targets = [ "10.100.10.1:9093" ];
+          }];
+        }];
+
+        ruleFiles = [ ../data/prometheus/host-alerts.yml ];
+
         exporters = {
           node = {
             enable = true;
@@ -105,6 +137,15 @@
                 name = "Loki";
                 url = "http://10.100.10.1:3100";
                 type = "loki";
+                access = "proxy";
+                jsonData = {
+                  manageAlerts = false;
+                };
+              }
+              {
+                name = "Prometheus";
+                url = "http://10.100.10.1:9001";
+                type = "prometheus";
                 access = "proxy";
               }
             ];

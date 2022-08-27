@@ -47,6 +47,9 @@ in
       "gistre.fr" = {
         forceSSL = true;
         enableACME = true;
+        extraConfig = ''
+          access_log /var/log/nginx/access-gistre.fr.log;
+        '';
         locations."/" = {
           root = "${gistre_fr_site}";
         };
@@ -55,6 +58,9 @@ in
       "sso.germond.org" = {
         forceSSL = true;
         enableACME = true;
+        extraConfig = ''
+          access_log /var/log/nginx/access-sso.germond.org.log;
+        '';
         locations."/" = {
           proxyPass = "http://10.100.10.2:9000/";
           proxyWebsockets = true;
@@ -64,6 +70,9 @@ in
       "cloud.germond.org" = {
         forceSSL = true;
         enableACME = true;
+        extraConfig = ''
+          access_log /var/log/nginx/access-cloud.germond.org.log;
+        '';
         locations."/" = {
           proxyPass = "http://10.100.10.2/";
           proxyWebsockets = true;
@@ -77,6 +86,11 @@ in
         forceSSL = true;
         enableACME = true;
         root = config.services.grafana.staticRootPath;
+
+        extraConfig = ''
+          access_log /var/log/nginx/access-grafana.germond.org.log;
+        '';
+
         locations."/".tryFiles = "$uri @grafana";
 
         locations."@grafana" = {
