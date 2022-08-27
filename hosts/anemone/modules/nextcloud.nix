@@ -89,6 +89,7 @@ in
         "opcache.revalidate_freq" = "1";
         "opcache.fast_shutdown" = "1";
         "openssl.cafile" = "/etc/ssl/certs/ca-certificates.crt";
+        output_buffering = "on";
         catch_workers_output = "yes";
       };
 
