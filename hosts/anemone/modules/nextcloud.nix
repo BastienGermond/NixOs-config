@@ -75,6 +75,20 @@ in
           url = "https://github.com/PaulLereverend/NextcloudDuplicateFinder/releases/download/${version}/duplicatefinder.tar.gz";
           version = "0.0.15";
         };
+
+        notes = pkgs.fetchNextcloudApp rec {
+          name = "notes";
+          sha256 = "sha256-6XwrMVX0ioqqWg4mhaxy07M3RLHmQ2DsMxBtRM95Olc=";
+          url = "https://github.com/nextcloud/notes/releases/download/v${version}/notes.tar.gz";
+          version = "4.5.0";
+        };
+
+        announcementcenter = pkgs.fetchNextcloudApp rec {
+          name = "announcementcenter";
+          sha256 = "sha256-PZ7lEBW7h6/A+VpyQ4/JLRmMaFZptyDCuIy7iC2+o1Y=";
+          url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v${version}/announcementcenter-v${version}.tar.gz";
+          version = "6.3.1";
+        };
       };
 
       phpOptions = {
