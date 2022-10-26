@@ -195,8 +195,10 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+# Tool to take screenshot
 exec --no-startup-id flameshot
 
+# NetworkManager applet, configure WiFi
 exec --no-startup-id nm-applet
 
 set_from_resource $term_background background
