@@ -4,7 +4,6 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "modesetting" ];
-  services.xserver.useGlamor = true;
 
   services.xserver.windowManager.i3 = {
     enable = true;
