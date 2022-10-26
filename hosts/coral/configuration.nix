@@ -48,7 +48,21 @@
     hostName = "coral";
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
     useDHCP = true;
+
     firewall.enable = false;
+
+    enableIPv6 = true;
+
+    interfaces.enp1s0.ipv6.addresses = [{
+      address = "2a01:4f9:c010:b3c0::";
+      prefixLength = 64;
+    }];
+
+    defaultGateway6 = {
+      address = "fe80::1";
+      interface = "enp1s0";
+    };
+
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
