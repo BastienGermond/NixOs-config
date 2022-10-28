@@ -12,6 +12,7 @@
     dns = { url = "github:kirelagin/dns.nix"; inputs.nixpkgs.follows = "nixpkgs"; };
     deploy-rs = { url = "github:serokell/deploy-rs"; inputs.nixpkgs.follows = "nixpkgs"; };
     sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; };
+    gistre-fr-db = { url = "github:BastienGermond/gistre.fr.db"; inputs.dns.follows = "dns"; };
   };
 
   outputs =
@@ -25,6 +26,7 @@
     , dns
     , deploy-rs
     , sops-nix
+    , gistre-fr-db
     , ...
     } @ inputs:
     let
@@ -38,6 +40,7 @@
       hostDefaults = {
         modules = [
           sops-nix.nixosModules.sops
+          gistre-fr-db.nixosModules.default
           ./modules
         ];
         extraArgs = { inherit dns; };
