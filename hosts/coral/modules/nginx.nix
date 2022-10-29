@@ -9,8 +9,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "BastienGermond";
       repo = "gistre.fr";
-      rev = "d8e9b70600ff9f9ced2696da7deacb6eba604a7d";
-      sha256 = "sha256-bt0U5gSHwdLy4sUdbeSrLopCcGIqeEyEJyTGS3ETVuA=";
+      rev = "efa716c7ff48c8d52cd19f9b55aa2fa92994b3bd";
+      sha256 = "sha256-2WaFELIF7gXrelhPbhCnZ4ubO4E7KB7/HAy1piIKULY=";
     };
 
     installPhase = ''
