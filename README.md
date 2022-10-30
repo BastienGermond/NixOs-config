@@ -8,3 +8,17 @@
   public ip endpoint for my infrastructure.
 - **anemone**: Storage server and main kubernetes cluster.
 - _kelp_: currently not setup but will be my desktop computer at some point.
+
+## Secrets
+
+Secrets are handled with [sops-nix](https://github.com/Mic92/sops-nix).
+
+### Update secrets
+
+`sops <file>`
+
+## Deployment
+
+Remote deployment uses [deploy-rs](https://github.com/serokell/deploy-rs).
+
+Node configurations are stored in [nodes.nix](/nodes.nix).
