@@ -20,7 +20,7 @@ let
   };
 in
 {
-  users.users.nginx.extraGroups = [ "grafana" ];
+  users.users.nginx.extraGroups = [ "grafana" "acme" ];
 
   services.nginx = {
     enable = true;
@@ -57,10 +57,14 @@ in
 
       "sso.germond.org" = {
         forceSSL = true;
-        enableACME = true;
+
+        useACMEHost = "germond.org";
+        acmeRoot = null;
+
         extraConfig = ''
           access_log /var/log/nginx/access-sso.germond.org.log;
         '';
+
         locations."/" = {
           proxyPass = "http://10.100.10.2:9000/";
           proxyWebsockets = true;
@@ -69,10 +73,14 @@ in
 
       "cloud.germond.org" = {
         forceSSL = true;
-        enableACME = true;
+
+        useACMEHost = "germond.org";
+        acmeRoot = null;
+
         extraConfig = ''
           access_log /var/log/nginx/access-cloud.germond.org.log;
         '';
+
         locations."/" = {
           proxyPass = "http://10.100.10.2/";
           proxyWebsockets = true;
@@ -84,7 +92,10 @@ in
 
       "grafana.germond.org" = {
         forceSSL = true;
-        enableACME = true;
+
+        useACMEHost = "germond.org";
+        acmeRoot = null;
+
         root = config.services.grafana.staticRootPath;
 
         extraConfig = ''
@@ -102,10 +113,14 @@ in
   };
 
   security.acme.acceptTerms = true;
+  security.acme.defaults.email = certs_mail_addr;
   security.acme.certs = {
-    "gistre.fr".email = certs_mail_addr;
-    "sso.germond.org".email = certs_mail_addr;
-    "cloud.germond.org".email = certs_mail_addr;
-    "grafana.germond.org".email = certs_mail_addr;
+    "gistre.fr" = { };
+    "germond.org" = {
+      dnsProvider = "rfc2136";
+      credentialsFile = config.sops.secrets.acmeGermondOrgCredsEnv.path;
+      extraDomainNames = [ "*.germond.org" ];
+      dnsPropagationCheck = false;
+    };
   };
 }

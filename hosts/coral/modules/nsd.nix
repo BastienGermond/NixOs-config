@@ -2,9 +2,16 @@
 
 {
   services.nsd = {
-    enable = true;
+    enable = false;
     verbosity = 3;
     interfaces = [ "0.0.0.0" ];
+    # TSIG key used for wildcard certificate
+    keys = {
+      "rfc2136key.germond.org" = {
+        algorithm = "hmac-sha512";
+        keyFile = config.sops.secrets.nsdGermondOrgTsigSecret.path;
+      };
+    };
     enableGistreFr = true;
     zones = {
       "synapze.fr" = {
@@ -13,9 +20,8 @@
       "germond.org" = {
         data = dns.lib.toString "germond.org" (import ../data/dns/zones/germond.org.db.nix { inherit dns; });
       };
-      # "gistre.fr" = {
-      #   data = dns.lib.toString "gistre.fr" (import ../data/dns/zones/gistre.fr.db.nix { inherit dns; });
-      # };
     };
   };
 }
+
+

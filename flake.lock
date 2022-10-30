@@ -146,11 +146,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1667057054,
-        "narHash": "sha256-ZRDBIWOCKdbgqkZqf8FrV7ZcS1FnPVpk/GUjBuJ2d4U=",
+        "lastModified": 1667120406,
+        "narHash": "sha256-kaeLyYchufUsUiWqjsbmiiy22XfPUPVJjdJGEvDpGwA=",
         "owner": "BastienGermond",
         "repo": "gistre.fr.db",
-        "rev": "db697c3b9d2e882d8286d3ee3226435b6fb830f0",
+        "rev": "7e514705464bdb43e84bbf6b59f63b4e053dc74a",
         "type": "github"
       },
       "original": {

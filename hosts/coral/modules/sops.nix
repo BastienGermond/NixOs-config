@@ -17,5 +17,10 @@
       owner = config.users.users.nginx.name;
     };
     alertmanagerEnv = { };
+    nsdGermondOrgTsigSecret = { };
+    acmeGermondOrgCredsEnv = { };
+    bindDnsKey = {
+      owner = config.users.users."named".name;
+    };
   };
 }
