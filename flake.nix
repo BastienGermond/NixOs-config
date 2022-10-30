@@ -97,7 +97,7 @@
       deploy.nodes = nodes.nodes;
 
       outputsBuilder = channels: {
-        devShell = channels.nixpkgs.mkShell {
+        devShells.default = channels.nixpkgs.mkShell {
           buildInputs = with channels.nixpkgs; [
             age-plugin-yubikey
             unstable.deploy-rs
