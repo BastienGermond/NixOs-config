@@ -45,6 +45,7 @@
         modules = [
           sops-nix.nixosModules.sops
           gistre-fr-db.nixosModules.default
+          home-manager.nixosModule
           ./modules
         ];
         extraArgs = { inherit dns; };
@@ -77,21 +78,18 @@
           (import ./home { })
           ./modules
           ./modules/xorg.nix
-          home-manager.nixosModule
         ];
 
         "anemone".modules = [
           ./hosts/anemone
           (import ./home { isMinimal = true; })
           ./modules
-          home-manager.nixosModule
         ];
 
         "coral".modules = [
           ./hosts/coral
           (import ./home { isMinimal = true; })
           ./modules
-          home-manager.nixosModule
         ];
       };
 
