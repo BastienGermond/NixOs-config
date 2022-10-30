@@ -26,7 +26,7 @@ require('packer').startup({
         use 'wbthomason/packer.nvim'
 
         -- theme
-        use 'shaunsingh/nord.nvim'
+        use {'shaunsingh/nord.nvim', commit = "78f5f001709b5b321a35dcdc44549ef93185e024"}
         use 'EdenEast/nightfox.nvim'
         use "savq/melange"
 
