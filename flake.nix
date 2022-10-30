@@ -74,7 +74,6 @@
         "synapze-pc".modules = [
           nixos-hardware.nixosModules.dell-xps-13-9360
           ./hosts/synapze-pc
-          ./hosts/synapze-pc/system
           (import ./home { })
           ./modules
           ./modules/xorg.nix

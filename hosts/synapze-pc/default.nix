@@ -3,6 +3,7 @@
 {
   imports = [
     ./configuration.nix
+    ./system
   ];
 
   users.extraGroups.plugdev = { };
