@@ -54,7 +54,7 @@ in
     ];
 
     extraConfig = builtins.concatStringsSep "\n" [
-      (lib.strings.fileContents ../users/dotfiles/vimrc)
+      (lib.strings.fileContents ../dotfiles/vimrc)
     ];
   };
 
