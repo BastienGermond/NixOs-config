@@ -31,6 +31,10 @@
     } @ inputs:
     let
       supportedSystems = [ "x86_64-linux" ];
+      nodes = import ./nodes.nix {
+        inherit deploy-rs; nixosConfigurations =
+        self.nixosConfigurations;
+      };
     in
     flake-utils.lib.mkFlake {
       inherit self inputs;
@@ -93,33 +97,7 @@
 
       formatter.x86_64-linux = self.pkgs.x86_64-linux.nixpkgs.nixpkgs-fmt;
 
-      deploy.nodes = {
-        anemone = {
-          hostname = "10.100.10.2";
-
-          sshUser = "synapze";
-          sshOpts = [ "-A" ];
-          magicRollback = false;
-
-          profiles.system = {
-            user = "root";
-            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.anemone;
-          };
-        };
-
-        coral = {
-          hostname = "135.181.36.15";
-
-          sshUser = "synapze";
-          sshOpts = [ "-A" ];
-          magicRollback = false;
-
-          profiles.system = {
-            user = "root";
-            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.coral;
-          };
-        };
-      };
+      deploy.nodes = nodes.nodes;
 
       outputsBuilder = channels: {
         devShell = channels.nixpkgs.mkShell {
