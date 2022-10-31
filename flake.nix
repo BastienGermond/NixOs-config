@@ -67,6 +67,9 @@
           ltex-ls = nixpkgs-unstable.legacyPackages.${prev.system}.ltex-ls;
 
           neovim = nvim-flake.packages.${prev.system}.neovim;
+
+          # Mitigation for https://mta.openssl.org/pipermail/openssl-announce/2022-October/000238.html
+          nginxStable = prev.nginxStable.override { openssl = prev.openssl_1_1; };
         })
       ];
 

@@ -24,6 +24,7 @@ in
 
   services.nginx = {
     enable = true;
+    package = pkgs.nginxStable;
     recommendedProxySettings = true;
 
     upstreams = {
