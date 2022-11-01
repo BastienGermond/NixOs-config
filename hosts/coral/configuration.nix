@@ -26,10 +26,31 @@
         type = "postgres";
         path = "postgres://gatus@127.0.0.1:5432/gatus?sslmode=disable";
       };
+      ui = {
+        title = "Germond's Infrastructure Monitoring";
+        description = "Monitoring of my infrastructure, mostly under domain germond.org.";
+      };
       endpoints = [
         {
-          name = "cloud.germond.org";
+          name = "Authentik";
+          group = "Authentication";
+          url = "https://sso.germond.org";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+        {
+          name = "Nextcloud";
+          group = "Cloud";
           url = "https://cloud.germond.org";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+        {
+          name = "Grafanouille";
+          group = "Monitoring";
+          url = "https://grafana.germond.org";
           conditions = [
             "[STATUS] == 200"
           ];
