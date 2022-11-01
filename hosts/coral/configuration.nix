@@ -42,7 +42,7 @@
         {
           name = "Nextcloud";
           group = "Cloud";
-          url = "https://cloud.germond.org";
+          url = "https://cloud.germond.org/heartbeat";
           conditions = [
             "[STATUS] == 200"
           ];
