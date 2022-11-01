@@ -5,5 +5,6 @@
     ./ssh.nix
     ./nix.nix
     ./authentik.nix
+    ./gatus.nix
   ];
 }
