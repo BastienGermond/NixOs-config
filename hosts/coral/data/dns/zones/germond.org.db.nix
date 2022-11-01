@@ -19,5 +19,6 @@ with dns.lib.combinators;
     cloud.CNAME = [ "germond.org." ];
     sso.CNAME = [ "germond.org." ];
     grafana.CNAME = [ "germond.org." ];
+    status.CNAME = [ "germond.org." ];
   };
 }

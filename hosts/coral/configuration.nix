@@ -15,6 +15,29 @@
   boot.loader.grub.device = "/dev/sda";
   boot.cleanTmpDir = true;
 
+  services.gatus = {
+    enable = true;
+    config = {
+      web = {
+        address = "127.0.0.1";
+        port = 8040;
+      };
+      storage = {
+        type = "postgres";
+        path = "postgres://gatus@127.0.0.1:5432/gatus?sslmode=disable";
+      };
+      endpoints = [
+        {
+          name = "cloud.germond.org";
+          url = "https://cloud.germond.org";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+      ];
+    };
+  };
+
   # Required for postgres authentication.
   services.oidentd.enable = true;
 
@@ -23,6 +46,17 @@
     local all all ident
     host all all 127.0.0.1/32 ident
   '';
+
+  # Gatus
+  services.postgresql.ensureDatabases = [ "gatus" ];
+  services.postgresql.ensureUsers = [
+    {
+      name = "gatus";
+      ensurePermissions = {
+        "DATABASE \"gatus\"" = "ALL PRIVILEGES";
+      };
+    }
+  ];
 
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
   environment.variables.EDITOR = "vim";

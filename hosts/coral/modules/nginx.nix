@@ -18,6 +18,8 @@ let
       cp -r site/* $out
     '';
   };
+
+  gatusWebCfg = config.services.gatus.config.web;
 in
 {
   users.users.nginx.extraGroups = [ "grafana" "acme" ];
@@ -107,6 +109,22 @@ in
 
         locations."@grafana" = {
           proxyPass = "http://grafana";
+          proxyWebsockets = true;
+        };
+      };
+
+      "status.germond.org" = {
+        forceSSL = true;
+
+        useACMEHost = "germond.org";
+        acmeRoot = null;
+
+        extraConfig = ''
+          access_log /var/log/nginx/access-status.germond.org.log;
+        '';
+
+        locations."/" = {
+          proxyPass = "http://${gatusWebCfg.address}:${builtins.toString gatusWebCfg.port}";
           proxyWebsockets = true;
         };
       };
