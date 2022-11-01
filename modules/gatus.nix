@@ -318,6 +318,12 @@ in
           description = "Web configuration.";
         };
 
+        ui = lib.mkOption {
+          type = lib.types.submodule uiModule;
+          default = { };
+          description = "UI configuration.";
+        };
+
         maintenance = lib.mkOption {
           type = lib.types.nullOr (lib.types.submodule maintenanceModule);
           default = null;
