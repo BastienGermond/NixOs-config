@@ -34,9 +34,9 @@
         {
           name = "Authentik";
           group = "Authentication";
-          url = "https://sso.germond.org";
+          url = "https://sso.germond.org/-/health/ready/";
           conditions = [
-            "[STATUS] == 200"
+            "[STATUS] == 204"
           ];
         }
         {
