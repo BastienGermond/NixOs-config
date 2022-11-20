@@ -28,21 +28,11 @@ in
       databases = [ "nextcloud" ];
     };
 
-    systemd.services.nextcloud-cron.after = [
-      "postgresql.service"
-    ];
+    systemd.services.nextcloud-cron.after = [ "postgresql.service" ];
+    systemd.services.nextcloud-cron.wants = [ "postgresql.service" ];
 
-    systemd.services.nextcloud-cron.wants = [
-      "postgresql.service"
-    ];
-
-    systemd.services.nextcloud-setup.after = [
-      "postgresql.service"
-    ];
-
-    systemd.services.nextcloud-setup.wants = [
-      "postgresql.service"
-    ];
+    systemd.services.nextcloud-setup.after = [ "postgresql.service" ];
+    systemd.services.nextcloud-setup.wants = [ "postgresql.service" ];
 
     services.nextcloud = {
       enable = true;
@@ -55,24 +45,18 @@ in
 
       extraApps = {
         oidc_login = pkgs.fetchNextcloudApp rec {
-          # name = "oidc_login";
           sha256 = "sha256-zku8TEqv3FUK45Xc4/cLAQtUhn0odW8P014HOIgOCuA=";
           url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.3.2/oidc_login.tar.gz";
-          # version = "2.3.2";
         };
 
         breezedark = pkgs.fetchNextcloudApp rec {
-          # name = "breezedark";
           sha256 = "sha256-2tBm45gh5VRKh+w5YcBGyuNB7EGIdBh67jSLfrq+4R4=";
           url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v24.0.2/breezedark.tar.gz";
-          # version = "24.0.2";
         };
 
         files_markdown = pkgs.fetchNextcloudApp rec {
-          # name = "files_markdown";
           sha256 = "sha256-vv/PVDlQOm7Rjhzv8KXxkGpEnyidrV2nsl+Z2fdAFLY=";
           url = "https://github.com/icewind1991/files_markdown/releases/download/v2.3.6/files_markdown.tar.gz";
-          # version = "2.3.6";
         };
 
         # files_texteditor = pkgs.fetchNextcloudApp rec {
@@ -83,24 +67,18 @@ in
         # };
 
         duplicatefinder = pkgs.fetchNextcloudApp rec {
-          # name = "duplicatefinder";
           sha256 = "sha256-ZJLwKsRpS0BZU6+HtLbxkQBDM15RL+F0mwynHKujy60=";
           url = "https://github.com/PaulLereverend/NextcloudDuplicateFinder/releases/download/0.0.15/duplicatefinder.tar.gz";
-          # version = "0.0.15";
         };
 
         notes = pkgs.fetchNextcloudApp rec {
-          # name = "notes";
           sha256 = "sha256-VmnNdP9oia2zCfjHbVvRKeKNL5PoOAk+ZuLV4GScxm4=";
           url = "https://github.com/nextcloud/notes/releases/download/v4.5.0/notes.tar.gz";
-          # version = "4.5.0";
         };
 
         announcementcenter = pkgs.fetchNextcloudApp rec {
-          # name = "announcementcenter";
           sha256 = "sha256-1w/pY+4HKlugmSN9vyUryeepIaOemjW1W5zwEIgTLCI=";
           url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v6.3.1/announcementcenter-v6.3.1.tar.gz";
-          # version = "6.3.1";
         };
       };
 
