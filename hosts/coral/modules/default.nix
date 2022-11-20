@@ -10,5 +10,6 @@
     ./nginx.nix
     ./wireguard.nix
     ./monitoring.nix
+    ./gatus.nix
   ];
 }
