@@ -29,6 +29,7 @@ require('packer').startup({
         use {'shaunsingh/nord.nvim', commit = "78f5f001709b5b321a35dcdc44549ef93185e024"}
         use 'EdenEast/nightfox.nvim'
         use "savq/melange"
+        use "sainnhe/everforest"
 
         -- dependency
         use 'nvim-lua/plenary.nvim'
@@ -91,6 +92,9 @@ require('packer').startup({
 
         -- Go
         use { 'fatih/vim-go' }
+
+        -- C
+        use { 'drmikehenry/vim-headerguard' }
 
         if packer_bootstrap then
             require('packer').sync()

@@ -10,7 +10,9 @@ lua <<EOF
 
 local set = vim.opt
 
-vim.cmd[[colorscheme nord]]
+vim.g.everforest_background = 'hard'
+
+vim.cmd[[colorscheme everforest]]
 
 -- We are running Vim not Vi (plugin need)
 set.compatible = false
