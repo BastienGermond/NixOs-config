@@ -88,44 +88,70 @@
         in
         {
           enable = true;
-          domain = "grafana.germond.org";
-          rootUrl = "https://grafana.germond.org/";
-          protocol = "socket";
 
-          extraOptions = {
-            USERS_AUTO_ASSIGN_ORG = "true";
-            USERS_AUTO_ASSIGN_ORG_ID = "1";
+          settings = {
+            server = {
+              protocol = "socket";
+              domain = "grafana.germond.org";
+              root_url = "https://grafana.germond.org/";
+            };
 
-            AUTH_GENERIC_OAUTH_ENABLED = "true";
-            AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP = "true";
-            AUTH_GENERIC_OAUTH_NAME = "Germond SSO";
+            users = {
+              auto_assign_org = true;
+              auto_assign_org_id = 1;
+            };
 
-            AUTH_GENERIC_OAUTH_CLIENT_ID = readFromFile config.sops.secrets.grafanaOAuthClientID.path;
-            AUTH_GENERIC_OAUTH_CLIENT_SECRET = readFromFile config.sops.secrets.grafanaOAuthSecret.path;
+            "auth.generic_oauth" = {
+              enabled = true;
+              allow_sign_up = true;
+              name = "Germond SSO";
+              client_id = readFromFile config.sops.secrets.grafanaOAuthClientID.path;
+              client_secret = readFromFile config.sops.secrets.grafanaOAuthSecret.path;
+              scopes = "email openid profile grafana";
+              auth_url = "https://sso.germond.org/application/o/authorize/";
+              token_url = "https://sso.germond.org/application/o/token/";
+              api_url = "https://sso.germond.org/application/o/userinfo/";
+              allowed_domains = "gmail.com";
+              role_attribute_path = "grafanaRole";
+              email_attribute_path = "email";
+              groups_attribute_path = "groups";
+              name_attribute_path = "name";
+              login_attribute_path = "preferred_username";
+            };
 
-            AUTH_GENERIC_OAUTH_SCOPES = "email openid profile grafana";
+            security.secret_key = readFromFile config.sops.secrets.grafanaSecretKey.path;
 
-            AUTH_GENERIC_OAUTH_AUTH_URL = "https://sso.germond.org/application/o/authorize/";
-            AUTH_GENERIC_OAUTH_TOKEN_URL = "https://sso.germond.org/application/o/token/";
-            AUTH_GENERIC_OAUTH_API_URL = "https://sso.germond.org/application/o/userinfo/";
-            AUTH_GENERIC_OAUTH_ALLOWED_DOMAINS = "gmail.com";
-            AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH = "grafanaRole";
-            AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_PATH = "email";
-            AUTH_GENERIC_OAUTH_GROUPS_ATTRIBUTE_PATH = "groups";
-            AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH = "name";
-            AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH = "preferred_username";
+            database = {
+              user = grafanaDbUser;
+              type = "postgres";
+              name = grafanaDbName;
+              host = "127.0.0.1:5432";
+            };
           };
 
-          database = {
-            user = grafanaDbUser;
-            type = "postgres";
-            name = grafanaDbName;
-            host = "127.0.0.1:5432";
-          };
+          # extraOptions = {
+          #   USERS_AUTO_ASSIGN_ORG = "true";
+          #   USERS_AUTO_ASSIGN_ORG_ID = "1";
 
-          security = {
-            secretKeyFile = config.sops.secrets.grafanaSecretKey.path;
-          };
+          #   AUTH_GENERIC_OAUTH_ENABLED = "true";
+          #   AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP = "true";
+          #   AUTH_GENERIC_OAUTH_NAME = "Germond SSO";
+
+          #   AUTH_GENERIC_OAUTH_CLIENT_ID = readFromFile config.sops.secrets.grafanaOAuthClientID.path;
+          #   AUTH_GENERIC_OAUTH_CLIENT_SECRET = readFromFile config.sops.secrets.grafanaOAuthSecret.path;
+
+          #   AUTH_GENERIC_OAUTH_SCOPES = "email openid profile grafana";
+
+          #   AUTH_GENERIC_OAUTH_AUTH_URL = "https://sso.germond.org/application/o/authorize/";
+          #   AUTH_GENERIC_OAUTH_TOKEN_URL = "https://sso.germond.org/application/o/token/";
+          #   AUTH_GENERIC_OAUTH_API_URL = "https://sso.germond.org/application/o/userinfo/";
+          #   AUTH_GENERIC_OAUTH_ALLOWED_DOMAINS = "gmail.com";
+          #   AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH = "grafanaRole";
+          #   AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_PATH = "email";
+          #   AUTH_GENERIC_OAUTH_GROUPS_ATTRIBUTE_PATH = "groups";
+          #   AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH = "name";
+          #   AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH = "preferred_username";
+          # };
 
           declarativePlugins = with pkgs.grafanaPlugins; [ ];
 

@@ -23,7 +23,11 @@
     EditionIDs = [ "GeoLite2-City" ];
   };
 
-  services.postgresql.package = pkgs.postgresql_14;
+  services.postgresql = {
+    package = pkgs.postgresql_14;
+  };
+
+  services.postgresqlBackup.location = "/datastore/postgres";
 
   services.authentik = {
     enable = true;
@@ -39,7 +43,6 @@
     };
     postgresBackup = {
       enable = true;
-      location = "/datastore/postgres";
     };
     GeoIP.enable = true;
   };

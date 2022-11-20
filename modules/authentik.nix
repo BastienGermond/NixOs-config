@@ -30,14 +30,6 @@ in
 
       postgresBackup = {
         enable = lib.mkEnableOption "Postgres Backup service";
-        location = lib.mkOption {
-          type = lib.types.path;
-          default = "/var/backup/postgresql";
-          example = lib.literalExpression "/var/backup/postgresql";
-          description = ''
-            Path of directory where the PostgreSQL database dumps will be placed.
-          '';
-        };
       };
 
       GeoIP = {
@@ -213,7 +205,6 @@ in
       (lib.mkIf cfg.postgresBackup.enable {
         services.postgresqlBackup = {
           enable = true;
-          location = cfg.postgresBackup.location;
           databases = [ cfg.dbName ];
         };
       })

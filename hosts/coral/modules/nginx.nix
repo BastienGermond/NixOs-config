@@ -31,7 +31,7 @@ in
 
     upstreams = {
       grafana.servers = {
-        "unix:/${config.services.grafana.socket}" = { };
+        "unix:/${config.services.grafana.settings.server.socket}" = { };
       };
     };
 
@@ -99,7 +99,7 @@ in
         useACMEHost = "germond.org";
         acmeRoot = null;
 
-        root = config.services.grafana.staticRootPath;
+        root = config.services.grafana.settings.server.static_root_path;
 
         extraConfig = ''
           access_log /var/log/nginx/access-grafana.germond.org.log;
