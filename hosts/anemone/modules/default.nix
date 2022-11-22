@@ -12,5 +12,6 @@
     ./nfs.nix
     ./nextcloud.nix
     ./monitoring.nix
+    ./authentik.nix
   ];
 }
