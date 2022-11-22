@@ -36,7 +36,7 @@ in
 
     services.nextcloud = {
       enable = true;
-      package = pkgs.nextcloud24;
+      package = pkgs.nextcloud25;
       hostName = "cloud.germond.org";
       home = "/datastore/nextcloud";
       https = true;
@@ -45,40 +45,41 @@ in
 
       extraApps = {
         oidc_login = pkgs.fetchNextcloudApp rec {
-          sha256 = "sha256-zku8TEqv3FUK45Xc4/cLAQtUhn0odW8P014HOIgOCuA=";
-          url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.3.2/oidc_login.tar.gz";
+          sha256 = "sha256-ZA6UWnVvNuifvpa6GdPUR0toZUZCceoELizdaFhxbU8=";
+          url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.4.0-beta.1/oidc_login.tar.gz";
         };
 
-        breezedark = pkgs.fetchNextcloudApp rec {
-          sha256 = "sha256-2tBm45gh5VRKh+w5YcBGyuNB7EGIdBh67jSLfrq+4R4=";
-          url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v24.0.2/breezedark.tar.gz";
-        };
-
-        files_markdown = pkgs.fetchNextcloudApp rec {
-          sha256 = "sha256-vv/PVDlQOm7Rjhzv8KXxkGpEnyidrV2nsl+Z2fdAFLY=";
-          url = "https://github.com/icewind1991/files_markdown/releases/download/v2.3.6/files_markdown.tar.gz";
-        };
-
-        # files_texteditor = pkgs.fetchNextcloudApp rec {
-        #   name = "files_texteditor";
-        #   sha256 = "sha256-QiOHQ+WbB0ssI0eVk5lpOfnRzBCiBHvADy5rQiVStTc=";
-        #   url = "https://github.com/nextcloud-releases/files_texteditor/releases/download/v${version}/files_texteditor.tar.gz";
-        #   version = "2.14.0";
+        # FIXME: Not yet ready (https://github.com/mwalbeck/nextcloud-breeze-dark/issues/317)
+        # breezedark = pkgs.fetchNextcloudApp rec {
+        #   sha256 = "sha256-2tBm45gh5VRKh+w5YcBGyuNB7EGIdBh67jSLfrq+4R4=";
+        #   url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v24.0.2/breezedark.tar.gz";
         # };
 
-        duplicatefinder = pkgs.fetchNextcloudApp rec {
-          sha256 = "sha256-ZJLwKsRpS0BZU6+HtLbxkQBDM15RL+F0mwynHKujy60=";
-          url = "https://github.com/PaulLereverend/NextcloudDuplicateFinder/releases/download/0.0.15/duplicatefinder.tar.gz";
+        # FIXME: Not yet ready (https://github.com/icewind1991/files_markdown/issues/200)
+        # files_markdown = pkgs.fetchNextcloudApp rec {
+        #   sha256 = "sha256-vv/PVDlQOm7Rjhzv8KXxkGpEnyidrV2nsl+Z2fdAFLY=";
+        #   url = "https://github.com/icewind1991/files_markdown/releases/download/v2.3.6/files_markdown.tar.gz";
+        # };
+
+        files_texteditor = pkgs.fetchNextcloudApp rec {
+          sha256 = "sha256-Wvd5FhB0kAokaezqBK2QpfIDZgCVjmt1QO2SwSMJs2Y=";
+          url = "https://github.com/nextcloud/files_texteditor/releases/download/v2.15.0/files_texteditor.tar.gz";
         };
 
+        # FIXME: Not yet ready (https://github.com/PaulLereverend/NextcloudDuplicateFinder/issues/105)
+        # duplicatefinder = pkgs.fetchNextcloudApp rec {
+        #   sha256 = "sha256-ZJLwKsRpS0BZU6+HtLbxkQBDM15RL+F0mwynHKujy60=";
+        #   url = "https://github.com/PaulLereverend/NextcloudDuplicateFinder/releases/download/0.0.15/duplicatefinder.tar.gz";
+        # };
+
         notes = pkgs.fetchNextcloudApp rec {
-          sha256 = "sha256-VmnNdP9oia2zCfjHbVvRKeKNL5PoOAk+ZuLV4GScxm4=";
-          url = "https://github.com/nextcloud/notes/releases/download/v4.5.0/notes.tar.gz";
+          sha256 = "sha256-dLJ2fWSwNlK0wBGo1SO9grZ1KQ4FbTzswLKQzNXYj8k=";
+          url = "https://github.com/nextcloud/notes/releases/download/v4.6.0/notes.tar.gz";
         };
 
         announcementcenter = pkgs.fetchNextcloudApp rec {
-          sha256 = "sha256-1w/pY+4HKlugmSN9vyUryeepIaOemjW1W5zwEIgTLCI=";
-          url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v6.3.1/announcementcenter-v6.3.1.tar.gz";
+          sha256 = "sha256-n8GqrlYSfAtJInMMblqk4TFB0wqrvY7bAit8i5F+evc=";
+          url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v6.4.0/announcementcenter-v6.4.0.tar.gz";
         };
       };
 
