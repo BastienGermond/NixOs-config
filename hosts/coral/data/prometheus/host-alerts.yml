@@ -8,4 +8,20 @@ groups:
           severity: critical
         annotations:
           text: |
-            {{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.
+            {{ $labels.job }} has been down for more than 1 minute.
+      - alert: DiskSpaceRunningLow
+        expr: (node_filesystem_avail_bytes{mountpoint="/",fstype!="rootfs"} * 100) / node_filesystem_size_bytes{mountpoint="/",fstype!="rootfs"} >= 90
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          text: |
+            {{ $labels.job }} is running low on disk space.
+      - alert: RamAlmostUsedUp
+        expr: 100 - (100 * node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) >= 80
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          text: |
+            {{ $labels.job }} is running low on RAM.
