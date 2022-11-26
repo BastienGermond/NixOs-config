@@ -1,10 +1,10 @@
-{ config, pkgs, lib, ...}:
+{ config, pkgs, lib, ... }:
 
 {
   services.authentik = {
     enable = true;
     # image = "ghcr.io/goauthentik/dev-server";
-    version = "2022.10.1";
+    version = "2022.11.1";
     authentikServerEnvironmentFiles = [
       config.sops.secrets.authentik.path
     ];
