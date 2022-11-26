@@ -19,6 +19,12 @@
     options = [ "zfsutil" ];
   };
 
+  fileSystems."/datastore/minio" = {
+    device = "datastore/minio";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;

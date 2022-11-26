@@ -20,5 +20,7 @@ with dns.lib.combinators;
     sso.CNAME = [ "germond.org." ];
     grafana.CNAME = [ "germond.org." ];
     status.CNAME = [ "germond.org." ];
+    minio.CNAME = [ "germond.org." ];
+    s3.CNAME = [ "germond.org." ];
   };
 }

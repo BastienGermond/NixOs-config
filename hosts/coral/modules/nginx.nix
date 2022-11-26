@@ -128,6 +128,36 @@ in
           proxyWebsockets = true;
         };
       };
+
+      "minio.germond.org" = {
+        forceSSL = true;
+
+        useACMEHost = "germond.org";
+        acmeRoot = null;
+
+        extraConfig = ''
+          access_log /var/log/nginx/access-minio.germond.org.log;
+        '';
+
+        locations."/" = {
+          proxyPass = "http://10.100.10.2:9031";
+        };
+      };
+
+      "s3.germond.org" = {
+        forceSSL = true;
+
+        useACMEHost = "germond.org";
+        acmeRoot = null;
+
+        extraConfig = ''
+          access_log /var/log/nginx/access-s3.germond.org.log;
+        '';
+
+        locations."/" = {
+          proxyPass = "http://10.100.10.2:9030";
+        };
+      };
     };
   };
 

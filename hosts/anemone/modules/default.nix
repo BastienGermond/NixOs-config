@@ -2,16 +2,17 @@
 
 {
   imports = [
-    ./sops.nix
+    ./authentik.nix
     ./docker.nix
     ./k3s.nix
+    ./minio.nix
+    ./monitoring.nix
+    ./nextcloud.nix
+    ./nfs.nix
     ./packages.nix
+    ./sops.nix
     ./ssh.nix
     ./wireguard.nix
     ./zfs.nix
-    ./nfs.nix
-    ./nextcloud.nix
-    ./monitoring.nix
-    ./authentik.nix
   ];
 }

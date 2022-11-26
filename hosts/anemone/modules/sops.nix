@@ -13,5 +13,9 @@
       owner = config.users.users.nextcloud.name;
       restartUnits = [ "nextcloud-setup.service" ];
     };
+    sops.secrets.minioCreds = {
+      owner = "minio";
+      restartUnits = [ "minio.service" ];
+    };
   };
 }
