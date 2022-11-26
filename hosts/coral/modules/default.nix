@@ -2,14 +2,14 @@
 
 {
   imports = [
-    ./sops.nix
-    ./ssh.nix
-    ./packages.nix
     # ./nsd.nix
     ./bind.nix
-    ./nginx.nix
-    ./wireguard.nix
-    ./monitoring.nix
     ./gatus.nix
+    ./monitoring.nix
+    ./nginx.nix
+    ./packages.nix
+    ./sops.nix
+    ./ssh.nix
+    ./wireguard.nix
   ];
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ...}:
+{ config, pkgs, lib, ... }:
 
 {
   services.gatus = {
@@ -15,6 +15,7 @@
       ui = {
         title = "Germond's Infrastructure Monitoring";
         description = "Monitoring of my infrastructure, mostly under domain germond.org.";
+        logo = "https://s3.germond.org/gatus/serveur-meduse.png";
       };
       endpoints = [
         {
@@ -35,8 +36,16 @@
         }
         {
           name = "Grafanouille";
-          group = "Monitoring";
+          group = "Others";
           url = "https://grafana.germond.org";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+        {
+          name = "S3";
+          group = "Others";
+          url = "https://s3.germond.org/minio/health/live";
           conditions = [
             "[STATUS] == 200"
           ];
