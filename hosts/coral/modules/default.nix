@@ -10,6 +10,7 @@
     ./packages.nix
     ./sops.nix
     ./ssh.nix
+    ./transfer.sh.nix
     ./wireguard.nix
   ];
 }

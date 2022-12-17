@@ -22,5 +22,6 @@ with dns.lib.combinators;
     status.CNAME = [ "germond.org." ];
     minio.CNAME = [ "germond.org." ];
     s3.CNAME = [ "germond.org." ];
+    t.CNAME = [ "germond.org." ];
   };
 }

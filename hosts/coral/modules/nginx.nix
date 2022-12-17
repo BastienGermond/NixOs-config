@@ -158,6 +158,21 @@ in
           proxyPass = "http://10.100.10.2:9030";
         };
       };
+
+      "t.germond.org" = {
+        forceSSL = true;
+
+        useACMEHost = "germond.org";
+        acmeRoot = null;
+
+        extraConfig = ''
+          access_log /var/log/nginx/access-t.germond.org.log;
+        '';
+
+        locations."/" = {
+          proxyPass = "http://${config.services.transfer_sh.config.listener}";
+        };
+      };
     };
   };
 

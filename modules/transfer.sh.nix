@@ -27,6 +27,12 @@ in
         description = "Group account under which transfer.sh runs.";
       };
 
+      envFile = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
+        default = null;
+        description = ''Environment file passed to the service.'';
+      };
+
       config = {
         listener = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
@@ -99,8 +105,8 @@ in
         };
 
         temp-path = lib.mkOption {
-          type = lib.types.path;
-          default = /tmp;
+          type = lib.types.nullOr lib.types.path;
+          default = null;
           description = "path to temp folder";
         };
 
@@ -290,7 +296,7 @@ in
     };
   };
 
-  config =
+  config = lib.mkIf cfg.enable (
     let
       toStr = e: if e == null then "" else
       (if builtins.isBool e then
@@ -306,7 +312,7 @@ in
       buildFlags = transferCfg: builtins.concatStringsSep " "
         (
           builtins.attrValues (
-            builtins.mapAttrs (name: value: if value == null then "" else "--${name} ${toStr value}") transferCfg
+            builtins.mapAttrs (name: value: if value == null then "" else "--${name}=\"${toStr value}\"") transferCfg
           )
         );
     in
@@ -334,7 +340,11 @@ in
           Group = cfg.group;
           # Transfer sh uses the tmp so let's isolate it
           PrivateTmp = "yes";
-        };
+        } // (if (cfg.envFile != null) then
+          {
+            EnvironmentFile = cfg.envFile;
+          } else { });
       };
-    };
+    }
+  );
 }
