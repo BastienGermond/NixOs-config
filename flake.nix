@@ -68,6 +68,7 @@
           # Custom packages
           spotibar = final.callPackage ./pkgs/spotibar/default.nix { };
           gatus = final.callPackage ./pkgs/gatus/default.nix { };
+          transfer_sh = final.callPackage ./pkgs/transfer.sh/default.nix { };
 
           go_1_18 = nixpkgs-unstable.legacyPackages.${prev.system}.go_1_18;
           ltex-ls = nixpkgs-unstable.legacyPackages.${prev.system}.ltex-ls;
