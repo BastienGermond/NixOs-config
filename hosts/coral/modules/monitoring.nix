@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   config =
@@ -82,9 +82,18 @@
         ];
       };
 
+      systemd.services.grafana.serviceConfig = {
+        # FIXME: Remove or keep ?
+        # Without this grafana try to call sys_fchownat which is blocked without @chown;
+        SystemCallFilter = [ "@chown" ];
+      };
+
       services.grafana =
         let
           readFromFile = path: "$__file{${path}}";
+          provisionConfDir = pkgs.runCommand "grafana-provisioning" { nativeBuildInputs = [ pkgs.xorg.lndir ]; } ''
+            mkdir -p $out/{datasources,dashboards,notifiers,alerting,plugins}
+          '';
         in
         {
           enable = true;
@@ -94,6 +103,14 @@
               protocol = "socket";
               domain = "grafana.germond.org";
               root_url = "https://grafana.germond.org/";
+            };
+
+            paths = {
+              provisioning = provisionConfDir;
+            };
+
+            log = {
+              level = "debug";
             };
 
             users = {
@@ -129,52 +146,32 @@
             };
           };
 
-          # extraOptions = {
-          #   USERS_AUTO_ASSIGN_ORG = "true";
-          #   USERS_AUTO_ASSIGN_ORG_ID = "1";
-
-          #   AUTH_GENERIC_OAUTH_ENABLED = "true";
-          #   AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP = "true";
-          #   AUTH_GENERIC_OAUTH_NAME = "Germond SSO";
-
-          #   AUTH_GENERIC_OAUTH_CLIENT_ID = readFromFile config.sops.secrets.grafanaOAuthClientID.path;
-          #   AUTH_GENERIC_OAUTH_CLIENT_SECRET = readFromFile config.sops.secrets.grafanaOAuthSecret.path;
-
-          #   AUTH_GENERIC_OAUTH_SCOPES = "email openid profile grafana";
-
-          #   AUTH_GENERIC_OAUTH_AUTH_URL = "https://sso.germond.org/application/o/authorize/";
-          #   AUTH_GENERIC_OAUTH_TOKEN_URL = "https://sso.germond.org/application/o/token/";
-          #   AUTH_GENERIC_OAUTH_API_URL = "https://sso.germond.org/application/o/userinfo/";
-          #   AUTH_GENERIC_OAUTH_ALLOWED_DOMAINS = "gmail.com";
-          #   AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH = "grafanaRole";
-          #   AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_PATH = "email";
-          #   AUTH_GENERIC_OAUTH_GROUPS_ATTRIBUTE_PATH = "groups";
-          #   AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH = "name";
-          #   AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH = "preferred_username";
-          # };
-
           declarativePlugins = with pkgs.grafanaPlugins; [ ];
 
           provision = {
             enable = true;
 
-            datasources = [
-              {
-                name = "Loki";
-                url = "http://10.100.10.1:3100";
-                type = "loki";
-                access = "proxy";
-                jsonData = {
-                  manageAlerts = false;
-                };
-              }
-              {
-                name = "Prometheus";
-                url = "http://10.100.10.1:9001";
-                type = "prometheus";
-                access = "proxy";
-              }
-            ];
+            datasources.settings = {
+              apiVersion = 1;
+
+              datasources = [
+                {
+                  name = "Loki";
+                  url = "http://10.100.10.1:3100";
+                  type = "loki";
+                  access = "proxy";
+                  jsonData = {
+                    manageAlerts = false;
+                  };
+                }
+                {
+                  name = "Prometheus";
+                  url = "http://10.100.10.1:9001";
+                  type = "prometheus";
+                  access = "proxy";
+                }
+              ];
+            };
           };
         };
 

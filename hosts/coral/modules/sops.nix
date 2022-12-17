@@ -22,12 +22,15 @@
     (lib.mkIf config.services.grafana.enable {
       grafanaSecretKey = {
         owner = config.users.users.grafana.name;
+        restartUnits = [ "grafana.service" ];
       };
       grafanaOAuthClientID = {
         owner = config.users.users.grafana.name;
+        restartUnits = [ "grafana.service" ];
       };
       grafanaOAuthSecret = {
         owner = config.users.users.grafana.name;
+        restartUnits = [ "grafana.service" ];
       };
     })
 
