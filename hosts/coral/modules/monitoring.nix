@@ -110,7 +110,7 @@
             };
 
             log = {
-              level = "debug";
+              level = "info";
             };
 
             users = {
