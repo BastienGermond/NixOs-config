@@ -20,7 +20,7 @@
       endpoints = [
         {
           name = "Authentik";
-          group = "Authentication";
+          group = "0 - Authentication";
           url = "https://sso.germond.org/-/health/ready/";
           conditions = [
             "[STATUS] == 204"
@@ -28,15 +28,23 @@
         }
         {
           name = "Nextcloud";
-          group = "Cloud";
+          group = "1 - Cloud";
           url = "https://cloud.germond.org/heartbeat";
           conditions = [
             "[STATUS] == 200"
           ];
         }
         {
+          name = "Transfer.sh";
+          group = "2 - Services";
+          url = "https://t.germond.org/health.html";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+        {
           name = "Grafanouille";
-          group = "Others";
+          group = "2 - Services";
           url = "https://grafana.germond.org";
           conditions = [
             "[STATUS] == 200"
@@ -44,7 +52,7 @@
         }
         {
           name = "S3";
-          group = "Others";
+          group = "3 - Others";
           url = "https://s3.germond.org/minio/health/live";
           conditions = [
             "[STATUS] == 200"
