@@ -157,7 +157,8 @@ for_window [window_role="pop-up"] floating enable
 for_window [window_role="About"] floating enable
 for_window [class="Nm-connection-editor"] floating enable
 for_window [instance="flameshot"] floating enable
-for_window [class="Org.gnome.Nautilus"] floating enable bordel normal
+for_window [class="Org.gnome.Nautilus"] floating enable border normal
+for_window [title="^3D Viewer .*$"] floating enable border normal, resize set 600 400 px
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
