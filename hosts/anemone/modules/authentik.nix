@@ -4,7 +4,7 @@
   services.authentik = {
     enable = true;
     # image = "ghcr.io/goauthentik/dev-server";
-    version = "2022.11.2";
+    version = "2022.11.4";
     authentikServerEnvironmentFiles = [
       config.sops.secrets.authentik.path
     ];
