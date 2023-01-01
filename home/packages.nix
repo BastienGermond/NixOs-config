@@ -28,6 +28,7 @@
 
       (lib.mkIf (isMinimal == false) (with pkgs; [
         docker-buildx
+        spotify
         spotibar
         drawio
         firefox
