@@ -4,6 +4,7 @@
   services.gatus = {
     enable = true;
     config = {
+      metrics = true;
       web = {
         address = "127.0.0.1";
         port = 8040;

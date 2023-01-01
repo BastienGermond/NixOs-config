@@ -56,7 +56,10 @@
           }];
         }];
 
-        ruleFiles = [ ../data/prometheus/host-alerts.yml ];
+        ruleFiles = [
+          ../data/prometheus/host-alerts.yml
+          ../data/prometheus/gatus.yml
+        ];
 
         exporters = {
           node = {
@@ -77,6 +80,13 @@
             job_name = "coral";
             static_configs = [{
               targets = [ "127.0.0.1:9002" ];
+            }];
+          }
+          {
+            job_name = "gatus";
+            scheme = "https";
+            static_configs = [{
+              targets = [ "status.germond.org" ];
             }];
           }
         ];
