@@ -23,5 +23,6 @@ with dns.lib.combinators;
     minio.CNAME = [ "germond.org." ];
     s3.CNAME = [ "germond.org." ];
     t.CNAME = [ "germond.org." ];
+    paperless.CNAME = [ "germond.org." ];
   };
 }

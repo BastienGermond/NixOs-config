@@ -171,6 +171,82 @@ in
 
         locations."/" = {
           proxyPass = "http://${config.services.transfer_sh.config.listener}";
+          extraConfig = ''
+            client_max_body_size 2G;
+          '';
+        };
+      };
+
+      "paperless.germond.org" = {
+        forceSSL = true;
+
+        useACMEHost = "germond.org";
+        acmeRoot = null;
+
+        extraConfig = ''
+          access_log /var/log/nginx/access-paperless.germond.org.log;
+
+          proxy_buffers 8 16k;
+          proxy_buffer_size 32k;
+        '';
+
+        locations."/" = {
+          priority = 50;
+          proxyWebsockets = true;
+          extraConfig = ''
+            proxy_pass http://10.100.10.2:28981;
+
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Host $server_name;
+
+            ##############################
+            # authentik-specific config
+            ##############################
+            auth_request     /outpost.goauthentik.io/auth/nginx;
+            error_page       401 = @goauthentik_proxy_signin;
+            auth_request_set $auth_cookie $upstream_http_set_cookie;
+            add_header       Set-Cookie $auth_cookie;
+
+            # translate headers from the outposts back to the actual upstream
+            auth_request_set $authentik_username $upstream_http_x_authentik_username;
+            auth_request_set $authentik_groups $upstream_http_x_authentik_groups;
+            auth_request_set $authentik_email $upstream_http_x_authentik_email;
+            auth_request_set $authentik_name $upstream_http_x_authentik_name;
+            auth_request_set $authentik_uid $upstream_http_x_authentik_uid;
+
+            proxy_set_header X-authentik-username $authentik_username;
+            proxy_set_header X-authentik-groups $authentik_groups;
+            proxy_set_header X-authentik-email $authentik_email;
+            proxy_set_header X-authentik-name $authentik_name;
+            proxy_set_header X-authentik-uid $authentik_uid;
+          '';
+        };
+
+        locations."/outpost.goauthentik.io" = {
+          proxyWebsockets = true;
+          extraConfig = ''
+            proxy_pass              http://10.100.10.2:9000/outpost.goauthentik.io;
+            # ensure the host of this vserver matches your external URL you've configured
+            # in authentik
+            proxy_set_header        Host $host;
+            proxy_set_header        X-Original-URL $scheme://$http_host$request_uri;
+            add_header              Set-Cookie $auth_cookie;
+            auth_request_set        $auth_cookie $upstream_http_set_cookie;
+            proxy_pass_request_body off;
+            proxy_set_header        Content-Length "";
+          '';
+        };
+
+        locations."@goauthentik_proxy_signin" = {
+          proxyWebsockets = true;
+          extraConfig = ''
+            internal;
+            add_header Set-Cookie $auth_cookie;
+            return 302 /outpost.goauthentik.io/start?rd=$request_uri;
+          '';
         };
       };
     };

@@ -10,6 +10,7 @@
     ./nextcloud.nix
     ./nfs.nix
     ./packages.nix
+    ./paperless.nix
     ./sops.nix
     ./ssh.nix
     ./wireguard.nix

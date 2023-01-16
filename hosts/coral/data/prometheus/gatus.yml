@@ -2,10 +2,10 @@ groups:
   - name: gatus
     rules:
       - alert: GatusServiceDown
-        expr: gatus_results_total{success="false"}
-        for: 5m
+        expr: rate(gatus_results_total{success="false"}[5m])*60 == 1
+        for: 0m
         labels:
           severity: warning
         annotations:
           text: |
-            Gatus monitoring indicate that {{ $labels.name }} is down since 5 minutes.
+            Gatus monitoring indicates that {{ $labels.name }} is down since 5 minutes.
