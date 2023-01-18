@@ -24,5 +24,6 @@ with dns.lib.combinators;
     s3.CNAME = [ "germond.org." ];
     t.CNAME = [ "germond.org." ];
     paperless.CNAME = [ "germond.org." ];
+    hackmd.CNAME = [ "germond.org." ];
   };
 }

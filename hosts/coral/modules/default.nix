@@ -12,5 +12,6 @@
     ./ssh.nix
     ./transfer.sh.nix
     ./wireguard.nix
+    ./hedgedoc.nix
   ];
 }

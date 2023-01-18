@@ -250,6 +250,24 @@ in
           '';
         };
       };
+
+      "hackmd.germond.org" = {
+        forceSSL = true;
+
+        useACMEHost = "germond.org";
+        acmeRoot = null;
+
+        extraConfig = ''
+          access_log /var/log/nginx/access-hackmd.germond.org.log;
+        '';
+
+        locations."/" = let
+          hedgedocHost = config.services.hedgedoc.settings.host;
+          hedgedocPort = config.services.hedgedoc.settings.port;
+        in {
+          proxyPass = "http://${hedgedocHost}:${builtins.toString hedgedocPort}";
+        };
+      };
     };
   };
 

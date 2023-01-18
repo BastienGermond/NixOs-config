@@ -39,5 +39,11 @@
         owner = config.services.transfer_sh.user;
       };
     })
+
+    (lib.mkIf config.services.hedgedoc.enable {
+      hedgedocEnv = {
+        owner = "hedgedoc";
+      };
+    })
   ];
 }

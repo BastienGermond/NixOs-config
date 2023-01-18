@@ -36,6 +36,14 @@
           ];
         }
         {
+          name = "Hedgedoc";
+          group = "2 - Services";
+          url = "https://hackmd.germond.org/status";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+        {
           name = "Transfer.sh";
           group = "2 - Services";
           url = "https://t.germond.org/health.html";
