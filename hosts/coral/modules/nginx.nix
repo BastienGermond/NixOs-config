@@ -141,6 +141,7 @@ in
 
         locations."/" = {
           proxyPass = "http://10.100.10.2:9031";
+          proxyWebsockets = true;
         };
       };
 
