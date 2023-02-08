@@ -20,6 +20,7 @@
     adapta-gtk-theme
     alacritty
     arandr
+    arduino
     aspell
     aspellDicts.en
     aspellDicts.fr
