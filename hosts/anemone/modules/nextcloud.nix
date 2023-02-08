@@ -5,7 +5,7 @@ let
 in
 {
   config = {
-    services.redis.servers.redis-nextcloud = {
+    services.redis.servers.nextcloud = {
       enable = true;
       port = nextcloudRedisPort;
     };
@@ -49,11 +49,10 @@ in
           url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.4.0-beta.1/oidc_login.tar.gz";
         };
 
-        # FIXME: Not yet ready (https://github.com/mwalbeck/nextcloud-breeze-dark/issues/317)
-        # breezedark = pkgs.fetchNextcloudApp rec {
-        #   sha256 = "sha256-2tBm45gh5VRKh+w5YcBGyuNB7EGIdBh67jSLfrq+4R4=";
-        #   url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v24.0.2/breezedark.tar.gz";
-        # };
+        breezedark = pkgs.fetchNextcloudApp rec {
+          sha256 = "sha256-caf3Ac9p0mzV/oBQcukSvL+b1gTIBa201klJsi6cB+Q=";
+          url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v25.0.0/breezedark.tar.gz";
+        };
 
         # FIXME: Not yet ready (https://github.com/icewind1991/files_markdown/issues/200)
         # files_markdown = pkgs.fetchNextcloudApp rec {
@@ -158,6 +157,8 @@ in
         redis = {
           host = "localhost";
           port = nextcloudRedisPort;
+          dbindex = 0;
+          timeout = 1.5;
         };
       };
     };
