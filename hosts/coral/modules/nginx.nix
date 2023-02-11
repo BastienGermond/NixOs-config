@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, infra, ... }:
 
 let
   certs_mail_addr = "bastien.germond+certs@epita.fr";
@@ -79,14 +79,14 @@ in
 
         "sso.germond.org" = withDefaultConfiguration "sso.germond.org" {
           locations."/" = {
-            proxyPass = "http://10.100.10.2:9000/";
+            proxyPass = "http://${infra.hosts.anemone.ips.vpn.A}:9000/";
             proxyWebsockets = true;
           };
         };
 
         "cloud.germond.org" = withDefaultConfiguration "cloud.germond.org" {
           locations."/" = {
-            proxyPass = "http://10.100.10.2/";
+            proxyPass = "http://${infra.hosts.anemone.ips.vpn.A}/";
             proxyWebsockets = true;
             extraConfig = ''
               client_max_body_size 10G;
@@ -114,14 +114,14 @@ in
 
         "minio.germond.org" = withDefaultConfiguration "minio.germond.org" {
           locations."/" = {
-            proxyPass = "http://10.100.10.2:9031";
+            proxyPass = "http://${infra.hosts.anemone.ips.vpn.A}:9031";
             proxyWebsockets = true;
           };
         };
 
         "s3.germond.org" = withDefaultConfiguration "s3.germond.org" {
           locations."/" = {
-            proxyPass = "http://10.100.10.2:9030";
+            proxyPass = "http://${infra.hosts.anemone.ips.vpn.A}:9030";
           };
         };
 
@@ -144,7 +144,7 @@ in
             priority = 50;
             proxyWebsockets = true;
             extraConfig = ''
-              proxy_pass http://10.100.10.2:28981;
+              proxy_pass http://${infra.hosts.anemone.ips.vpn.A}:28981;
 
               proxy_redirect off;
               proxy_set_header Host $host;
@@ -178,7 +178,7 @@ in
           locations."/outpost.goauthentik.io" = {
             proxyWebsockets = true;
             extraConfig = ''
-              proxy_pass              http://10.100.10.2:9000/outpost.goauthentik.io;
+              proxy_pass              http://${infra.hosts.anemone.ips.vpn.A}:9000/outpost.goauthentik.io;
               # ensure the host of this vserver matches your external URL you've configured
               # in authentik
               proxy_set_header        Host $host;
