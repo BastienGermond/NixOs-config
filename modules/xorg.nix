@@ -19,7 +19,11 @@
 
     libinput = {
       enable = true;
-      touchpad.naturalScrolling = true;
+      touchpad = {
+        naturalScrolling = true;
+        tapping = true;
+        tappingDragLock = false;
+      };
       mouse = {
         tapping = false;
         tappingDragLock = false;
