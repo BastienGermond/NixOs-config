@@ -35,240 +35,182 @@ in
       };
     };
 
-    virtualHosts = {
-      # be the default to trap all the direct ip access.
-      # TODO: fail2ban almost instantly those ips
-      "trap" = {
-        default = true;
-        addSSL = true;
-        sslCertificate = ../data/nginx/trap/certificate.pem;
-        sslCertificateKey = config.sops.secrets.nginxTrapCertKey.path;
+    virtualHosts =
+      let
+        withDefaultConfiguration = name: conf: lib.mkMerge [
+          {
+            forceSSL = true;
 
-        locations."/".return = "444"; # 444 with nginx close connection without response.
-      };
+            extraConfig = ''
+              access_log /var/log/nginx/access-${name}.log;
+            '';
+          }
 
-      "gistre.fr" = {
-        forceSSL = true;
-        enableACME = true;
-        extraConfig = ''
-          access_log /var/log/nginx/access-gistre.fr.log;
-        '';
-        locations."/" = {
-          root = "${gistre_fr_site}";
+          (if (builtins.match ".*germond\.org" name) != null then {
+            useACMEHost = "germond.org";
+            acmeRoot = null;
+          } else { })
+
+          conf
+        ];
+      in
+      {
+        # be the default to trap all the direct ip access.
+        # TODO: fail2ban almost instantly those ips
+        "trap" = {
+          default = true;
+          addSSL = true;
+          sslCertificate = ../data/nginx/trap/certificate.pem;
+          sslCertificateKey = config.sops.secrets.nginxTrapCertKey.path;
+
+          locations."/".return = "444"; # 444 with nginx close connection without response.
         };
-      };
 
-      "sso.germond.org" = {
-        forceSSL = true;
-
-        useACMEHost = "germond.org";
-        acmeRoot = null;
-
-        extraConfig = ''
-          access_log /var/log/nginx/access-sso.germond.org.log;
-        '';
-
-        locations."/" = {
-          proxyPass = "http://10.100.10.2:9000/";
-          proxyWebsockets = true;
-        };
-      };
-
-      "cloud.germond.org" = {
-        forceSSL = true;
-
-        useACMEHost = "germond.org";
-        acmeRoot = null;
-
-        extraConfig = ''
-          access_log /var/log/nginx/access-cloud.germond.org.log;
-        '';
-
-        locations."/" = {
-          proxyPass = "http://10.100.10.2/";
-          proxyWebsockets = true;
+        "gistre.fr" = {
+          forceSSL = true;
+          enableACME = true;
           extraConfig = ''
-            client_max_body_size 10G;
+            access_log /var/log/nginx/access-gistre.fr.log;
           '';
+          locations."/" = {
+            root = "${gistre_fr_site}";
+          };
         };
-      };
 
-      "grafana.germond.org" = {
-        forceSSL = true;
-
-        useACMEHost = "germond.org";
-        acmeRoot = null;
-
-        root = config.services.grafana.settings.server.static_root_path;
-
-        extraConfig = ''
-          access_log /var/log/nginx/access-grafana.germond.org.log;
-        '';
-
-        locations."/".tryFiles = "$uri @grafana";
-
-        locations."@grafana" = {
-          proxyPass = "http://grafana";
-          proxyWebsockets = true;
+        "sso.germond.org" = withDefaultConfiguration "sso.germond.org" {
+          locations."/" = {
+            proxyPass = "http://10.100.10.2:9000/";
+            proxyWebsockets = true;
+          };
         };
-      };
 
-      "status.germond.org" = {
-        forceSSL = true;
-
-        useACMEHost = "germond.org";
-        acmeRoot = null;
-
-        extraConfig = ''
-          access_log /var/log/nginx/access-status.germond.org.log;
-        '';
-
-        locations."/" = {
-          proxyPass = "http://${gatusWebCfg.address}:${builtins.toString gatusWebCfg.port}";
-          proxyWebsockets = true;
+        "cloud.germond.org" = withDefaultConfiguration "cloud.germond.org" {
+          locations."/" = {
+            proxyPass = "http://10.100.10.2/";
+            proxyWebsockets = true;
+            extraConfig = ''
+              client_max_body_size 10G;
+            '';
+          };
         };
-      };
 
-      "minio.germond.org" = {
-        forceSSL = true;
+        "grafana.germond.org" = withDefaultConfiguration "grafana.germond.org" {
+          root = config.services.grafana.settings.server.static_root_path;
 
-        useACMEHost = "germond.org";
-        acmeRoot = null;
+          locations."/".tryFiles = "$uri @grafana";
 
-        extraConfig = ''
-          access_log /var/log/nginx/access-minio.germond.org.log;
-        '';
-
-        locations."/" = {
-          proxyPass = "http://10.100.10.2:9031";
-          proxyWebsockets = true;
+          locations."@grafana" = {
+            proxyPass = "http://grafana";
+            proxyWebsockets = true;
+          };
         };
-      };
 
-      "s3.germond.org" = {
-        forceSSL = true;
-
-        useACMEHost = "germond.org";
-        acmeRoot = null;
-
-        extraConfig = ''
-          access_log /var/log/nginx/access-s3.germond.org.log;
-        '';
-
-        locations."/" = {
-          proxyPass = "http://10.100.10.2:9030";
+        "status.germond.org" = withDefaultConfiguration "status.germond.org" {
+          locations."/" = {
+            proxyPass = "http://${gatusWebCfg.address}:${builtins.toString gatusWebCfg.port}";
+            proxyWebsockets = true;
+          };
         };
-      };
 
-      "t.germond.org" = {
-        forceSSL = true;
+        "minio.germond.org" = withDefaultConfiguration "minio.germond.org" {
+          locations."/" = {
+            proxyPass = "http://10.100.10.2:9031";
+            proxyWebsockets = true;
+          };
+        };
 
-        useACMEHost = "germond.org";
-        acmeRoot = null;
+        "s3.germond.org" = withDefaultConfiguration "s3.germond.org" {
+          locations."/" = {
+            proxyPass = "http://10.100.10.2:9030";
+          };
+        };
 
-        extraConfig = ''
-          access_log /var/log/nginx/access-t.germond.org.log;
-        '';
+        "t.germond.org" = withDefaultConfiguration "t.germond.org" {
+          locations."/" = {
+            proxyPass = "http://${config.services.transfer_sh.config.listener}";
+            extraConfig = ''
+              client_max_body_size 2G;
+            '';
+          };
+        };
 
-        locations."/" = {
-          proxyPass = "http://${config.services.transfer_sh.config.listener}";
+        "paperless.germond.org" = withDefaultConfiguration "paperless.germond.org" {
           extraConfig = ''
-            client_max_body_size 2G;
+            proxy_buffers 8 16k;
+            proxy_buffer_size 32k;
           '';
+
+          locations."/" = {
+            priority = 50;
+            proxyWebsockets = true;
+            extraConfig = ''
+              proxy_pass http://10.100.10.2:28981;
+
+              proxy_redirect off;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Host $server_name;
+
+              ##############################
+              # authentik-specific config
+              ##############################
+              auth_request     /outpost.goauthentik.io/auth/nginx;
+              error_page       401 = @goauthentik_proxy_signin;
+              auth_request_set $auth_cookie $upstream_http_set_cookie;
+              add_header       Set-Cookie $auth_cookie;
+
+              # translate headers from the outposts back to the actual upstream
+              auth_request_set $authentik_username $upstream_http_x_authentik_username;
+              auth_request_set $authentik_groups $upstream_http_x_authentik_groups;
+              auth_request_set $authentik_email $upstream_http_x_authentik_email;
+              auth_request_set $authentik_name $upstream_http_x_authentik_name;
+              auth_request_set $authentik_uid $upstream_http_x_authentik_uid;
+
+              proxy_set_header X-authentik-username $authentik_username;
+              proxy_set_header X-authentik-groups $authentik_groups;
+              proxy_set_header X-authentik-email $authentik_email;
+              proxy_set_header X-authentik-name $authentik_name;
+              proxy_set_header X-authentik-uid $authentik_uid;
+            '';
+          };
+
+          locations."/outpost.goauthentik.io" = {
+            proxyWebsockets = true;
+            extraConfig = ''
+              proxy_pass              http://10.100.10.2:9000/outpost.goauthentik.io;
+              # ensure the host of this vserver matches your external URL you've configured
+              # in authentik
+              proxy_set_header        Host $host;
+              proxy_set_header        X-Original-URL $scheme://$http_host$request_uri;
+              add_header              Set-Cookie $auth_cookie;
+              auth_request_set        $auth_cookie $upstream_http_set_cookie;
+              proxy_pass_request_body off;
+              proxy_set_header        Content-Length "";
+            '';
+          };
+
+          locations."@goauthentik_proxy_signin" = {
+            proxyWebsockets = true;
+            extraConfig = ''
+              internal;
+              add_header Set-Cookie $auth_cookie;
+              return 302 /outpost.goauthentik.io/start?rd=$request_uri;
+            '';
+          };
+        };
+
+        "hackmd.germond.org" = withDefaultConfiguration "hackmd.germond.org" {
+          locations."/" =
+            let
+              hedgedocHost = config.services.hedgedoc.settings.host;
+              hedgedocPort = config.services.hedgedoc.settings.port;
+            in
+            {
+              proxyPass = "http://${hedgedocHost}:${builtins.toString hedgedocPort}";
+            };
         };
       };
-
-      "paperless.germond.org" = {
-        forceSSL = true;
-
-        useACMEHost = "germond.org";
-        acmeRoot = null;
-
-        extraConfig = ''
-          access_log /var/log/nginx/access-paperless.germond.org.log;
-
-          proxy_buffers 8 16k;
-          proxy_buffer_size 32k;
-        '';
-
-        locations."/" = {
-          priority = 50;
-          proxyWebsockets = true;
-          extraConfig = ''
-            proxy_pass http://10.100.10.2:28981;
-
-            proxy_redirect off;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Host $server_name;
-
-            ##############################
-            # authentik-specific config
-            ##############################
-            auth_request     /outpost.goauthentik.io/auth/nginx;
-            error_page       401 = @goauthentik_proxy_signin;
-            auth_request_set $auth_cookie $upstream_http_set_cookie;
-            add_header       Set-Cookie $auth_cookie;
-
-            # translate headers from the outposts back to the actual upstream
-            auth_request_set $authentik_username $upstream_http_x_authentik_username;
-            auth_request_set $authentik_groups $upstream_http_x_authentik_groups;
-            auth_request_set $authentik_email $upstream_http_x_authentik_email;
-            auth_request_set $authentik_name $upstream_http_x_authentik_name;
-            auth_request_set $authentik_uid $upstream_http_x_authentik_uid;
-
-            proxy_set_header X-authentik-username $authentik_username;
-            proxy_set_header X-authentik-groups $authentik_groups;
-            proxy_set_header X-authentik-email $authentik_email;
-            proxy_set_header X-authentik-name $authentik_name;
-            proxy_set_header X-authentik-uid $authentik_uid;
-          '';
-        };
-
-        locations."/outpost.goauthentik.io" = {
-          proxyWebsockets = true;
-          extraConfig = ''
-            proxy_pass              http://10.100.10.2:9000/outpost.goauthentik.io;
-            # ensure the host of this vserver matches your external URL you've configured
-            # in authentik
-            proxy_set_header        Host $host;
-            proxy_set_header        X-Original-URL $scheme://$http_host$request_uri;
-            add_header              Set-Cookie $auth_cookie;
-            auth_request_set        $auth_cookie $upstream_http_set_cookie;
-            proxy_pass_request_body off;
-            proxy_set_header        Content-Length "";
-          '';
-        };
-
-        locations."@goauthentik_proxy_signin" = {
-          proxyWebsockets = true;
-          extraConfig = ''
-            internal;
-            add_header Set-Cookie $auth_cookie;
-            return 302 /outpost.goauthentik.io/start?rd=$request_uri;
-          '';
-        };
-      };
-
-      "hackmd.germond.org" = {
-        forceSSL = true;
-
-        useACMEHost = "germond.org";
-        acmeRoot = null;
-
-        extraConfig = ''
-          access_log /var/log/nginx/access-hackmd.germond.org.log;
-        '';
-
-        locations."/" = let
-          hedgedocHost = config.services.hedgedoc.settings.host;
-          hedgedocPort = config.services.hedgedoc.settings.port;
-        in {
-          proxyPass = "http://${hedgedocHost}:${builtins.toString hedgedocPort}";
-        };
-      };
-    };
   };
 
   security.acme.acceptTerms = true;
