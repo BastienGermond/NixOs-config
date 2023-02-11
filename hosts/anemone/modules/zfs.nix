@@ -25,6 +25,12 @@
     options = [ "zfsutil" ];
   };
 
+  fileSystems."/datastore/paperless" = {
+    device = "datastore/paperless";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;
