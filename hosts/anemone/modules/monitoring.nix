@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, infra, ... }:
 
 {
   services.prometheus = {
@@ -18,7 +18,7 @@
       server.grpc_listen_port = 0;
 
       clients = [{
-        url = "http://10.100.10.1:3100/loki/api/v1/push";
+        url = "http://${infra.hosts.coral.ips.vpn.A}:3100/loki/api/v1/push";
       }];
 
       scrape_configs = [{
