@@ -1,11 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, infra, ... }:
 
 {
   services.paperless = {
     enable = true;
     dataDir = "/datastore/paperless";
     port = 28981;
-    address = "10.100.10.2";
+    address = infra.hosts.anemone.ips.vpn.A;
     extraConfig = {
       PAPERLESS_ENABLE_HTTP_REMOTE_USER = true;
       PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME = "HTTP_X_AUTHENTIK_USERNAME";
