@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, infra, ... }:
 
 {
   config =
@@ -52,7 +52,7 @@
 
         alertmanagers = [{
           static_configs = [{
-            targets = [ "10.100.10.1:9093" ];
+            targets = [ "${infra.hosts.coral.ips.vpn.A}:9093" ];
           }];
         }];
 
@@ -73,7 +73,7 @@
           {
             job_name = "anemone";
             static_configs = [{
-              targets = [ "10.100.10.2:9002" ];
+              targets = [ "${infra.hosts.anemone.ips.vpn.A}:9002" ];
             }];
           }
           {
@@ -167,7 +167,7 @@
               datasources = [
                 {
                   name = "Loki";
-                  url = "http://10.100.10.1:3100";
+                  url = "http://${infra.hosts.coral.ips.vpn.A}:3100";
                   type = "loki";
                   access = "proxy";
                   jsonData = {
@@ -176,7 +176,7 @@
                 }
                 {
                   name = "Prometheus";
-                  url = "http://10.100.10.1:9001";
+                  url = "http://${infra.hosts.coral.ips.vpn.A}:9001";
                   type = "prometheus";
                   access = "proxy";
                 }
@@ -194,7 +194,7 @@
           server.grpc_listen_port = 0;
 
           clients = [{
-            url = "http://10.100.10.1:3100/loki/api/v1/push";
+            url = "http://${infra.hosts.coral.ips.vpn.A}:3100/loki/api/v1/push";
           }];
 
           scrape_configs = [
@@ -237,11 +237,11 @@
           auth_enabled = false;
 
           server.http_listen_port = 3100;
-          server.http_listen_address = "10.100.10.1";
+          server.http_listen_address = infra.hosts.coral.ips.vpn.A;
 
           ingester = {
             lifecycler = {
-              address = "10.100.10.1";
+              address = infra.hosts.coral.ips.vpn.A;
               ring = {
                 kvstore = {
                   store = "inmemory";
