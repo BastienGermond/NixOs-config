@@ -1,12 +1,16 @@
 { config, pkgs, infra, ... }:
 
+let
+  coral = infra.hosts.coral;
+  anemone = infra.hosts.anemone;
+in
 {
   services.prometheus = {
     exporters = {
       node = {
         enable = true;
         enabledCollectors = [ "systemd" "processes" "cpu" ];
-        port = 9002;
+        port = anemone.ports.node-exporter;
       };
     };
   };
@@ -14,11 +18,11 @@
   services.promtail = {
     enable = true;
     configuration = {
-      server.http_listen_port = 3031;
+      server.http_listen_port = anemone.ports.promtail;
       server.grpc_listen_port = 0;
 
       clients = [{
-        url = "http://${infra.hosts.coral.ips.vpn.A}:3100/loki/api/v1/push";
+        url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.loki}/loki/api/v1/push";
       }];
 
       scrape_configs = [{

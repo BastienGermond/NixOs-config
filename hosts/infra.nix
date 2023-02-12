@@ -11,6 +11,12 @@ rec {
           AAAA = "";
         };
       };
+      ports = {
+        prometheus = 9001;
+        node-exporter = 9002;
+        promtail = 3031;
+        loki = 3100;
+      };
       wireguard = {
         wgs0 = {
           ips = [ "${hosts.coral.ips.vpn.A}/24" ];
@@ -39,6 +45,8 @@ rec {
         };
       };
       ports = {
+        promtail = 3031;
+        node-exporter = 9002;
         authentik = 9000;
         minio = 9031;
         s3 = 9030;
