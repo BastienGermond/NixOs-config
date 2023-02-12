@@ -20,6 +20,8 @@ let
   };
 
   gatusWebCfg = config.services.gatus.config.web;
+
+  anemone = infra.hosts.anemone;
 in
 {
   users.users.nginx.extraGroups = [ "grafana" "acme" ];
@@ -79,14 +81,14 @@ in
 
         "sso.germond.org" = withDefaultConfiguration "sso.germond.org" {
           locations."/" = {
-            proxyPass = "http://${infra.hosts.anemone.ips.vpn.A}:9000/";
+            proxyPass = "http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.authentik}/";
             proxyWebsockets = true;
           };
         };
 
         "cloud.germond.org" = withDefaultConfiguration "cloud.germond.org" {
           locations."/" = {
-            proxyPass = "http://${infra.hosts.anemone.ips.vpn.A}/";
+            proxyPass = "http://${anemone.ips.vpn.A}/";
             proxyWebsockets = true;
             extraConfig = ''
               client_max_body_size 10G;
@@ -114,14 +116,14 @@ in
 
         "minio.germond.org" = withDefaultConfiguration "minio.germond.org" {
           locations."/" = {
-            proxyPass = "http://${infra.hosts.anemone.ips.vpn.A}:9031";
+            proxyPass = "http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.minio}";
             proxyWebsockets = true;
           };
         };
 
         "s3.germond.org" = withDefaultConfiguration "s3.germond.org" {
           locations."/" = {
-            proxyPass = "http://${infra.hosts.anemone.ips.vpn.A}:9030";
+            proxyPass = "http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.s3}";
           };
         };
 
@@ -144,7 +146,7 @@ in
             priority = 50;
             proxyWebsockets = true;
             extraConfig = ''
-              proxy_pass http://${infra.hosts.anemone.ips.vpn.A}:28981;
+              proxy_pass http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.paperless};
 
               proxy_redirect off;
               proxy_set_header Host $host;
@@ -178,7 +180,7 @@ in
           locations."/outpost.goauthentik.io" = {
             proxyWebsockets = true;
             extraConfig = ''
-              proxy_pass              http://${infra.hosts.anemone.ips.vpn.A}:9000/outpost.goauthentik.io;
+              proxy_pass              http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.authentik}/outpost.goauthentik.io;
               # ensure the host of this vserver matches your external URL you've configured
               # in authentik
               proxy_set_header        Host $host;

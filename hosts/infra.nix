@@ -38,6 +38,12 @@ rec {
           AAAA = "";
         };
       };
+      ports = {
+        authentik = 9000;
+        minio = 9031;
+        s3 = 9030;
+        paperless = 28981;
+      };
       wireguard = {
         wg0 = {
           ips = [ "${hosts.anemone.ips.vpn.A}/32" ];

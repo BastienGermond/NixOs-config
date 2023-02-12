@@ -4,7 +4,7 @@
   services.paperless = {
     enable = true;
     dataDir = "/datastore/paperless";
-    port = 28981;
+    port = infra.hosts.anemone.ports.paperless;
     address = infra.hosts.anemone.ips.vpn.A;
     extraConfig = {
       PAPERLESS_ENABLE_HTTP_REMOTE_USER = true;
