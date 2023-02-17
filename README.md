@@ -6,7 +6,7 @@
 - **coral**: VPS hosted within [Hetzner (referral
   link)](https://hetzner.cloud/?ref=R6XfWTfBuoF5), used as a vpn server and
   public ip endpoint for my infrastructure.
-- **anemone**: Storage server and main kubernetes cluster.
+- **anemone**: Storage server and hosts "heavy" services.
 - _kelp_: currently not setup but will be my desktop computer at some point.
 
 ## Secrets
