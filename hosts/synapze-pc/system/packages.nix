@@ -25,7 +25,6 @@
     aspellDicts.en
     aspellDicts.fr
     bind
-    brave
     clipit
     cryptsetup
     ctags
