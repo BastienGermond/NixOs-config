@@ -3,11 +3,11 @@
   description = "My NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    home-manager = { url = "github:nix-community/home-manager/release-22.05"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = { url = "github:nix-community/home-manager/release-22.11"; inputs.nixpkgs.follows = "nixpkgs"; };
     flake-utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
-    nvim-flake = { url = "github:neovim/neovim?dir=contrib"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nvim-flake = { url = "github:neovim/neovim/v0.8.3?dir=contrib"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     dns = { url = "github:kirelagin/dns.nix"; inputs.nixpkgs.follows = "nixpkgs"; };
     deploy-rs = { url = "github:serokell/deploy-rs"; inputs.nixpkgs.follows = "nixpkgs"; };
@@ -71,13 +71,10 @@
           transfer_sh = final.callPackage ./pkgs/transfer.sh/default.nix { };
           immich-server = final.callPackage ./pkgs/immich/server/default.nix { };
 
-          go_1_18 = nixpkgs-unstable.legacyPackages.${prev.system}.go_1_18;
-          ltex-ls = nixpkgs-unstable.legacyPackages.${prev.system}.ltex-ls;
+          kicad = nixpkgs-unstable.legacyPackages.${prev.system}.kicad;
 
           neovim = nvim-flake.packages.${prev.system}.neovim;
-
-          nextcloud24 = nixpkgs-unstable.legacyPackages.${prev.system}.nextcloud24;
-          nextcloud25 = nixpkgs-unstable.legacyPackages.${prev.system}.nextcloud25;
+          # neovim = nixpkgs-unstable.legacyPackages.${prev.system}.neovim;
 
           # Mitigation for https://mta.openssl.org/pipermail/openssl-announce/2022-October/000238.html
           nginxStable = prev.nginxStable.override { openssl = prev.openssl_1_1; };

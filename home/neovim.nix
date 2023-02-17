@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  gopls_0_8_1 = pkgs.unstable.buildGo118Module rec {
+  gopls_0_8_1 = pkgs.buildGo118Module rec {
     inherit (pkgs.gopls.drvAttrs) pname doCheck buildPhase installPhase modRoot subPackages;
 
     inherit (pkgs.gopls) meta;

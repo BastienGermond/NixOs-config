@@ -45,7 +45,7 @@
     iftop
     killall
     libcgroup
-    unstable.librewolf-wayland
+    librewolf-wayland
     man-pages
     man-pages-posix
     neovim

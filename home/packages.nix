@@ -35,7 +35,7 @@
         freecad
         gimp
         inkscape
-        kicad-unstable
+        kicad
         languagetool
         libreoffice
         nodePackages.eslint
