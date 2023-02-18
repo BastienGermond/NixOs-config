@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, infra, ... }:
 
 {
   imports = [
@@ -55,25 +55,9 @@
 
   networking.networkmanager.enable = true;
 
-  networking.nat.internalInterfaces = [ "wg0" ];
+  networking.nat.internalInterfaces = builtins.attrNames infra.hosts.synapze-pc.wireguard;
 
-  networking.wireguard.interfaces = {
-    wg0 = {
-      ips = [ "10.100.10.3/32" ];
-      listenPort = 51821;
-      privateKeyFile = "/home/synapze/.wg/wg0.pkey";
-
-      peers = [
-        {
-          publicKey = "IOXJd4A9NO9JMcRcQRl5QYL8WW0s13+PMnyZVbbr728=";
-          allowedIPs = [ "10.100.10.0/24" ];
-          endpoint = "135.181.36.15:51821";
-          persistentKeepalive = 25;
-        }
-      ];
-    };
-  };
-
+  networking.wireguard.interfaces = infra.hosts.synapze-pc.wireguard;
 
   documentation = {
     enable = true;

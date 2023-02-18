@@ -35,6 +35,7 @@
         inherit deploy-rs; nixosConfigurations =
         self.nixosConfigurations;
       };
+      infra = import ./hosts/infra.nix;
     in
     flake-utils.lib.mkFlake {
       inherit self inputs;
@@ -48,7 +49,7 @@
           home-manager.nixosModule
           ./modules
         ];
-        extraArgs = { inherit dns; };
+        extraArgs = { inherit dns infra; };
       };
 
       channelsConfig = {
