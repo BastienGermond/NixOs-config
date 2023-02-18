@@ -45,5 +45,11 @@
         owner = "hedgedoc";
       };
     })
+
+    (lib.mkIf config.services.postgresqlCipheredBackup.enable {
+      PostgresBackupS3ConfigFile = {
+        owner = "postgres";
+      };
+    })
   ];
 }

@@ -23,6 +23,8 @@ in
     ensureDatabases = [ grafanaDbName ];
   };
 
+  services.postgresqlCipheredBackup.databases = [ grafanaDbName ];
+
   services.prometheus = {
     enable = true;
     port = coral.ports.prometheus;

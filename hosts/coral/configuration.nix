@@ -24,6 +24,19 @@
     host all all 127.0.0.1/32 ident
   '';
 
+  # Base configuration for postgresql ciphered backup
+  services.postgresqlCipheredBackup = {
+    enable = true;
+    compression = "gzip";
+    gpgKeyID = "4B4BF1563B72C6170FD2B835E1B6C1650DF13CAF";
+    location = "/srv/backup";
+    s3 = {
+      enable = true;
+      bucket = "coral-pg-backup";
+      configFile = config.sops.secrets.PostgresBackupS3ConfigFile.path;
+    };
+  };
+
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
   environment.variables.EDITOR = "vim";
 

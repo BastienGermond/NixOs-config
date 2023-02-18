@@ -25,4 +25,6 @@
       };
     }
   ];
+
+  services.postgresqlCipheredBackup.databases = [ "hedgedoc" ];
 }
