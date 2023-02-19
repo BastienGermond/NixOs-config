@@ -14,6 +14,7 @@
       jq
       libnotify
       ncdu
+      nvd
       picocom
     ];
   };
