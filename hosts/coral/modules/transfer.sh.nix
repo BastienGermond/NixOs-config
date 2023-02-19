@@ -15,7 +15,9 @@
       s3-path-style = true;
       bucket = "transfer.sh";
 
-      max-upload-size = 2000000; # Restrict to 2GB
+      max-upload-size = 5000000; # Restrict to 5GB
+
+      purge-days = 7;
     };
   };
 }
