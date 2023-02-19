@@ -1,4 +1,3 @@
-{ isMinimal ? false }:
 { config, pkgs, lib, inputs, ... }:
 
 {
@@ -10,14 +9,13 @@
         home.stateVersion = "22.05";
 
         imports = [
-          (import ./packages.nix { inherit isMinimal; })
-          ./xdg.nix
-          ./gpg.nix
-          ./shell.nix
-          ./terminal.nix
-          ./neovim.nix
+          (../hosts/${config.networking.hostName}/home)
           ./git.nix
-          ./rofi.nix
+          ./gpg.nix
+          ./neovim.nix
+          ./packages.nix
+          ./shell.nix
+          ./xdg.nix
         ];
       };
     };

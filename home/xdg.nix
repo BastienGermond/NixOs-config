@@ -36,11 +36,7 @@
 
   xdg.configFile = {
     "git/config".source = ../dotfiles/gitconfig;
-    "dunst/dunstrc".source = ../dotfiles/dunstrc;
     "i3/config".source = ../dotfiles/i3;
-    "polybar/config".source = ../dotfiles/polybar/config;
-    "polybar/launch.sh".source = ../dotfiles/polybar/launch.sh;
-    "polybar/polybar-wireguard.sh".source = ../dotfiles/polybar/polybar-wireguard;
     "signature".source = ../dotfiles/signature;
     "nvim/lua/plugins.lua".source = ../dotfiles/vim/lua/plugins.lua;
   };
