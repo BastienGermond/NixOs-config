@@ -14,8 +14,10 @@
       logLevel = "debug";
     };
     postgresBackup = {
-      enable = true;
+      enable = false;
     };
     GeoIP.enable = true;
   };
+
+  services.postgresqlCipheredBackup.databases = [ config.services.authentik.dbName ];
 }

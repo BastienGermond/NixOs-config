@@ -29,6 +29,18 @@
 
   services.postgresqlBackup.location = "/datastore/postgres";
 
+  services.postgresqlCipheredBackup = {
+    enable = true;
+    compression = "gzip";
+    gpgKeyID = "4B4BF1563B72C6170FD2B835E1B6C1650DF13CAF";
+    location = "/srv/backup";
+    s3 = {
+      enable = true;
+      bucket = "anemone-pg-backup";
+      configFile = config.sops.secrets.PostgresBackupS3ConfigFile.path;
+    };
+  };
+
   systemd.services.NetworkManager-wait-online.enable = false;
 
   services.udev.extraRules = ''

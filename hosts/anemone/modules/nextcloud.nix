@@ -23,8 +23,7 @@ in
       ensureDatabases = [ "nextcloud" ];
     };
 
-    services.postgresqlBackup = {
-      enable = true;
+    services.postgresqlCipheredBackup = {
       databases = [ "nextcloud" ];
     };
 
