@@ -29,8 +29,10 @@ let
       inProgressFile = mkSqlPath ".in-progress" compressSuffix;
 
       s3UploadCmd = ''
-        ${pkgs.s3cmd}/bin/s3cmd --config=${cfg.s3.configFile} put ${prevFile} \
-        s3://${cfg.s3.bucket}/${builtins.baseNameOf prevFile}
+        if [ -e "${prevFile}" ]; then
+          ${pkgs.s3cmd}/bin/s3cmd --config=${cfg.s3.configFile} put ${prevFile} \
+          s3://${cfg.s3.bucket}/${builtins.baseNameOf prevFile}
+        fi
         ${pkgs.s3cmd}/bin/s3cmd --config=${cfg.s3.configFile} put ${curFile} \
         s3://${cfg.s3.bucket}/${builtins.baseNameOf curFile}
       '';
@@ -42,27 +44,27 @@ let
 
       requires = [ "postgresql.service" ];
 
-      path = [ pkgs.coreutils config.services.postgresql.package pkgs.s3cmd];
+      path = [ pkgs.coreutils config.services.postgresql.package pkgs.s3cmd ];
 
       script = ''
-          set -e -o pipefail
+        set -e -o pipefail
 
-          umask 0077 # ensure backup is only readable by postgres user
+        umask 0077 # ensure backup is only readable by postgres user
 
-          if [ -e ${curFile} ]; then
-            rm -f ${toString prevFiles}
-            mv ${curFile} ${prevFile}
-          fi
+        if [ -e ${curFile} ]; then
+          rm -f ${toString prevFiles}
+          mv ${curFile} ${prevFile}
+        fi
 
-          # ensure that we have imported key
-          ${pkgs.gnupg}/bin/gpg --recv-keys ${cfg.gpgKeyID}
+        # ensure that we have imported key
+        ${pkgs.gnupg}/bin/gpg --recv-keys ${cfg.gpgKeyID}
 
-          ${dumpCmd} \
-            | ${compressCmd} \
-            | ${cipherCmd} \
-            > ${inProgressFile}
+        ${dumpCmd} \
+          | ${compressCmd} \
+          | ${cipherCmd} \
+          > ${inProgressFile}
 
-          mv ${inProgressFile} ${curFile}
+        mv ${inProgressFile} ${curFile}
       '' + (if cfg.s3.enable then s3UploadCmd else "");
 
       serviceConfig = {
