@@ -86,20 +86,20 @@
         "synapze-pc".modules = [
           nixos-hardware.nixosModules.dell-xps-13-9360
           ./hosts/synapze-pc
-          (import ./home { })
+          ./home
           ./modules
           ./modules/xorg.nix
         ];
 
         "anemone".modules = [
           ./hosts/anemone
-          (import ./home { isMinimal = true; })
+          ./home
           ./modules
         ];
 
         "coral".modules = [
           ./hosts/coral
-          (import ./home { isMinimal = true; })
+          ./home
           ./modules
         ];
       };
