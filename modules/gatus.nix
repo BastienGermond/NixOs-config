@@ -357,7 +357,7 @@ in
       stopIfChanged = false;
       startLimitIntervalSec = 60;
       environment = {
-        GATUS_CONFIG_FILE = cfg.configFile;
+        GATUS_CONFIG_PATH = cfg.configFile;
       };
       serviceConfig = {
         ExecStart = execCommand;
