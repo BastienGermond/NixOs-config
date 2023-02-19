@@ -32,8 +32,8 @@
     let
       supportedSystems = [ "x86_64-linux" ];
       nodes = import ./nodes.nix {
-        inherit deploy-rs; nixosConfigurations =
-        self.nixosConfigurations;
+        inherit deploy-rs;
+        nixosConfigurations = self.nixosConfigurations;
       };
       infra = import ./hosts/infra.nix;
     in
@@ -112,8 +112,7 @@
         devShells.default = channels.nixpkgs.mkShell {
           buildInputs = with channels.nixpkgs; [
             age-plugin-yubikey
-            unstable.deploy-rs
-            sops
+            deploy-rs.packages.${system}.deploy-rs
           ];
         };
       };
