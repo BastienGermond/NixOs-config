@@ -44,6 +44,7 @@ in
       rust-analyzer
       clippy
       ltex-ls
+      nil
     ];
 
     plugins = with pkgs.vimPlugins; [

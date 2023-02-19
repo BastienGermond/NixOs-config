@@ -4,8 +4,8 @@ local fn = vim.fn
 
 vim.g.package_home = fn.stdpath("data") .. "/site/pack/packer/"
 
--- local plug_url_format = "https://hub.fastgit.xyz/%s"
-local plug_url_format = 'https://github.com/%s'
+local plug_url_format = "https://hub.fastgit.xyz/%s"
+-- local plug_url_format = 'https://github.com/%s'
 
 -- Auto-install packer in case it hasn't been installed.
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
