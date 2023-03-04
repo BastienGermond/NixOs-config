@@ -20,6 +20,7 @@ let
       sshUser = "synapze";
       sshOpts = [ "-A" ];
       magicRollback = false;
+      fastConnection = true;
 
       profiles.system = {
         user = "root";

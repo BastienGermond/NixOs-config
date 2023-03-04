@@ -13,6 +13,7 @@
     ./paperless.nix
     ./sops.nix
     ./ssh.nix
+    ./synapse.nix
     ./wireguard.nix
     ./zfs.nix
   ];

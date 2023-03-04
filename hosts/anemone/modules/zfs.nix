@@ -31,6 +31,12 @@
     options = [ "zfsutil" ];
   };
 
+  fileSystems."/datastore/matrix-synapse" = {
+    device = "datastore/matrix-synapse";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;

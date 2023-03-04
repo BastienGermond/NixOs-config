@@ -26,5 +26,11 @@
         owner = "postgres";
       };
     })
+
+    (lib.mkIf config.services.matrix-synapse.enable {
+      SynapseRegistrationSharedSecret = {
+        owner = "matrix-synapse";
+      };
+    })
   ];
 }
