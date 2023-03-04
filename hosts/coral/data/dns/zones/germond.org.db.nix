@@ -29,7 +29,7 @@ with dns.lib.combinators;
     selector = "mail";
     k = "rsa";
     p = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTciDADhA2e+uFBv6HVPGpIhVXLng2MkdB7lTw0m6HnfN25GQKf49unO4Oz4Yvd0DrwwlOE3A2tWtx1qw+hMr9xBO2eOB0Xc9WAVc7p0A2FTmMBaSBZ5n7bg71KEw8aJEnQmBLcrz+RgWYAwdcjY0BNwgRsi/WOH2ceXO1h0UtiwIDAQAB";
-    s = ["email"];
+    s = [ "email" ];
   }];
 
   subdomains = {

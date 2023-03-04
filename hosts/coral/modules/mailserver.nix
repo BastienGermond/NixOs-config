@@ -6,7 +6,7 @@
     debug = true;
     fqdn = "mx.germond.org";
     sendingFqdn = "germond.org";
-    domains = ["germond.org"];
+    domains = [ "germond.org" ];
 
     localDnsResolver = false;
 
