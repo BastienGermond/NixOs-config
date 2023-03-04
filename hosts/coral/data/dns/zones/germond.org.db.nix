@@ -44,6 +44,7 @@ with dns.lib.combinators;
     t.CNAME = [ "germond.org." ];
     paperless.CNAME = [ "germond.org." ];
     hackmd.CNAME = [ "germond.org." ];
+    newsso.CNAME = [ "germond.org." ];
     yamaha = {
       A = [ "193.48.57.161" ];
       AAAA = [ "2001:660:4401:60a0:216:3eff:fe63:515a" ];

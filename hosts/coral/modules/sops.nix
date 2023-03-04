@@ -52,6 +52,12 @@
       };
     })
 
+    (lib.mkIf config.services.keycloak.enable {
+      keycloakPostgresPassword = {
+        owner = "postgres";
+      };
+    })
+
     (lib.mkIf config.mailserver.enable {
       noReplyMailPassword = { };
       testMailPassword = { };

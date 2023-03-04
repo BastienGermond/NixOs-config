@@ -87,6 +87,18 @@ in
           };
         };
 
+        "newsso.germond.org" = withDefaultConfiguration "newsso.germond.org" {
+          extraConfig = ''
+            fastcgi_buffers  16 16k;
+            fastcgi_buffer_size  32k;
+          '';
+
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:${builtins.toString coral.ports.keycloak}/";
+            proxyWebsockets = true;
+          };
+        };
+
         "cloud.germond.org" = withDefaultConfiguration "cloud.germond.org" {
           locations."/" = {
             proxyPass = "http://${anemone.ips.vpn.A}/";

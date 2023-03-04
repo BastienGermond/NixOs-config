@@ -16,6 +16,7 @@ rec {
         node-exporter = 9002;
         promtail = 3031;
         loki = 3100;
+        keycloak = 9042;
       };
       wireguard = {
         wgs0 = {

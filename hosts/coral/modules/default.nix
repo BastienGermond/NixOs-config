@@ -5,6 +5,8 @@
     # ./nsd.nix
     ./bind.nix
     ./gatus.nix
+    ./hedgedoc.nix
+    ./keycloak.nix
     ./mailserver.nix
     ./monitoring.nix
     ./nginx.nix
