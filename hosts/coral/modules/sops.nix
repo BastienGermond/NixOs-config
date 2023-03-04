@@ -51,5 +51,10 @@
         owner = "postgres";
       };
     })
+
+    (lib.mkIf config.mailserver.enable {
+      noReplyMailPassword = { };
+      testMailPassword = { };
+    })
   ];
 }

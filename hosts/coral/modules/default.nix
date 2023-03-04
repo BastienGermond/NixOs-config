@@ -5,6 +5,7 @@
     # ./nsd.nix
     ./bind.nix
     ./gatus.nix
+    ./mailserver.nix
     ./monitoring.nix
     ./nginx.nix
     ./packages.nix
@@ -12,6 +13,5 @@
     ./ssh.nix
     ./transfer.sh.nix
     ./wireguard.nix
-    ./hedgedoc.nix
   ];
 }

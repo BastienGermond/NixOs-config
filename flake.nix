@@ -13,6 +13,7 @@
     deploy-rs = { url = "github:serokell/deploy-rs"; inputs.nixpkgs.follows = "nixpkgs"; };
     sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; };
     gistre-fr-db = { url = "github:BastienGermond/gistre.fr.db"; inputs.dns.follows = "dns"; };
+    nixos-mailserver = { url = "gitlab:simple-nixos-mailserver/nixos-mailserver"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
@@ -27,6 +28,7 @@
     , deploy-rs
     , sops-nix
     , gistre-fr-db
+    , nixos-mailserver
     , ...
     } @ inputs:
     let
@@ -47,6 +49,7 @@
           sops-nix.nixosModules.sops
           gistre-fr-db.nixosModules.default
           home-manager.nixosModule
+          nixos-mailserver.nixosModules.mailserver
           ./modules
         ];
         extraArgs = { inherit dns infra; };
@@ -113,6 +116,7 @@
           buildInputs = with channels.nixpkgs; [
             age-plugin-yubikey
             deploy-rs.packages.${system}.deploy-rs
+            sops
           ];
         };
       };

@@ -14,8 +14,27 @@ with dns.lib.combinators;
   ];
 
   A = [ "135.181.36.15" ];
+  AAAA = [ "2a01:4f9:c010:b3c0::" ];
+
+  MX = [{
+    preference = 50;
+    exchange = "mx.germond.org.";
+  }];
+
+  TXT = [
+    "v=spf1 a:mx.germond.org ip4:135.181.36.15 ~all"
+  ];
+
+  DKIM = [{
+    selector = "mail";
+    k = "rsa";
+    p = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTciDADhA2e+uFBv6HVPGpIhVXLng2MkdB7lTw0m6HnfN25GQKf49unO4Oz4Yvd0DrwwlOE3A2tWtx1qw+hMr9xBO2eOB0Xc9WAVc7p0A2FTmMBaSBZ5n7bg71KEw8aJEnQmBLcrz+RgWYAwdcjY0BNwgRsi/WOH2ceXO1h0UtiwIDAQAB";
+    s = ["email"];
+  }];
 
   subdomains = {
+    mx.CNAME = [ "germond.org" ];
+    _dmarc.TXT = [ "v=DMARC1; p=none" ];
     cloud.CNAME = [ "germond.org." ];
     sso.CNAME = [ "germond.org." ];
     grafana.CNAME = [ "germond.org." ];

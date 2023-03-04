@@ -76,6 +76,9 @@
       interface = "enp1s0";
     };
 
+    hosts = {
+      "127.0.0.1" = [ "germond.org" "mx.germond.org" ];
+    };
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;

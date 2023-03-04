@@ -22,6 +22,7 @@ let
   gatusWebCfg = config.services.gatus.config.web;
 
   anemone = infra.hosts.anemone;
+  coral = infra.hosts.coral;
 in
 {
   users.users.nginx.extraGroups = [ "grafana" "acme" ];
