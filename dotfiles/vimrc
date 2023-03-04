@@ -359,7 +359,7 @@ require 'ltex-ls'.setup {
 
 -- Init tree-sitter
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "python", "latex", "nix", "go", "typescript" },
+  ensure_installed = { },
   ignore_install = { }, -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
