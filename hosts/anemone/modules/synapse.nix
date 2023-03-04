@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, infra, ... }:
 
 {
   services.matrix-synapse = {
@@ -8,11 +8,11 @@
       server_name = "germond.org";
       database.name = "psycopg2";
 
+      enable_metrics = true;
+
       listeners = [
         {
-          bind_addresses = [
-            "10.100.10.2"
-          ];
+          bind_addresses = [ "10.100.10.2" ];
           port = 8008;
           resources = [
             {
@@ -31,6 +31,18 @@
           tls = false;
           type = "http";
           x_forwarded = true;
+        }
+        {
+          type = "metrics";
+          bind_addresses = [ "10.100.10.2" ];
+          port = infra.hosts.anemone.ports.matrix-synapse-monitoring;
+          tls = false;
+          resources = [
+            {
+              compress = true;
+              names = [ "metrics" ];
+            }
+          ];
         }
       ];
 

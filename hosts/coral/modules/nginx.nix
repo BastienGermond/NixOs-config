@@ -98,6 +98,8 @@ in
               # For the federation port
               listen 8448 ssl http2 default_server;
               listen [::]:8448 ssl http2 default_server;
+
+              client_max_body_size 50M;
             '';
 
             locations."= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;

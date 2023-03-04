@@ -52,6 +52,7 @@ rec {
         minio = 9031;
         s3 = 9030;
         paperless = 28981;
+        matrix-synapse-monitoring = 9092;
       };
       wireguard = {
         wg0 = {

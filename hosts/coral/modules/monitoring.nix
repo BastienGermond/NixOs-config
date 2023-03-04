@@ -63,6 +63,7 @@ in
     ruleFiles = [
       ../data/prometheus/host-alerts.yml
       ../data/prometheus/gatus.yml
+      ../data/prometheus/synapse-v2.rules
     ];
 
     exporters = {
@@ -91,6 +92,13 @@ in
         scheme = "https";
         static_configs = [{
           targets = [ "status.germond.org" ];
+        }];
+      }
+      {
+        job_name = "synapse";
+        metrics_path = "/_synapse/metrics";
+        static_configs = [{
+          targets = [ "10.100.10.2:${builtins.toString anemone.ports.matrix-synapse-monitoring}" ];
         }];
       }
     ];

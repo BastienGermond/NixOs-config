@@ -38,7 +38,7 @@
         {
           name = "Hedgedoc";
           group = "2 - Services";
-          url = "https://hackmd.germond.org/status";
+          url = "https://hackmd.germond.org/";
           conditions = [
             "[STATUS] == 200"
           ];
