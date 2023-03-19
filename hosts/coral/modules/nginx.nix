@@ -106,6 +106,7 @@ in
             locations."= /.well-known/matrix/client".extraConfig = mkWellKnown clientConfig;
             locations."/_matrix".proxyPass = "http://${anemone.ips.vpn.A}:8008";
             locations."/_synapse/client".proxyPass = "http://${anemone.ips.vpn.A}:8008";
+            locations."= /matrix/health".proxyPass = "http://${anemone.ips.vpn.A}:8008/health";
             locations."/".return = "444";
           }
         );
