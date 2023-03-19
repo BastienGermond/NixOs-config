@@ -90,4 +90,9 @@
   ];
 
   services.postgresqlCipheredBackup.databases = [ "gatus" ];
+
+  systemd.services.gatus = {
+    after = [ "postgresql.service" ];
+    bindsTo = [ "postgresql.service" ];
+  };
 }
