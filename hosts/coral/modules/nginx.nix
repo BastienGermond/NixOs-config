@@ -120,8 +120,9 @@ in
 
         "newsso.germond.org" = withDefaultConfiguration "newsso.germond.org" {
           extraConfig = ''
-            fastcgi_buffers  16 16k;
-            fastcgi_buffer_size  32k;
+            proxy_busy_buffers_size       512k;
+            proxy_buffers             4   512k;
+            proxy_buffer_size             256k;
           '';
 
           locations."/" = {
