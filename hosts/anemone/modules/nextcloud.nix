@@ -43,14 +43,14 @@ in
       maxUploadSize = "10G";
 
       extraApps = {
-        oidc_login = pkgs.fetchNextcloudApp rec {
-          sha256 = "sha256-ZA6UWnVvNuifvpa6GdPUR0toZUZCceoELizdaFhxbU8=";
-          url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.4.0-beta.1/oidc_login.tar.gz";
+        oidc_login = pkgs.fetchNextcloudApp {
+          sha256 = "sha256-muTtxUxhSvBbhmJuE/Aig2toLcg+62s/fyA5b73gkYE=";
+          url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.4.1/oidc_login.tar.gz";
         };
 
-        breezedark = pkgs.fetchNextcloudApp rec {
-          sha256 = "sha256-caf3Ac9p0mzV/oBQcukSvL+b1gTIBa201klJsi6cB+Q=";
-          url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v25.0.0/breezedark.tar.gz";
+        breezedark = pkgs.fetchNextcloudApp {
+          sha256 = "sha256-wWoeMj6XFV7b9bY+zvCc8o0ufC7q8uasM0Kj0bgoTUo=";
+          url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v25.0.1/breezedark.tar.gz";
         };
 
         # FIXME: Not yet ready (https://github.com/icewind1991/files_markdown/issues/200)
@@ -59,7 +59,7 @@ in
         #   url = "https://github.com/icewind1991/files_markdown/releases/download/v2.3.6/files_markdown.tar.gz";
         # };
 
-        files_texteditor = pkgs.fetchNextcloudApp rec {
+        files_texteditor = pkgs.fetchNextcloudApp {
           sha256 = "sha256-Wvd5FhB0kAokaezqBK2QpfIDZgCVjmt1QO2SwSMJs2Y=";
           url = "https://github.com/nextcloud/files_texteditor/releases/download/v2.15.0/files_texteditor.tar.gz";
         };
@@ -70,12 +70,12 @@ in
         #   url = "https://github.com/PaulLereverend/NextcloudDuplicateFinder/releases/download/0.0.15/duplicatefinder.tar.gz";
         # };
 
-        notes = pkgs.fetchNextcloudApp rec {
+        notes = pkgs.fetchNextcloudApp {
           sha256 = "sha256-dLJ2fWSwNlK0wBGo1SO9grZ1KQ4FbTzswLKQzNXYj8k=";
           url = "https://github.com/nextcloud/notes/releases/download/v4.6.0/notes.tar.gz";
         };
 
-        announcementcenter = pkgs.fetchNextcloudApp rec {
+        announcementcenter = pkgs.fetchNextcloudApp {
           sha256 = "sha256-n8GqrlYSfAtJInMMblqk4TFB0wqrvY7bAit8i5F+evc=";
           url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v6.4.0/announcementcenter-v6.4.0.tar.gz";
         };
@@ -133,20 +133,23 @@ in
         lost_password_link = "disabled";
 
         # OIDC Login configuration
-        oidc_login_provider_url = "https://sso.germond.org/application/o/nextcloud/";
-        oidc_login_auto_redirect = false;
+        oidc_login_client_id = "nextcloud";
+        oidc_login_provider_url = "https://newsso.germond.org/realms/germond/";
+        oidc_login_auto_redirect = true;
         oidc_login_hide_password_form = true;
         oidc_login_scope = "openid email profile nextcloud";
-        oidc_login_end_session_redirect = false;
+        oidc_login_end_session_redirect = true;
+        oidc_login_logout_url = "https://cloud.germond.org";
         oidc_login_disable_registration = false;
+        oidc_login_redir_fallback = true;
         oidc_login_attributes = {
           id = "preferred_username";
           name = "name";
           mail = "email";
-          groups = "groups";
+          # groups = "groups";
           quota = "quota";
         };
-        oidc_create_groups = true;
+        oidc_create_groups = false;
         oidc_login_button_text = "Germond SSO";
 
         # Cache
