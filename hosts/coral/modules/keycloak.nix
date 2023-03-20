@@ -30,6 +30,8 @@ in
       http-host = "127.0.0.1";
       http-port = coral.ports.keycloak;
       http-enabled = true;
+
+      health-enabled = true;
     };
   };
 }

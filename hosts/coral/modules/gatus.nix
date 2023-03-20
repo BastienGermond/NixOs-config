@@ -28,6 +28,14 @@
           ];
         }
         {
+          name = "Keycloak";
+          group = "0 - Authentication";
+          url = "https://newsso.germond.org/health/ready";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+        {
           name = "Nextcloud";
           group = "1 - Cloud";
           url = "https://cloud.germond.org/heartbeat";
