@@ -2,6 +2,11 @@
 
 let
   coral = infra.hosts.coral;
+
+  keycloak-restrict-client-auth = pkgs.fetchurl {
+    url = "https://github.com/sventorben/keycloak-restrict-client-auth/releases/download/v20.0.1/keycloak-restrict-client-auth.jar";
+    sha256 = "sha256-BHS2qMwufpfsI0B9b+g80dvPX29XMb7up25rgPm7gZY=";
+  };
 in
 {
   services.keycloak = {
@@ -14,6 +19,10 @@ in
       username = "keycloak";
       passwordFile = config.sops.secrets.keycloakPostgresPassword.path;
     };
+
+    plugins = [
+      keycloak-restrict-client-auth
+    ];
 
     settings = {
       hostname = "newsso.germond.org";
