@@ -44,6 +44,15 @@
           ];
         }
         {
+          name = "Gitea";
+          group = "2 - Services";
+          url = "https://git.germond.org/api/healthz";
+          conditions = [
+            "[STATUS] == 200"
+            "[BODY].status == pass"
+          ];
+        }
+        {
           name = "Hedgedoc";
           group = "2 - Services";
           url = "https://hackmd.germond.org/";
