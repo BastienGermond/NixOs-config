@@ -41,7 +41,7 @@ in
         USERNAME = "nickname";
       };
       log = {
-        LEVEL = "Debug";
+        LEVEL = "Info";
       };
     };
     database = {
