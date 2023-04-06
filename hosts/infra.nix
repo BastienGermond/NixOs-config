@@ -46,13 +46,14 @@ rec {
         };
       };
       ports = {
-        promtail = 3031;
-        node-exporter = 9002;
         authentik = 9000;
-        minio = 9031;
-        s3 = 9030;
-        paperless = 28981;
+        gitea = 9006;
         matrix-synapse-monitoring = 9092;
+        minio = 9031;
+        node-exporter = 9002;
+        paperless = 28981;
+        promtail = 3031;
+        s3 = 9030;
       };
       wireguard = {
         wg0 = {

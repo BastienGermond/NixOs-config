@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -25,6 +25,10 @@
 
   services.postgresql = {
     package = pkgs.postgresql_14;
+    authentication = lib.mkOverride 20 ''
+      local all all ident
+      host all all 127.0.0.1/32 ident
+    '';
   };
 
   services.postgresqlBackup.location = "/datastore/postgres";

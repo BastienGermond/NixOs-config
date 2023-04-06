@@ -4,6 +4,7 @@
   imports = [
     ./authentik.nix
     ./docker.nix
+    ./gitea.nix
     ./k3s.nix
     ./minio.nix
     ./monitoring.nix

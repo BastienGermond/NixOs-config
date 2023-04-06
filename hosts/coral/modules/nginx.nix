@@ -260,6 +260,12 @@ in
               proxyPass = "http://${hedgedocHost}:${builtins.toString hedgedocPort}";
             };
         };
+
+        "git.germond.org" = withDefaultConfiguration "git.germond.org" {
+          locations."/" = {
+            proxyPass = "http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.gitea}";
+          };
+        };
       };
   };
 

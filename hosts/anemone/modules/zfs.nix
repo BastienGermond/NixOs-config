@@ -37,6 +37,12 @@
     options = [ "zfsutil" ];
   };
 
+  fileSystems."/datastore/gitea" = {
+    device = "datastore/gitea";
+    fsType = "zfs";
+    options = [ "zfsutil" ];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;
