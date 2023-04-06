@@ -1,6 +1,8 @@
-{ pkgs, config, infra, ... }:
+{ config, infra, ... }:
 
 {
+  networking.firewall.allowedTCPPorts = [ ];
+
   services.matrix-synapse = {
     enable = true;
     dataDir = "/datastore/matrix-synapse/data";

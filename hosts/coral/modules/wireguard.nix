@@ -1,9 +1,9 @@
-{ config, pkgs, lib, infra, ... }:
+{ pkgs, lib, infra, ... }:
 
 {
-  networking.nat.enable = true;
-  networking.nat.externalInterface = "eth0";
   networking.nat.internalInterfaces = builtins.attrNames infra.hosts.coral.wireguard;
+
+  networking.firewall.allowedUDPPorts = [ 51821 ];
 
   networking.wireguard.interfaces = lib.mkMerge [
     infra.hosts.coral.wireguard

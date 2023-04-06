@@ -27,6 +27,8 @@ in
 {
   users.users.nginx.extraGroups = [ "grafana" "acme" ];
 
+  networking.firewall.allowedTCPPorts = [ 80 443 8448 ];
+
   services.nginx = {
     enable = true;
     package = pkgs.nginxStable;

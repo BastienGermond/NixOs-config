@@ -54,6 +54,7 @@ rec {
         paperless = 28981;
         promtail = 3031;
         s3 = 9030;
+        gitea-ssh = 2222;
       };
       wireguard = {
         wg0 = {

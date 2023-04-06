@@ -23,6 +23,16 @@ in
     httpPort = anemone.ports.gitea;
     httpAddress = anemone.ips.vpn.A;
     settings = {
+      server = {
+        START_SSH_SERVER = true;
+        BUILTIN_SSH_SERVER_USER = "git";
+        SSH_DOMAIN = "git.germond.org";
+        SSH_LISTEN_HOST = anemone.ips.vpn.A;
+        SSH_LISTEN_PORT = anemone.ports.gitea-ssh;
+        SSH_ROOT_PATH = "~/.gitea-ssh";
+        SSH_PORT = 22;
+        # SSH_SERVER_KEY_EXCHANGES = "curve25519-sha256";
+      };
       service = {
         DISABLE_REGISTRATION = true;
         DEFAULT_USER_VISIBILITY = "limited";
@@ -41,7 +51,7 @@ in
         USERNAME = "nickname";
       };
       log = {
-        LEVEL = "Info";
+        LEVEL = "Debug";
       };
     };
     database = {

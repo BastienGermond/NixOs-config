@@ -9,16 +9,17 @@ let
     {
       hostname = "135.181.36.15";
       name = "coral";
+      sshOpts = [ "-p" "2222" ];
     }
   ];
 
-  createNode = { hostname, name }: {
+  createNode = { hostname, name, ... } @ extra: {
     name = "${name}";
     value = {
       hostname = "${hostname}";
 
       sshUser = "synapze";
-      sshOpts = [ "-A" ];
+      sshOpts = [ "-A" ] ++ (if (builtins.hasAttr "sshOpts" extra) then extra.sshOpts else [ ]);
       magicRollback = false;
 
       profiles.system = {
