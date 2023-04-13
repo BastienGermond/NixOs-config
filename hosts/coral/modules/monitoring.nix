@@ -30,6 +30,8 @@ in
     port = coral.ports.prometheus;
     retentionTime = "15d";
 
+    checkConfig = "syntax-only";
+
     alertmanager = {
       enable = true;
       environmentFile = config.sops.secrets.alertmanagerEnv.path;
@@ -99,6 +101,15 @@ in
         metrics_path = "/_synapse/metrics";
         static_configs = [{
           targets = [ "10.100.10.2:${builtins.toString anemone.ports.matrix-synapse-monitoring}" ];
+        }];
+      }
+      {
+        job_name = "minio-job";
+        metrics_path = "/minio/v2/metrics/cluster";
+        scheme = "https";
+        bearer_token_file = config.sops.secrets.minioBearerToken.path;
+        static_configs = [{
+          targets = [ "s3.germond.org" ];
         }];
       }
     ];

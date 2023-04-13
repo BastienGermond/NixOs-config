@@ -62,5 +62,12 @@
       noReplyMailPassword = { };
       testMailPassword = { };
     })
+
+    (lib.mkIf config.services.prometheus.enable {
+      minioBearerToken = {
+        owner = "prometheus";
+        restartUnits = [ "prometheus.service" ];
+      };
+    })
   ];
 }
