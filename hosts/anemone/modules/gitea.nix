@@ -38,11 +38,14 @@ in
         DEFAULT_USER_VISIBILITY = "limited";
         DEFAULT_KEEP_EMAIL_PRIVATE = true;
       };
+      "service.explore" = {
+        REQUIRE_SIGNIN_VIEW = true;
+      };
       session = {
         COOKIE_SECURE = true;
       };
       openid = {
-        ENABLE_OPENID_SIGNIN = true;
+        ENABLE_OPENID_SIGNIN = false;
       };
       oauth2_client = {
         REGISTER_EMAIL_CONFIRM = false;
