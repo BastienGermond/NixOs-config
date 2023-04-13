@@ -2,13 +2,13 @@
 
 pkgs.buildGoModule rec {
   pname = "tansfer.sh";
-  version = "1.4.0";
+  version = "1.5.0";
 
   src = pkgs.fetchFromGitHub {
     owner = "dutchcoders";
     repo = "transfer.sh";
     rev = "v${version}";
-    sha256 = "sha256-8XMeLIhVWqXBeQToVSyLxEBgLVhCZ+kAf96Cti5e04U=";
+    sha256 = "sha256-6nq7yjhYsreMtwuQf4RLGxupSMDtRsha7LimuOSBYBk=";
   };
 
   ldflags = [
@@ -19,5 +19,5 @@ pkgs.buildGoModule rec {
 
   CGO_ENABLED = false;
 
-  vendorSha256 = "sha256-d7EMXCtDGp9k6acVg/FiLqoO1AsRzoCMkBb0zen9IGc=";
+  vendorSha256 = "sha256-ngmmJga9vxNTp0UGyiKYfaPATipXny7DLjeEPhyW5m0=";
 }
