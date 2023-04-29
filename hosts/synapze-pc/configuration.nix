@@ -18,7 +18,7 @@
 
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
   environment.variables.TERM = "alacritty";
-  environment.variables.EDITOR = "vim";
+  environment.variables.EDITOR = "hx";
 
   environment.extraInit = ''
     # these are the defaults, but some applications are buggy so we set them
