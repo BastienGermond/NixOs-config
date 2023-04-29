@@ -5,7 +5,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager = { url = "github:nix-community/home-manager/release-22.11"; inputs.nixpkgs.follows = "nixpkgs"; };
+    home-manager = { url = "github:nix-community/home-manager/release-22.11"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
     flake-utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nvim-flake = { url = "github:neovim/neovim/v0.8.3?dir=contrib"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -73,7 +73,7 @@
           spotibar = final.callPackage ./pkgs/spotibar/default.nix { };
           gatus = final.callPackage ./pkgs/gatus/default.nix { };
           transfer_sh = final.callPackage ./pkgs/transfer.sh/default.nix { };
-          immich-server = final.callPackage ./pkgs/immich/server/default.nix { };
+          gose = final.callPackage ./pkgs/gose/default.nix { };
 
           kicad = nixpkgs-unstable.legacyPackages.${prev.system}.kicad;
 
