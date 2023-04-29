@@ -4,8 +4,8 @@ local fn = vim.fn
 
 vim.g.package_home = fn.stdpath("data") .. "/site/pack/packer/"
 
-local plug_url_format = "https://hub.fastgit.xyz/%s"
--- local plug_url_format = 'https://github.com/%s'
+-- local plug_url_format = "https://hub.fastgit.xyz/%s"
+local plug_url_format = 'https://github.com/%s'
 
 -- Auto-install packer in case it hasn't been installed.
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -38,6 +38,7 @@ require('packer').startup({
         use 'neovim/nvim-lspconfig'
         use 'ray-x/lsp_signature.nvim'
         use 'L3MON4D3/LuaSnip'
+        use 'p00f/clangd_extensions.nvim'
 
         use 'ludovicchabant/vim-gutentags'
 
@@ -77,9 +78,6 @@ require('packer').startup({
 
         -- PostgreSQL syntax
         use 'lifepillar/pgsql.vim'
-
-        -- Enable Neovim's builtin spellchecker for buffers with tree-sitter highlighting.
-        use 'lewis6991/spellsitter.nvim'
 
         -- Nvim suggestion
         use 'hrsh7th/cmp-nvim-lsp'
