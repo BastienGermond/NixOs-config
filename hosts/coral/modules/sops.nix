@@ -43,6 +43,7 @@
     (lib.mkIf config.services.hedgedoc.enable {
       hedgedocEnv = {
         owner = "hedgedoc";
+        restartUnits = [ "hedgedoc.service" ];
       };
     })
 
