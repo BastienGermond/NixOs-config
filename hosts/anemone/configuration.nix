@@ -13,9 +13,11 @@
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
     supportedFilesystems = [ "zfs" ];
   };
+
+  programs.zsh.enable = true;
 
   services.geoipupdate.settings = {
     AccountID = 753286;

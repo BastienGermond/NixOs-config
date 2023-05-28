@@ -19,11 +19,10 @@ in
   services.gitea = {
     enable = true;
     stateDir = "/datastore/gitea";
-    rootUrl = "https://git.germond.org";
-    httpPort = anemone.ports.gitea;
-    httpAddress = anemone.ips.vpn.A;
     settings = {
       server = {
+        HTTP_PORT = anemone.ports.gitea;
+        HTTP_ADDR = anemone.ips.vpn.A;
         START_SSH_SERVER = true;
         BUILTIN_SSH_SERVER_USER = "git";
         SSH_DOMAIN = "git.germond.org";
@@ -31,6 +30,7 @@ in
         SSH_LISTEN_PORT = anemone.ports.gitea-ssh;
         SSH_ROOT_PATH = "~/.gitea-ssh";
         SSH_PORT = 22;
+        ROOT_URL = "https://git.germond.org";
         # SSH_SERVER_KEY_EXCHANGES = "curve25519-sha256";
       };
       service = {

@@ -21,13 +21,15 @@
         auto-format = true;
       };
     };
-    languages = [
-      { name = "c"; }
-      { name = "cpp"; }
-      { name = "nix"; }
-      { name = "tsx"; }
-      { name = "go"; }
-      { name = "cmake"; }
-    ];
+    languages = {
+      language = [
+        { name = "c"; }
+        { name = "cpp"; }
+        { name = "nix"; }
+        { name = "tsx"; }
+        { name = "go"; }
+        { name = "cmake"; }
+      ];
+    };
   };
 }

@@ -5,7 +5,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager = { url = "github:nix-community/home-manager/release-22.11"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
+    home-manager = { url = "github:nix-community/home-manager/master"; inputs.nixpkgs.follows = "nixpkgs-unstable"; };
     flake-utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nvim-flake = { url = "github:neovim/neovim/v0.8.3?dir=contrib"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -58,7 +58,7 @@
       channelsConfig = {
         allowUnfree = true;
         permittedInsecurePackages = [
-          "qtwebkit-5.212.0-alpha4"
+          # "qtwebkit-5.212.0-alpha4"
         ];
       };
 
@@ -80,8 +80,7 @@
           neovim = nvim-flake.packages.${prev.system}.neovim;
           # neovim = nixpkgs-unstable.legacyPackages.${prev.system}.neovim;
 
-          # Mitigation for https://mta.openssl.org/pipermail/openssl-announce/2022-October/000238.html
-          nginxStable = prev.nginxStable.override { openssl = prev.openssl_1_1; };
+          nginxStable = prev.nginxStable.override { openssl = prev.pkgs.libressl; };
         })
       ];
 

@@ -4,16 +4,12 @@
   nixpkgs.config.allowUnfree = true;
 
   fonts.fonts = with pkgs; [
-    fira
-    fira-code
-    fira-mono
     font-awesome
     julia-mono
     noto-fonts
     roboto
-    terminus-nerdfont
-    terminus_font_ttf
     termsyn
+    (nerdfonts.override { fonts = [ "FiraMono" "FiraCode" "Terminus" ]; })
   ];
 
   environment.systemPackages = with pkgs; [

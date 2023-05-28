@@ -11,9 +11,8 @@
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   # Required for postgres authentication.
   services.oidentd.enable = true;
@@ -36,6 +35,8 @@
       configFile = config.sops.secrets.PostgresBackupS3ConfigFile.path;
     };
   };
+
+  programs.zsh.enable = true;
 
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
   environment.variables.EDITOR = "vim";
