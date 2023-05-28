@@ -20,6 +20,7 @@
   services.postgresql.package = pkgs.postgresql_14;
   services.postgresql.authentication = lib.mkOverride 10 ''
     local all all ident
+    host keycloak keycloak 127.0.0.1/32 scram-sha-256
     host all all 127.0.0.1/32 ident
   '';
 
