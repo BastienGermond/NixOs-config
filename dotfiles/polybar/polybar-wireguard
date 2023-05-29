@@ -9,9 +9,9 @@ ip=$(ip a show "$connected_interface" | grep inet | awk '{ print $2 }' | cut -d 
 print() {
     if [[ -n "$connected_interface" ]]
     then
-        echo %{u"$green"}%{+u}%{F"$green"}旅%{F-}" $connected_interface $ip"
+        echo %{u"$green"}%{+u}%{F"$green"}󰒄 %{F-}" $connected_interface $ip"
     else
-        echo %{u"$green"}%{+u}%{F"$green"}旅%{F-}" wg nc."
+        echo %{u"$green"}%{+u}%{F"$green"}󰒄 %{F-}" wg nc."
     fi
 }
 
