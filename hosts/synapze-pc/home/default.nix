@@ -2,9 +2,10 @@
 
 {
   imports = [
+    ./dunst.nix
+    ./helix.nix
     ./rofi.nix
     ./terminal.nix
-    ./helix.nix
   ];
 
   config = {
@@ -41,7 +42,6 @@
       ];
 
     xdg.configFile = {
-      "dunst/dunstrc".source = ../../../dotfiles/dunstrc;
       "polybar/config".source = ../../../dotfiles/polybar/config;
       "polybar/launch.sh".source = ../../../dotfiles/polybar/launch.sh;
       "polybar/polybar-wireguard.sh".source = ../../../dotfiles/polybar/polybar-wireguard;
