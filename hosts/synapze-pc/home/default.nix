@@ -4,6 +4,7 @@
   imports = [
     ./dunst.nix
     ./helix.nix
+    ./polybar.nix
     ./rofi.nix
     ./terminal.nix
   ];
@@ -40,11 +41,5 @@
         teams
         texlab
       ];
-
-    xdg.configFile = {
-      "polybar/config".source = ../../../dotfiles/polybar/config;
-      "polybar/launch.sh".source = ../../../dotfiles/polybar/launch.sh;
-      "polybar/polybar-wireguard.sh".source = ../../../dotfiles/polybar/polybar-wireguard;
-    };
   };
 }

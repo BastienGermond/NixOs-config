@@ -18,8 +18,16 @@
 
   services.xserver.displayManager.autoLogin.user = "synapze";
 
-  security.sudo.extraConfig = ''
-    synapze ALL = (root) NOPASSWD: ${pkgs.wireguard-tools.out}/bin/wg
-  '';
-
+  security.sudo = {
+    enable = true;
+    extraRules = [{
+      commands = [
+        {
+          command = "${pkgs.wireguard-tools.out}/bin/wg show";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+      groups = [ "wheel" ];
+    }];
+  };
 }

@@ -412,12 +412,6 @@ screenchange-reload = true
 margin-top = 5
 margin-bottom = 5
 
-[module/wireguard]
-type = custom/script
-exec = ~/.config/polybar/polybar-wireguard.sh
-tail = false
-interval = 5
-
 # Spotify
 
 [module/spotibar-previous-track]
