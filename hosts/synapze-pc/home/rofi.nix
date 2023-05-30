@@ -3,6 +3,6 @@
 {
   programs.rofi = {
     enable = true;
-    font = "Terminus (TTF) 12";
+    font = "Terminess Nerd Font 12";
   };
 }
