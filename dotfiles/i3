@@ -226,4 +226,5 @@ set_from_resource $term_color15    color15
 
 bindsym $mod+Shift+Return exec --no-startup-id $BROWSER
 
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# Restart polybar
+exec_always --no-startup-id systemctl --user restart polybar

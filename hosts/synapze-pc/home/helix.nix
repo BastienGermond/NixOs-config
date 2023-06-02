@@ -19,6 +19,10 @@
         mouse = false;
         cursorline = true;
         auto-format = true;
+        soft-wrap = {
+          enable = true;
+          wrap-at-text-width = true;
+        };
       };
     };
     languages = {
