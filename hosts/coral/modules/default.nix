@@ -4,6 +4,7 @@
   imports = [
     # ./nsd.nix
     ./bind.nix
+    ./fail2ban.nix
     ./gatus.nix
     ./hedgedoc.nix
     ./keycloak.nix

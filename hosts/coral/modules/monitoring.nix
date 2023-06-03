@@ -112,6 +112,13 @@ in
           targets = [ "s3.germond.org" ];
         }];
       }
+      {
+        job_name = "coral-f2b";
+        scheme = "http";
+        static_configs = [{
+          targets = [ "127.0.0.1:9191" ];
+        }];
+      }
     ];
   };
 
