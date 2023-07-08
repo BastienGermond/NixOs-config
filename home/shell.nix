@@ -1,6 +1,9 @@
-{ config, pkgs, inputs, ... }:
-
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -56,7 +59,7 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" "timer" ];
+      plugins = ["git" "sudo" "timer"];
       theme = "re5et";
     };
   };

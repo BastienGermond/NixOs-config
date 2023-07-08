@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
-
-let
-  nextcloudRedisPort = 6380;
-in
 {
+  config,
+  pkgs,
+  ...
+}: let
+  nextcloudRedisPort = 6380;
+in {
   services.redis.servers.nextcloud = {
     enable = true;
     port = nextcloudRedisPort;
@@ -19,18 +20,18 @@ in
         };
       }
     ];
-    ensureDatabases = [ "nextcloud" ];
+    ensureDatabases = ["nextcloud"];
   };
 
   services.postgresqlCipheredBackup = {
-    databases = [ "nextcloud" ];
+    databases = ["nextcloud"];
   };
 
-  systemd.services.nextcloud-cron.after = [ "postgresql.service" ];
-  systemd.services.nextcloud-cron.wants = [ "postgresql.service" ];
+  systemd.services.nextcloud-cron.after = ["postgresql.service"];
+  systemd.services.nextcloud-cron.wants = ["postgresql.service"];
 
-  systemd.services.nextcloud-setup.after = [ "postgresql.service" ];
-  systemd.services.nextcloud-setup.wants = [ "postgresql.service" ];
+  systemd.services.nextcloud-setup.after = ["postgresql.service"];
+  systemd.services.nextcloud-setup.wants = ["postgresql.service"];
 
   services.nextcloud = {
     enable = true;

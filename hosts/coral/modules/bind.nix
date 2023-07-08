@@ -1,14 +1,17 @@
-{ pkgs, config, dns, ... }:
-
-let
-  writeZone = name: pkgs.writeTextFile {
-    name = "${name}.zone";
-    text = dns.lib.toString name (import ../data/dns/zones/${name}.db.nix { inherit dns; });
-  };
-in
 {
-  networking.firewall.allowedTCPPorts = [ 53 ];
-  networking.firewall.allowedUDPPorts = [ 53 ];
+  pkgs,
+  config,
+  dns,
+  ...
+}: let
+  writeZone = name:
+    pkgs.writeTextFile {
+      name = "${name}.zone";
+      text = dns.lib.toString name (import ../data/dns/zones/${name}.db.nix {inherit dns;});
+    };
+in {
+  networking.firewall.allowedTCPPorts = [53];
+  networking.firewall.allowedUDPPorts = [53];
 
   services.bind = {
     enable = true;

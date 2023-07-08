@@ -1,52 +1,53 @@
-{ pkgs, config, lib, ... }:
-
-with lib;
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+with lib; let
   cfg = config.services.postgresqlCipheredBackup;
 
-  postgresqlBackupService = db: dumpCmd:
-    let
-      compressSuffixes = {
-        "none" = "";
-        "gzip" = ".gz";
-        "zstd" = ".zstd";
-      };
-      compressSuffix = getAttr cfg.compression compressSuffixes;
+  postgresqlBackupService = db: dumpCmd: let
+    compressSuffixes = {
+      "none" = "";
+      "gzip" = ".gz";
+      "zstd" = ".zstd";
+    };
+    compressSuffix = getAttr cfg.compression compressSuffixes;
 
-      compressCmd = getAttr cfg.compression {
-        "none" = "cat";
-        "gzip" = "${pkgs.gzip}/bin/gzip -c -${toString cfg.compressionLevel}";
-        "zstd" = "${pkgs.zstd}/bin/zstd -c -${toString cfg.compressionLevel}";
-      };
+    compressCmd = getAttr cfg.compression {
+      "none" = "cat";
+      "gzip" = "${pkgs.gzip}/bin/gzip -c -${toString cfg.compressionLevel}";
+      "zstd" = "${pkgs.zstd}/bin/zstd -c -${toString cfg.compressionLevel}";
+    };
 
-      cipherCmd = "${pkgs.gnupg}/bin/gpg --encrypt --armor --trust-model always -r ${cfg.gpgKeyID}";
+    cipherCmd = "${pkgs.gnupg}/bin/gpg --encrypt --armor --trust-model always -r ${cfg.gpgKeyID}";
 
-      mkSqlPath = prefix: suffix: "${cfg.location}/${db}${prefix}.sql${suffix}";
-      curFile = mkSqlPath "" compressSuffix;
-      prevFile = mkSqlPath ".prev" compressSuffix;
-      prevFiles = map (mkSqlPath ".prev") (attrValues compressSuffixes);
-      inProgressFile = mkSqlPath ".in-progress" compressSuffix;
+    mkSqlPath = prefix: suffix: "${cfg.location}/${db}${prefix}.sql${suffix}";
+    curFile = mkSqlPath "" compressSuffix;
+    prevFile = mkSqlPath ".prev" compressSuffix;
+    prevFiles = map (mkSqlPath ".prev") (attrValues compressSuffixes);
+    inProgressFile = mkSqlPath ".in-progress" compressSuffix;
 
-      s3UploadCmd = ''
-        if [ -e "${prevFile}" ]; then
-          ${pkgs.s3cmd}/bin/s3cmd --config=${cfg.s3.configFile} put ${prevFile} \
-          s3://${cfg.s3.bucket}/${builtins.baseNameOf prevFile}
-        fi
-        ${pkgs.s3cmd}/bin/s3cmd --config=${cfg.s3.configFile} put ${curFile} \
-        s3://${cfg.s3.bucket}/${builtins.baseNameOf curFile}
-      '';
-    in
-    {
-      enable = true;
+    s3UploadCmd = ''
+      if [ -e "${prevFile}" ]; then
+        ${pkgs.s3cmd}/bin/s3cmd --config=${cfg.s3.configFile} put ${prevFile} \
+        s3://${cfg.s3.bucket}/${builtins.baseNameOf prevFile}
+      fi
+      ${pkgs.s3cmd}/bin/s3cmd --config=${cfg.s3.configFile} put ${curFile} \
+      s3://${cfg.s3.bucket}/${builtins.baseNameOf curFile}
+    '';
+  in {
+    enable = true;
 
-      description = "Backup of ${db} database(s)";
+    description = "Backup of ${db} database(s)";
 
-      requires = [ "postgresql.service" ];
+    requires = ["postgresql.service"];
 
-      path = [ pkgs.coreutils config.services.postgresql.package pkgs.s3cmd ];
+    path = [pkgs.coreutils config.services.postgresql.package pkgs.s3cmd];
 
-      script = ''
+    script =
+      ''
         set -e -o pipefail
 
         umask 0077 # ensure backup is only readable by postgres user
@@ -65,17 +66,21 @@ let
           > ${inProgressFile}
 
         mv ${inProgressFile} ${curFile}
-      '' + (if cfg.s3.enable then s3UploadCmd else "");
+      ''
+      + (
+        if cfg.s3.enable
+        then s3UploadCmd
+        else ""
+      );
 
-      serviceConfig = {
-        Type = "oneshot";
-        User = "postgres";
-      };
-
-      startAt = cfg.startAt;
+    serviceConfig = {
+      Type = "oneshot";
+      User = "postgres";
     };
-in
-{
+
+    startAt = cfg.startAt;
+  };
+in {
   options = {
     services.postgresqlCipheredBackup = {
       enable = mkEnableOption "Postgresql Ciphered Backup";
@@ -96,7 +101,7 @@ in
       };
 
       databases = mkOption {
-        default = [ ];
+        default = [];
         type = types.listOf types.str;
         description = lib.mdDoc ''
           List of database names to dump.
@@ -120,7 +125,7 @@ in
       };
 
       compression = mkOption {
-        type = types.enum [ "none" "gzip" "zstd" ];
+        type = types.enum ["none" "gzip" "zstd"];
         default = "gzip";
         description = lib.mdDoc ''
           The type of compression to use on the generated database dump.
@@ -156,9 +161,11 @@ in
     {
       assertions = [
         {
-          assertion = cfg.compression == "none" ||
-            (cfg.compression == "gzip" && cfg.compressionLevel >= 1 && cfg.compressionLevel <= 9) ||
-            (cfg.compression == "zstd" && cfg.compressionLevel >= 1 && cfg.compressionLevel <= 19);
+          assertion =
+            cfg.compression
+            == "none"
+            || (cfg.compression == "gzip" && cfg.compressionLevel >= 1 && cfg.compressionLevel <= 9)
+            || (cfg.compression == "zstd" && cfg.compressionLevel >= 1 && cfg.compressionLevel <= 19);
           message = "config.services.postgresqlCipheredBackup.compressionLevel must be set between 1 and 9 for gzip and 1 and 19 for zstd";
         }
       ];
@@ -172,14 +179,12 @@ in
 
     (mkIf (cfg.enable) {
       systemd.services = listToAttrs (map
-        (db:
-          let
-            cmd = "pg_dump ${cfg.pgdumpOptions} ${db}";
-          in
-          {
-            name = "postgresqlCipheredBackup-${db}";
-            value = postgresqlBackupService db cmd;
-          })
+        (db: let
+          cmd = "pg_dump ${cfg.pgdumpOptions} ${db}";
+        in {
+          name = "postgresqlCipheredBackup-${db}";
+          value = postgresqlBackupService db cmd;
+        })
         cfg.databases);
     })
   ];

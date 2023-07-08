@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "modesetting" ];
+  services.xserver.videoDrivers = ["modesetting"];
 
   services.xserver.windowManager.i3 = {
     enable = true;
@@ -35,8 +37,16 @@
     enable = true;
     bindings = [
       # Brightness keys
-      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
-      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+      {
+        keys = [224];
+        events = ["key"];
+        command = "/run/current-system/sw/bin/light -U 10";
+      }
+      {
+        keys = [225];
+        events = ["key"];
+        command = "/run/current-system/sw/bin/light -A 10";
+      }
     ];
   };
 
@@ -74,5 +84,5 @@
   services.gvfs.enable = true;
 
   services.printing.enable = true;
-  services.printing.drivers = with pkgs; [ hplipWithPlugin canon-cups-ufr2 carps-cups cups-bjnp gutenprintBin cnijfilter2 ];
+  services.printing.drivers = with pkgs; [hplipWithPlugin canon-cups-ufr2 carps-cups cups-bjnp gutenprintBin cnijfilter2];
 }

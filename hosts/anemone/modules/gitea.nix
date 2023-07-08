@@ -1,11 +1,13 @@
-{ config, pkgs, infra, ... }:
-
-let
-  anemone = infra.hosts.anemone;
-in
 {
+  config,
+  pkgs,
+  infra,
+  ...
+}: let
+  anemone = infra.hosts.anemone;
+in {
   services.postgresql = {
-    ensureDatabases = [ "gitea" ];
+    ensureDatabases = ["gitea"];
     ensureUsers = [
       {
         name = "gitea";

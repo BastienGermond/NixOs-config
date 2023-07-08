@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   services.authentik = {
     enable = true;
     # image = "ghcr.io/goauthentik/dev-server";
@@ -19,5 +22,5 @@
     GeoIP.enable = true;
   };
 
-  services.postgresqlCipheredBackup.databases = [ config.services.authentik.dbName ];
+  services.postgresqlCipheredBackup.databases = [config.services.authentik.dbName];
 }

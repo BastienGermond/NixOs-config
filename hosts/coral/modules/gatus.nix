@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   services.gatus = {
     enable = true;
     config = {
@@ -96,7 +99,7 @@
     };
   };
 
-  services.postgresql.ensureDatabases = [ "gatus" ];
+  services.postgresql.ensureDatabases = ["gatus"];
   services.postgresql.ensureUsers = [
     {
       name = "gatus";
@@ -106,10 +109,10 @@
     }
   ];
 
-  services.postgresqlCipheredBackup.databases = [ "gatus" ];
+  services.postgresqlCipheredBackup.databases = ["gatus"];
 
   systemd.services.gatus = {
-    after = [ "postgresql.service" ];
-    bindsTo = [ "postgresql.service" ];
+    after = ["postgresql.service"];
+    bindsTo = ["postgresql.service"];
   };
 }

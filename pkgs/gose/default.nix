@@ -1,6 +1,8 @@
-{ pkgs, version ? "0.6.0", ... }:
-
-let
+{
+  pkgs,
+  version ? "0.6.0",
+  ...
+}: let
   gose-src = pkgs.fetchFromGitHub {
     owner = "BastienGermond";
     repo = "gose";
@@ -47,22 +49,21 @@ let
       "-X main.builtBy=nix"
     ];
 
-    tags = [ "embed" ];
+    tags = ["embed"];
 
     vendorSha256 = "sha256-ch9CVV6Dq5y8krTViPquc8eU6JQxXGB7o/G//1GB5mY=";
 
     doCheck = false;
   };
-
 in
-pkgs.stdenv.mkDerivation {
-  pname = "gose";
-  inherit version;
+  pkgs.stdenv.mkDerivation {
+    pname = "gose";
+    inherit version;
 
-  src = gose-bin;
+    src = gose-bin;
 
-  installPhase = ''
-    mkdir -p $out/bin
-    [ -e $out/bin ] && cp -rp bin/cmd $out/bin/gose
-  '';
-}
+    installPhase = ''
+      mkdir -p $out/bin
+      [ -e $out/bin ] && cp -rp bin/cmd $out/bin/gose
+    '';
+  }

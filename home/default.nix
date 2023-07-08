@@ -1,15 +1,19 @@
-{ config, pkgs, lib, inputs, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   home-manager = {
     useGlobalPkgs = true;
-    sharedModules = [ ];
+    sharedModules = [];
     users = {
       synapze = {
         home.stateVersion = "22.05";
 
         imports = [
-          (../hosts/${config.networking.hostName}/home)
+          ../hosts/${config.networking.hostName}/home
           ./git.nix
           ./gpg.nix
           ./neovim.nix
@@ -21,4 +25,3 @@
     };
   };
 }
-

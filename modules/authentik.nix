@@ -1,11 +1,16 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.services.authentik;
 
-  toStrBool = value: if value == true then "true" else "false";
-in
-{
+  toStrBool = value:
+    if value == true
+    then "true"
+    else "false";
+in {
   options = {
     services.authentik = {
       enable = lib.mkEnableOption "Authentik Service";
@@ -72,7 +77,7 @@ in
         };
 
         logLevel = lib.mkOption {
-          type = lib.types.enum [ "debug" "info" "warning" "error" ];
+          type = lib.types.enum ["debug" "info" "warning" "error"];
           default = "info";
           description = ''
             Log level for the server and worker containers. Possible values: debug, info, warning, error
@@ -100,16 +105,14 @@ in
 
       authentikServerEnvironmentFiles = lib.mkOption {
         type = with lib.types; listOf path;
-        default = [ ];
+        default = [];
         description = ''
           EnvironmentFiles passed to server and worker container. Mostly used to pass secrets such
           as AUTHENTIK_SECRET_KEY or AUTHENTIK_POSTGRESQL__PASSWORD.
         '';
       };
     };
-
   };
-
 
   config = lib.mkIf cfg.enable (
     let
@@ -128,92 +131,91 @@ in
       };
 
       authentikCommonVolumes = lib.mkMerge [
-        [ "${cfg.config.mediaFolder}:/media" ]
+        ["${cfg.config.mediaFolder}:/media"]
         (lib.mkIf
           cfg.GeoIP.enable [
-          "${config.services.geoipupdate.settings.DatabaseDirectory}:/geoip"
-        ])
+            "${config.services.geoipupdate.settings.DatabaseDirectory}:/geoip"
+          ])
       ];
-
     in
-    lib.mkMerge [
-      ({
-        # PostgreSQL DB
-        services.postgresql = {
-          enable = true;
-          enableTCPIP = true;
-          authentication = lib.mkOverride 10 ''
-            local all all trust
-            host all all 127.0.0.1/32 trust
-            host all all ::1/128 trust
-          '';
-          ensureUsers = [
-            {
-              name = cfg.dbUser;
-              ensurePermissions = {
-                "DATABASE \"${cfg.dbName}\"" = "ALL PRIVILEGES";
-              };
-            }
-          ];
-          ensureDatabases = [ cfg.dbName ];
-        };
+      lib.mkMerge [
+        {
+          # PostgreSQL DB
+          services.postgresql = {
+            enable = true;
+            enableTCPIP = true;
+            authentication = lib.mkOverride 10 ''
+              local all all trust
+              host all all 127.0.0.1/32 trust
+              host all all ::1/128 trust
+            '';
+            ensureUsers = [
+              {
+                name = cfg.dbUser;
+                ensurePermissions = {
+                  "DATABASE \"${cfg.dbName}\"" = "ALL PRIVILEGES";
+                };
+              }
+            ];
+            ensureDatabases = [cfg.dbName];
+          };
 
-        # Redis
-        services.redis.servers.redis-authentik = {
-          enable = true;
-          port = 6379;
-        };
+          # Redis
+          services.redis.servers.redis-authentik = {
+            enable = true;
+            port = 6379;
+          };
 
-        virtualisation.oci-containers = {
-          backend = "docker";
+          virtualisation.oci-containers = {
+            backend = "docker";
 
-          containers = lib.mkMerge [
-            ({
-              authentik-server = {
-                autoStart = true;
-                # user = "root";
-                image = "${cfg.image}:${cfg.version}";
-                cmd = [ "server" ];
-                extraOptions = [ "--network=host" ];
-                environment = authentikContainersEnv;
-                environmentFiles = cfg.authentikServerEnvironmentFiles;
-                volumes = authentikCommonVolumes;
-              };
+            containers = lib.mkMerge [
+              {
+                authentik-server = {
+                  autoStart = true;
+                  # user = "root";
+                  image = "${cfg.image}:${cfg.version}";
+                  cmd = ["server"];
+                  extraOptions = ["--network=host"];
+                  environment = authentikContainersEnv;
+                  environmentFiles = cfg.authentikServerEnvironmentFiles;
+                  volumes = authentikCommonVolumes;
+                };
 
-              authentik-worker = {
-                autoStart = true;
-                # Must access docker socket.
-                user = "root";
-                image = "${cfg.image}:${cfg.version}";
-                cmd = [ "worker" ];
-                extraOptions = [ "--network=host" ];
-                environment = authentikContainersEnv;
-                environmentFiles = cfg.authentikServerEnvironmentFiles;
-                volumes = lib.mkMerge [
-                  authentikCommonVolumes
-                  [
-                    "/var/run/docker.sock:/var/run/docker.sock"
-                    "${cfg.config.certsFolder}:/certs"
-                  ]
-                ];
-              };
-            })
-          ];
-        };
-      })
+                authentik-worker = {
+                  autoStart = true;
+                  # Must access docker socket.
+                  user = "root";
+                  image = "${cfg.image}:${cfg.version}";
+                  cmd = ["worker"];
+                  extraOptions = ["--network=host"];
+                  environment = authentikContainersEnv;
+                  environmentFiles = cfg.authentikServerEnvironmentFiles;
+                  volumes = lib.mkMerge [
+                    authentikCommonVolumes
+                    [
+                      "/var/run/docker.sock:/var/run/docker.sock"
+                      "${cfg.config.certsFolder}:/certs"
+                    ]
+                  ];
+                };
+              }
+            ];
+          };
+        }
 
-      (lib.mkIf cfg.postgresBackup.enable {
-        services.postgresqlBackup = {
-          enable = true;
-          databases = [ cfg.dbName ];
-        };
-      })
+        (lib.mkIf cfg.postgresBackup.enable {
+          services.postgresqlBackup = {
+            enable = true;
+            databases = [cfg.dbName];
+          };
+        })
 
-      (lib.mkIf cfg.GeoIP.enable {
-        services.geoipupdate = {
-          enable = true;
-        };
-      })
-    ]
+        (lib.mkIf cfg.GeoIP.enable {
+          services.geoipupdate = {
+            enable = true;
+          };
+        })
+      ]
   );
 }

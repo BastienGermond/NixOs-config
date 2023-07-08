@@ -1,21 +1,23 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   systemd.services.fail2ban-prometheus-exporter = {
     description = "Fail2ban prometheus exporter";
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       ExecStart = "${pkgs.fail2ban-prometheus-exporter}/bin/fail2ban-prometheus-exporter";
       Restart = "always";
       RestartSec = "10s";
     };
   };
-  
+
   services.fail2ban = {
     enable = true;
     bantime = "-1"; # permanent ban
 
-    extraPackages = [ pkgs.ipset ];
+    extraPackages = [pkgs.ipset];
     banaction = "iptables-ipset-proto6-allports";
 
     jails = {
@@ -39,7 +41,7 @@
       _daemon = sshd
 
       failregex = ^%(__prefix_line)s[iI](?:llegal|nvalid) user .*? from <HOST>(?: port \d+)?\s*$
-      ignoreregex = 
+      ignoreregex =
 
       [Init]
       journalmatch = _SYSTEMD_UNIT=sshd.service + _COMM=sshd

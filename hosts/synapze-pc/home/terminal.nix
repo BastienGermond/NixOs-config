@@ -1,6 +1,9 @@
-{ config, pkgs, inputs, ... }:
-
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   programs.alacritty = {
     enable = true;
     settings = {
@@ -22,7 +25,7 @@
         };
       };
       shell.program = "/usr/bin/env";
-      shell.args = [ "zsh" ];
+      shell.args = ["zsh"];
       key_bindings = [
         {
           key = "Return";

@@ -1,11 +1,13 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.services.transfer_sh;
 
   execCommand = "${cfg.package}/bin/transfer.sh";
-in
-{
+in {
   options = {
     services.transfer_sh = {
       enable = lib.mkEnableOption "Transfer.sh";
@@ -141,7 +143,7 @@ in
         };
 
         provider = lib.mkOption {
-          type = lib.types.enum [ "s3" "storj" "gdrive" "local" ];
+          type = lib.types.enum ["s3" "storj" "gdrive" "local"];
           description = "which storage provider to use";
         };
 
@@ -298,52 +300,70 @@ in
 
   config = lib.mkIf cfg.enable (
     let
-      toStr = e: if e == null then "" else
-      (if builtins.isBool e then
-        (if e == true then "true" else "false")
-      else
-        (if builtins.isList e then
-          (builtins.concatStringsSep "," e)
+      toStr = e:
+        if e == null
+        then ""
         else
-          (builtins.toString e)
-        )
-      );
+          (
+            if builtins.isBool e
+            then
+              (
+                if e == true
+                then "true"
+                else "false"
+              )
+            else
+              (
+                if builtins.isList e
+                then (builtins.concatStringsSep "," e)
+                else (builtins.toString e)
+              )
+          );
 
-      buildFlags = transferCfg: builtins.concatStringsSep " "
+      buildFlags = transferCfg:
+        builtins.concatStringsSep " "
         (
           builtins.attrValues (
-            builtins.mapAttrs (name: value: if value == null then "" else "--${name}=\"${toStr value}\"") transferCfg
+            builtins.mapAttrs (name: value:
+              if value == null
+              then ""
+              else "--${name}=\"${toStr value}\"")
+            transferCfg
           )
         );
-    in
-    {
+    in {
       users.users.${cfg.user} = {
         group = cfg.group;
         isSystemUser = true;
       };
 
-      users.groups.${cfg.group} = { };
+      users.groups.${cfg.group} = {};
 
       systemd.services."transfer.sh" = {
         description = "Transfer.sh -  Easy and fast file sharing from the command-line.";
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network.target" ];
+        wantedBy = ["multi-user.target"];
+        after = ["network.target"];
         stopIfChanged = false;
         startLimitIntervalSec = 60;
 
-        serviceConfig = {
-          ExecStart = "${execCommand} ${buildFlags cfg.config}";
-          Restart = "always";
-          RestartSec = "10s";
-          # User and Group
-          User = cfg.user;
-          Group = cfg.group;
-          # Transfer sh uses the tmp so let's isolate it
-          PrivateTmp = "yes";
-        } // (if (cfg.envFile != null) then
+        serviceConfig =
           {
-            EnvironmentFile = cfg.envFile;
-          } else { });
+            ExecStart = "${execCommand} ${buildFlags cfg.config}";
+            Restart = "always";
+            RestartSec = "10s";
+            # User and Group
+            User = cfg.user;
+            Group = cfg.group;
+            # Transfer sh uses the tmp so let's isolate it
+            PrivateTmp = "yes";
+          }
+          // (
+            if (cfg.envFile != null)
+            then {
+              EnvironmentFile = cfg.envFile;
+            }
+            else {}
+          );
       };
     }
   );

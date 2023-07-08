@@ -1,9 +1,12 @@
-{ pkgs, lib, infra, ... }:
-
 {
+  pkgs,
+  lib,
+  infra,
+  ...
+}: {
   networking.nat.internalInterfaces = builtins.attrNames infra.hosts.coral.wireguard;
 
-  networking.firewall.allowedUDPPorts = [ 51821 ];
+  networking.firewall.allowedUDPPorts = [51821];
 
   networking.wireguard.interfaces = lib.mkMerge [
     infra.hosts.coral.wireguard

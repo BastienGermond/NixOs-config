@@ -1,10 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, infra, ... }:
-
 {
+  config,
+  pkgs,
+  infra,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ./fs.nix
@@ -32,13 +34,12 @@
     alias gs='git status'
   '';
 
-  environment.pathsToLink = [ "/share/zsh" ];
-
+  environment.pathsToLink = ["/share/zsh"];
 
   virtualisation.virtualbox.host.enable = false;
   virtualisation.docker.enable = true;
 
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  users.extraGroups.vboxusers.members = ["user-with-access-to-virtualbox"];
 
   networking.hostName = "synapze-pc"; # Define your hostname.
   networking.extraHosts = ''
@@ -49,7 +50,7 @@
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
   networking.interfaces.wlp0s20f3.useDHCP = true;
 
@@ -87,7 +88,6 @@
   #   keyMap = "us";
   # };
 
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -105,6 +105,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
-
 }
-

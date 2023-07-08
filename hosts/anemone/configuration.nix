@@ -1,10 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -14,7 +16,7 @@
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     tmp.cleanOnBoot = true;
-    supportedFilesystems = [ "zfs" ];
+    supportedFilesystems = ["zfs"];
   };
 
   programs.zsh.enable = true;
@@ -22,7 +24,7 @@
   services.geoipupdate.settings = {
     AccountID = 753286;
     LicenseKey = config.sops.secrets.geoipLicenseKey.path;
-    EditionIDs = [ "GeoLite2-City" ];
+    EditionIDs = ["GeoLite2-City"];
   };
 
   services.postgresql = {
@@ -72,7 +74,7 @@
     alias gs='git status'
   '';
 
-  environment.pathsToLink = [ "/share/zsh" ];
+  environment.pathsToLink = ["/share/zsh"];
 
   virtualisation.docker.enable = true;
 
@@ -83,7 +85,7 @@
     hostName = "anemone";
     hostId = "aafe2a96";
 
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    nameservers = ["1.1.1.1" "8.8.8.8"];
     interfaces.enp8s0.useDHCP = true;
     networkmanager.enable = true;
   };
@@ -122,4 +124,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
 }
-

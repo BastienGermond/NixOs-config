@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-
+{pkgs, ...}:
 pkgs.buildGoModule rec {
   pname = "gatus";
   version = "5.3.2";
@@ -15,4 +14,3 @@ pkgs.buildGoModule rec {
 
   doCheck = false;
 }
-

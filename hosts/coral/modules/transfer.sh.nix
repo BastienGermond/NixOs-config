@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   services.transfer_sh = {
     enable = true;
     package = pkgs.transfer_sh;

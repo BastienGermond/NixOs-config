@@ -1,7 +1,9 @@
-{ config, infra, ... }:
-
 {
-  networking.firewall.allowedTCPPorts = [ ];
+  config,
+  infra,
+  ...
+}: {
+  networking.firewall.allowedTCPPorts = [];
 
   services.matrix-synapse = {
     enable = true;
@@ -14,7 +16,7 @@
 
       listeners = [
         {
-          bind_addresses = [ "10.100.10.2" ];
+          bind_addresses = ["10.100.10.2"];
           port = 8008;
           resources = [
             {
@@ -36,13 +38,13 @@
         }
         {
           type = "metrics";
-          bind_addresses = [ "10.100.10.2" ];
+          bind_addresses = ["10.100.10.2"];
           port = infra.hosts.anemone.ports.matrix-synapse-monitoring;
           tls = false;
           resources = [
             {
               compress = true;
-              names = [ "metrics" ];
+              names = ["metrics"];
             }
           ];
         }
@@ -65,6 +67,6 @@
     ];
     # If it's the first time, must run to fix issues with collate
     # psql# update pg_database set datctype='C',  datcollate='C' where datname='matrix-synapse';
-    ensureDatabases = [ "matrix-synapse" ];
+    ensureDatabases = ["matrix-synapse"];
   };
 }

@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   sops.defaultSopsFile = ../secrets/secrets.yml;
 
   sops.secrets = lib.mkMerge [
@@ -11,9 +14,9 @@
       nginxTrapCertKey = {
         owner = config.users.users.nginx.name;
       };
-      alertmanagerEnv = { };
-      nsdGermondOrgTsigSecret = { };
-      acmeGermondOrgCredsEnv = { };
+      alertmanagerEnv = {};
+      nsdGermondOrgTsigSecret = {};
+      acmeGermondOrgCredsEnv = {};
       bindDnsKey = {
         owner = config.users.users."named".name;
       };
@@ -22,15 +25,15 @@
     (lib.mkIf config.services.grafana.enable {
       grafanaSecretKey = {
         owner = config.users.users.grafana.name;
-        restartUnits = [ "grafana.service" ];
+        restartUnits = ["grafana.service"];
       };
       grafanaOAuthClientID = {
         owner = config.users.users.grafana.name;
-        restartUnits = [ "grafana.service" ];
+        restartUnits = ["grafana.service"];
       };
       grafanaOAuthSecret = {
         owner = config.users.users.grafana.name;
-        restartUnits = [ "grafana.service" ];
+        restartUnits = ["grafana.service"];
       };
     })
 
@@ -43,7 +46,7 @@
     (lib.mkIf config.services.hedgedoc.enable {
       hedgedocEnv = {
         owner = "hedgedoc";
-        restartUnits = [ "hedgedoc.service" ];
+        restartUnits = ["hedgedoc.service"];
       };
     })
 
@@ -60,14 +63,14 @@
     })
 
     (lib.mkIf config.mailserver.enable {
-      noReplyMailPassword = { };
-      testMailPassword = { };
+      noReplyMailPassword = {};
+      testMailPassword = {};
     })
 
     (lib.mkIf config.services.prometheus.enable {
       minioBearerToken = {
         owner = "prometheus";
-        restartUnits = [ "prometheus.service" ];
+        restartUnits = ["prometheus.service"];
       };
     })
   ];

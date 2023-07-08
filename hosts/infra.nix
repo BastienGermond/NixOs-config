@@ -20,18 +20,18 @@ rec {
       };
       wireguard = {
         wgs0 = {
-          ips = [ "${hosts.coral.ips.vpn.A}/24" ];
+          ips = ["${hosts.coral.ips.vpn.A}/24"];
           listenPort = 51821;
           privateKeyFile = "/root/.wg/wgs0.pkey";
 
           peers = [
             {
               publicKey = "ptVPzlnSRGpOVrlD/cYhvG/AKEAWe32UaDPAo0ivnG4=";
-              allowedIPs = [ hosts.anemone.ips.vpn.A ];
+              allowedIPs = [hosts.anemone.ips.vpn.A];
             }
             {
               publicKey = "hHWuxL+GuQ78uZNcUqTqyTdsCNDXXlsMlxf6IFm5ZUM=";
-              allowedIPs = [ hosts.synapze-pc.ips.vpn.A ];
+              allowedIPs = [hosts.synapze-pc.ips.vpn.A];
             }
           ];
         };
@@ -58,14 +58,14 @@ rec {
       };
       wireguard = {
         wg0 = {
-          ips = [ "${hosts.anemone.ips.vpn.A}/32" ];
+          ips = ["${hosts.anemone.ips.vpn.A}/32"];
           listenPort = 51821;
           privateKeyFile = "/root/.wg/wg0.pkey";
 
           peers = [
             {
               publicKey = "IOXJd4A9NO9JMcRcQRl5QYL8WW0s13+PMnyZVbbr728=";
-              allowedIPs = [ "10.100.10.0/24" ];
+              allowedIPs = ["10.100.10.0/24"];
               endpoint = "${hosts.coral.ips.public.A}:${builtins.toString hosts.coral.wireguard.wgs0.listenPort}";
               persistentKeepalive = 25;
             }
@@ -83,14 +83,14 @@ rec {
       };
       wireguard = {
         wg0 = {
-          ips = [ "${hosts.synapze-pc.ips.vpn.A}/32" ];
+          ips = ["${hosts.synapze-pc.ips.vpn.A}/32"];
           listenPort = 51821;
           privateKeyFile = "/home/synapze/.wg/wg0.pkey";
 
           peers = [
             {
               publicKey = "IOXJd4A9NO9JMcRcQRl5QYL8WW0s13+PMnyZVbbr728=";
-              allowedIPs = [ "10.100.10.0/24" ];
+              allowedIPs = ["10.100.10.0/24"];
               endpoint = "${hosts.coral.ips.public.A}:${builtins.toString hosts.coral.wireguard.wgs0.listenPort}";
               persistentKeepalive = 25;
             }

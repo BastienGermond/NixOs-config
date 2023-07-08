@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   hardware = {
     #Bluetooth
     bluetooth.enable = true;
@@ -11,7 +14,7 @@
     # Scanner
     sane = {
       enable = true;
-      extraBackends = [ pkgs.sane-airscan ];
+      extraBackends = [pkgs.sane-airscan];
     };
   };
 

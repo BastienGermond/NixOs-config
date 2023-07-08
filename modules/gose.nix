@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let
-  yaml = pkgs.formats.yaml { };
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  yaml = pkgs.formats.yaml {};
 
   cfg = config.services.gose;
 
@@ -11,7 +13,8 @@ let
 
   defaultConfigPath = yaml.generate "config.yml" (removeNullAttrs cfg.config);
 
-  markToRemoveFromSet = attrset: builtins.filter
+  markToRemoveFromSet = attrset:
+    builtins.filter
     (
       attrname: (builtins.isNull (builtins.getAttr attrname attrset))
     )
@@ -124,13 +127,12 @@ let
       };
 
       implementation = mkOption {
-        type = types.enum [ "AmazonS3" "MinIO" "UploadServer" "DigitalOceanSpaces" "" ];
+        type = types.enum ["AmazonS3" "MinIO" "UploadServer" "DigitalOceanSpaces" ""];
         default = "";
       };
     };
   };
-in
-{
+in {
   options = {
     services.gose = {
       enable = mkEnableOption "Gose - A tera-scale file uploader";
@@ -182,18 +184,18 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable ({
+  config = lib.mkIf cfg.enable {
     users.users.${cfg.user} = {
       group = cfg.group;
       isSystemUser = true;
     };
 
-    users.groups.${cfg.group} = { };
+    users.groups.${cfg.group} = {};
 
     systemd.services.gose = {
       description = "Gose - A tera-scale file uploader";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wantedBy = ["multi-user.target"];
+      after = ["network.target"];
       stopIfChanged = false;
       startLimitIntervalSec = 60;
       environment = {
@@ -209,5 +211,5 @@ in
         Group = cfg.group;
       };
     };
-  });
+  };
 }

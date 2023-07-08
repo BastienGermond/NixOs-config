@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   services.hedgedoc = {
     enable = true;
     environmentFile = config.sops.secrets.hedgedocEnv.path;
@@ -16,7 +18,7 @@
     };
   };
 
-  services.postgresql.ensureDatabases = [ "hedgedoc" ];
+  services.postgresql.ensureDatabases = ["hedgedoc"];
   services.postgresql.ensureUsers = [
     {
       name = "hedgedoc";
@@ -26,5 +28,5 @@
     }
   ];
 
-  services.postgresqlCipheredBackup.databases = [ "hedgedoc" ];
+  services.postgresqlCipheredBackup.databases = ["hedgedoc"];
 }

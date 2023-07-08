@@ -1,10 +1,13 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, infra, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  infra,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -54,58 +57,56 @@
     alias gs='git status'
   '';
 
-  environment.pathsToLink = [ "/share/zsh" ];
+  environment.pathsToLink = ["/share/zsh"];
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 
-  networking =
-    let
-      anemone = infra.hosts.anemone;
-    in
-    {
-      hostName = "coral";
-      nameservers = [ "1.1.1.1" "8.8.8.8" ];
-      useDHCP = true;
+  networking = let
+    anemone = infra.hosts.anemone;
+  in {
+    hostName = "coral";
+    nameservers = ["1.1.1.1" "8.8.8.8"];
+    useDHCP = true;
 
-      firewall = {
-        enable = true;
-        allowedTCPPorts = [ 22 2222 ];
-        extraCommands =
-          "iptables -t nat -A POSTROUTING -d ${anemone.ips.vpn.A} -p tcp -m tcp --dport 2222 -j MASQUERADE";
-      };
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [22 2222];
+      extraCommands = "iptables -t nat -A POSTROUTING -d ${anemone.ips.vpn.A} -p tcp -m tcp --dport 2222 -j MASQUERADE";
+    };
 
-      # Gitea forward ssh port
-      nat = {
-        enable = true;
-        externalInterface = "enp1s0";
-        enableIPv6 = true;
-        forwardPorts =
-          [
-            {
-              sourcePort = 22;
-              proto = "tcp";
-              destination = "${anemone.ips.vpn.A}:${builtins.toString anemone.ports.gitea-ssh}";
-            }
-          ];
-      };
-
+    # Gitea forward ssh port
+    nat = {
+      enable = true;
+      externalInterface = "enp1s0";
       enableIPv6 = true;
+      forwardPorts = [
+        {
+          sourcePort = 22;
+          proto = "tcp";
+          destination = "${anemone.ips.vpn.A}:${builtins.toString anemone.ports.gitea-ssh}";
+        }
+      ];
+    };
 
-      interfaces.enp1s0.ipv6.addresses = [{
+    enableIPv6 = true;
+
+    interfaces.enp1s0.ipv6.addresses = [
+      {
         address = "2a01:4f9:c010:b3c0::";
         prefixLength = 64;
-      }];
+      }
+    ];
 
-      defaultGateway6 = {
-        address = "fe80::1";
-        interface = "enp1s0";
-      };
-
-      hosts = {
-        "127.0.0.1" = [ "germond.org" "mx.germond.org" ];
-      };
+    defaultGateway6 = {
+      address = "fe80::1";
+      interface = "enp1s0";
     };
+
+    hosts = {
+      "127.0.0.1" = ["germond.org" "mx.germond.org"];
+    };
+  };
 
   systemd.services.NetworkManager-wait-online.enable = false;
 

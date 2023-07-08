@@ -1,12 +1,14 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   mailserver = {
     enable = true;
     debug = true;
     fqdn = "mx.germond.org";
     sendingFqdn = "germond.org";
-    domains = [ "germond.org" ];
+    domains = ["germond.org"];
 
     localDnsResolver = false;
 

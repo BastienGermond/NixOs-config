@@ -1,7 +1,10 @@
-{ config, lib, pkgs, ... }:
-
-let
-  yaml = pkgs.formats.yaml { };
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  yaml = pkgs.formats.yaml {};
 
   cfg = config.services.gatus;
 
@@ -61,7 +64,7 @@ let
 
       buttons = lib.mkOption {
         type = lib.types.listOf (lib.types.submodule uiButtonModule);
-        default = [ ];
+        default = [];
       };
     };
   };
@@ -161,7 +164,7 @@ let
 
       headers = lib.mkOption {
         type = lib.types.attrsOf lib.types.str;
-        default = { };
+        default = {};
         description = "Request headers.";
       };
 
@@ -187,7 +190,7 @@ let
 
       ui = lib.mkOption {
         type = lib.types.submodule endpointUiModule;
-        default = { };
+        default = {};
         description = "UI configuration at the endpoint level.";
       };
     };
@@ -202,7 +205,7 @@ let
       };
 
       type = lib.mkOption {
-        type = lib.types.enum [ "memory" "sqlite" "postgres" ];
+        type = lib.types.enum ["memory" "sqlite" "postgres"];
         default = "memory";
         description = "Type of storage.";
       };
@@ -252,8 +255,8 @@ let
       };
 
       every = lib.mkOption {
-        type = lib.types.listOf (lib.types.enum [ "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "Sunday" ]);
-        default = [ ];
+        type = lib.types.listOf (lib.types.enum ["Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday" "Sunday"]);
+        default = [];
         example = "[\"Monday\" \"Thursday\"]";
         description = ''
           Days on which the maintenance period applies.
@@ -262,8 +265,7 @@ let
       };
     };
   };
-in
-{
+in {
   options = {
     services.gatus = {
       enable = lib.mkEnableOption "Gatus Monitoring Dashboard";
@@ -303,7 +305,7 @@ in
 
         storage = lib.mkOption {
           type = lib.types.submodule storageModule;
-          default = { };
+          default = {};
           description = "Storage configuration.";
         };
 
@@ -314,13 +316,13 @@ in
 
         web = lib.mkOption {
           type = lib.types.submodule webModule;
-          default = { };
+          default = {};
           description = "Web configuration.";
         };
 
         ui = lib.mkOption {
           type = lib.types.submodule uiModule;
-          default = { };
+          default = {};
           description = "UI configuration.";
         };
 
@@ -340,20 +342,20 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable ({
-    environment.systemPackages = [ cfg.package ];
+  config = lib.mkIf cfg.enable {
+    environment.systemPackages = [cfg.package];
 
     users.users.${cfg.user} = {
       group = cfg.group;
       isSystemUser = true;
     };
 
-    users.groups.${cfg.group} = { };
+    users.groups.${cfg.group} = {};
 
     systemd.services.gatus = {
       description = "Gatus - Automated service health dashboard";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wantedBy = ["multi-user.target"];
+      after = ["network.target"];
       stopIfChanged = false;
       startLimitIntervalSec = 60;
       environment = {
@@ -368,5 +370,5 @@ in
         Group = cfg.group;
       };
     };
-  });
+  };
 }

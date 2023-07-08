@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
-
+{
+  config,
+  pkgs,
+  ...
+}:
 pkgs.buildGoModule rec {
   pname = "tansfer.sh";
   version = "1.5.0";
@@ -15,7 +18,7 @@ pkgs.buildGoModule rec {
     "-X github.com/dutchcoders/transfer.sh/cmd.Version=${version}-nix -a -s -w -extldflags '-static'"
   ];
 
-  tags = [ "netgo" ];
+  tags = ["netgo"];
 
   CGO_ENABLED = false;
 

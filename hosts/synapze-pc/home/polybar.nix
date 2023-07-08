@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   polybar-wg = pkgs.writeShellScript "polybar-wg.sh" ''
     # https://github.com/polybar/polybar/wiki/Formatting#format-tags-inside-polybar-config
     green=#55aa55
@@ -23,8 +25,7 @@ let
             ;;
     esac
   '';
-in
-{
+in {
   services.polybar = {
     enable = true;
     package = pkgs.polybarFull;

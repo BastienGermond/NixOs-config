@@ -1,6 +1,9 @@
-{ config, pkgs, infra, ... }:
-
 {
+  config,
+  pkgs,
+  infra,
+  ...
+}: {
   services.paperless = {
     enable = true;
     dataDir = "/datastore/paperless";

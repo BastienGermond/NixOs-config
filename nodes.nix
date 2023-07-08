@@ -1,6 +1,7 @@
-{ deploy-rs, nixosConfigurations }:
-
-let
+{
+  deploy-rs,
+  nixosConfigurations,
+}: let
   nodeCfg = [
     {
       hostname = "10.100.10.2";
@@ -9,17 +10,27 @@ let
     {
       hostname = "135.181.36.15";
       name = "coral";
-      sshOpts = [ "-p" "2222" ];
+      sshOpts = ["-p" "2222"];
     }
   ];
 
-  createNode = { hostname, name, ... } @ extra: {
+  createNode = {
+    hostname,
+    name,
+    ...
+  } @ extra: {
     name = "${name}";
     value = {
       hostname = "${hostname}";
 
       sshUser = "synapze";
-      sshOpts = [ "-A" ] ++ (if (builtins.hasAttr "sshOpts" extra) then extra.sshOpts else [ ]);
+      sshOpts =
+        ["-A"]
+        ++ (
+          if (builtins.hasAttr "sshOpts" extra)
+          then extra.sshOpts
+          else []
+        );
       magicRollback = false;
 
       profiles.system = {
@@ -28,9 +39,8 @@ let
       };
     };
   };
-in
-{
-  nodes = (builtins.listToAttrs (builtins.map createNode nodeCfg));
+in {
+  nodes = builtins.listToAttrs (builtins.map createNode nodeCfg);
 
   buildNodes = nodes: (builtins.listToAttrs (builtins.map createNode nodes));
 

@@ -1,6 +1,10 @@
-{ config, pkgs, lib, infra, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  infra,
+  ...
+}: let
   lokiDataDir = config.services.loki.dataDir;
 
   grafanaDbName = "grafana";
@@ -8,8 +12,7 @@ let
 
   coral = infra.hosts.coral;
   anemone = infra.hosts.anemone;
-in
-{
+in {
   services.postgresql = {
     enable = true;
     ensureUsers = [
@@ -20,10 +23,10 @@ in
         };
       }
     ];
-    ensureDatabases = [ grafanaDbName ];
+    ensureDatabases = [grafanaDbName];
   };
 
-  services.postgresqlCipheredBackup.databases = [ grafanaDbName ];
+  services.postgresqlCipheredBackup.databases = [grafanaDbName];
 
   services.prometheus = {
     enable = true;
@@ -56,11 +59,15 @@ in
       };
     };
 
-    alertmanagers = [{
-      static_configs = [{
-        targets = [ "${infra.hosts.coral.ips.vpn.A}:9093" ];
-      }];
-    }];
+    alertmanagers = [
+      {
+        static_configs = [
+          {
+            targets = ["${infra.hosts.coral.ips.vpn.A}:9093"];
+          }
+        ];
+      }
+    ];
 
     ruleFiles = [
       ../data/prometheus/host-alerts.yml
@@ -71,7 +78,7 @@ in
     exporters = {
       node = {
         enable = true;
-        enabledCollectors = [ "systemd" "processes" "cpu" ];
+        enabledCollectors = ["systemd" "processes" "cpu"];
         port = coral.ports.node-exporter;
       };
     };
@@ -79,45 +86,57 @@ in
     scrapeConfigs = [
       {
         job_name = "anemone";
-        static_configs = [{
-          targets = [ "${anemone.ips.vpn.A}:${builtins.toString anemone.ports.node-exporter}" ];
-        }];
+        static_configs = [
+          {
+            targets = ["${anemone.ips.vpn.A}:${builtins.toString anemone.ports.node-exporter}"];
+          }
+        ];
       }
       {
         job_name = "coral";
-        static_configs = [{
-          targets = [ "127.0.0.1:${builtins.toString coral.ports.node-exporter}" ];
-        }];
+        static_configs = [
+          {
+            targets = ["127.0.0.1:${builtins.toString coral.ports.node-exporter}"];
+          }
+        ];
       }
       {
         job_name = "gatus";
         scheme = "https";
-        static_configs = [{
-          targets = [ "status.germond.org" ];
-        }];
+        static_configs = [
+          {
+            targets = ["status.germond.org"];
+          }
+        ];
       }
       {
         job_name = "synapse";
         metrics_path = "/_synapse/metrics";
-        static_configs = [{
-          targets = [ "10.100.10.2:${builtins.toString anemone.ports.matrix-synapse-monitoring}" ];
-        }];
+        static_configs = [
+          {
+            targets = ["10.100.10.2:${builtins.toString anemone.ports.matrix-synapse-monitoring}"];
+          }
+        ];
       }
       {
         job_name = "minio-job";
         metrics_path = "/minio/v2/metrics/cluster";
         scheme = "https";
         bearer_token_file = config.sops.secrets.minioBearerToken.path;
-        static_configs = [{
-          targets = [ "s3.germond.org" ];
-        }];
+        static_configs = [
+          {
+            targets = ["s3.germond.org"];
+          }
+        ];
       }
       {
         job_name = "coral-f2b";
         scheme = "http";
-        static_configs = [{
-          targets = [ "127.0.0.1:9191" ];
-        }];
+        static_configs = [
+          {
+            targets = ["127.0.0.1:9191"];
+          }
+        ];
       }
     ];
   };
@@ -125,97 +144,95 @@ in
   systemd.services.grafana.serviceConfig = {
     # FIXME: Remove or keep ?
     # Without this grafana try to call sys_fchownat which is blocked without @chown;
-    SystemCallFilter = [ "@chown" ];
+    SystemCallFilter = ["@chown"];
   };
 
-  services.grafana =
-    let
-      readFromFile = path: "$__file{${path}}";
-      provisionConfDir = pkgs.runCommand "grafana-provisioning" { nativeBuildInputs = [ pkgs.xorg.lndir ]; } ''
-        mkdir -p $out/{datasources,dashboards,notifiers,alerting,plugins}
-      '';
-    in
-    {
-      enable = true;
+  services.grafana = let
+    readFromFile = path: "$__file{${path}}";
+    provisionConfDir = pkgs.runCommand "grafana-provisioning" {nativeBuildInputs = [pkgs.xorg.lndir];} ''
+      mkdir -p $out/{datasources,dashboards,notifiers,alerting,plugins}
+    '';
+  in {
+    enable = true;
 
-      settings = {
-        server = {
-          protocol = "socket";
-          domain = "grafana.germond.org";
-          root_url = "https://grafana.germond.org/";
-        };
-
-        paths = {
-          provisioning = provisionConfDir;
-        };
-
-        log = {
-          level = "info";
-        };
-
-        users = {
-          auto_assign_org = true;
-          auto_assign_org_id = 1;
-        };
-
-        "auth.generic_oauth" = {
-          enabled = true;
-          allow_sign_up = true;
-          name = "Germond SSO";
-          client_id = readFromFile config.sops.secrets.grafanaOAuthClientID.path;
-          client_secret = readFromFile config.sops.secrets.grafanaOAuthSecret.path;
-          scopes = "email openid profile grafana";
-          auth_url = "https://sso.germond.org/application/o/authorize/";
-          token_url = "https://sso.germond.org/application/o/token/";
-          api_url = "https://sso.germond.org/application/o/userinfo/";
-          allowed_domains = "gmail.com";
-          role_attribute_path = "grafanaRole";
-          email_attribute_path = "email";
-          groups_attribute_path = "groups";
-          name_attribute_path = "name";
-          login_attribute_path = "preferred_username";
-        };
-
-        security.secret_key = readFromFile config.sops.secrets.grafanaSecretKey.path;
-
-        database = {
-          user = grafanaDbUser;
-          type = "postgres";
-          name = grafanaDbName;
-          host = "127.0.0.1:${builtins.toString config.services.postgresql.port}";
-        };
+    settings = {
+      server = {
+        protocol = "socket";
+        domain = "grafana.germond.org";
+        root_url = "https://grafana.germond.org/";
       };
 
-      declarativePlugins = with pkgs.grafanaPlugins; [ ];
+      paths = {
+        provisioning = provisionConfDir;
+      };
 
-      provision = {
-        enable = true;
+      log = {
+        level = "info";
+      };
 
-        datasources.settings = {
-          apiVersion = 1;
+      users = {
+        auto_assign_org = true;
+        auto_assign_org_id = 1;
+      };
 
-          datasources = [
-            {
-              name = "Loki";
-              url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.loki}";
-              type = "loki";
-              access = "proxy";
-              jsonData = {
-                manageAlerts = false;
-              };
-            }
-            {
-              name = "Prometheus";
-              url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.prometheus}";
-              type = "prometheus";
-              access = "proxy";
-            }
-          ];
-        };
+      "auth.generic_oauth" = {
+        enabled = true;
+        allow_sign_up = true;
+        name = "Germond SSO";
+        client_id = readFromFile config.sops.secrets.grafanaOAuthClientID.path;
+        client_secret = readFromFile config.sops.secrets.grafanaOAuthSecret.path;
+        scopes = "email openid profile grafana";
+        auth_url = "https://sso.germond.org/application/o/authorize/";
+        token_url = "https://sso.germond.org/application/o/token/";
+        api_url = "https://sso.germond.org/application/o/userinfo/";
+        allowed_domains = "gmail.com";
+        role_attribute_path = "grafanaRole";
+        email_attribute_path = "email";
+        groups_attribute_path = "groups";
+        name_attribute_path = "name";
+        login_attribute_path = "preferred_username";
+      };
+
+      security.secret_key = readFromFile config.sops.secrets.grafanaSecretKey.path;
+
+      database = {
+        user = grafanaDbUser;
+        type = "postgres";
+        name = grafanaDbName;
+        host = "127.0.0.1:${builtins.toString config.services.postgresql.port}";
       };
     };
 
-  users.users.promtail.extraGroups = [ "nginx" ];
+    declarativePlugins = with pkgs.grafanaPlugins; [];
+
+    provision = {
+      enable = true;
+
+      datasources.settings = {
+        apiVersion = 1;
+
+        datasources = [
+          {
+            name = "Loki";
+            url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.loki}";
+            type = "loki";
+            access = "proxy";
+            jsonData = {
+              manageAlerts = false;
+            };
+          }
+          {
+            name = "Prometheus";
+            url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.prometheus}";
+            type = "prometheus";
+            access = "proxy";
+          }
+        ];
+      };
+    };
+  };
+
+  users.users.promtail.extraGroups = ["nginx"];
 
   services.promtail = {
     enable = true;
@@ -223,9 +240,11 @@ in
       server.http_listen_port = coral.ports.promtail;
       server.grpc_listen_port = 0;
 
-      clients = [{
-        url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.loki}/loki/api/v1/push";
-      }];
+      clients = [
+        {
+          url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.loki}/loki/api/v1/push";
+        }
+      ];
 
       scrape_configs = [
         {
@@ -237,10 +256,12 @@ in
               host = config.networking.hostName;
             };
           };
-          relabel_configs = [{
-            source_labels = [ "__journal__systemd_unit" ];
-            target_label = "unit";
-          }];
+          relabel_configs = [
+            {
+              source_labels = ["__journal__systemd_unit"];
+              target_label = "unit";
+            }
+          ];
         }
         {
           job_name = "nginx";

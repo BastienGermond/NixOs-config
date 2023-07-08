@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   nixpkgs.config.allowUnfree = true;
 
   fonts.fonts = with pkgs; [
@@ -10,7 +13,7 @@
     noto-fonts
     roboto
     termsyn
-    (nerdfonts.override { fonts = [ "FiraMono" "FiraCode" "Terminus" ]; })
+    (nerdfonts.override {fonts = ["FiraMono" "FiraCode" "Terminus"];})
   ];
 
   environment.systemPackages = with pkgs; [

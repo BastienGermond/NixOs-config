@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   programs.neovim = {
     enable = true;
     package = pkgs.neovim; # pkgs.neovim-nightly;
@@ -33,7 +36,7 @@
       vim-which-key
       vim-nix
       suda-vim
-      (nvim-treesitter.withPlugins (p: [ p.c p.python p.latex p.nix p.go ]))
+      (nvim-treesitter.withPlugins (p: [p.c p.python p.latex p.nix p.go]))
     ];
 
     extraConfig = builtins.concatStringsSep "\n" [

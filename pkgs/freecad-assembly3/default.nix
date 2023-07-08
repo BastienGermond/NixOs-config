@@ -1,6 +1,7 @@
-{ pkgs, fetchFromGitHub }:
-
-let
+{
+  pkgs,
+  fetchFromGitHub,
+}: let
   override = super: {
     version = "0.11";
 
@@ -13,4 +14,4 @@ let
     };
   };
 in
-pkgs.freecad.overrideAttrs (override)
+  pkgs.freecad.overrideAttrs override
