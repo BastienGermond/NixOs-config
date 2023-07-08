@@ -17,6 +17,6 @@
 [gpg]
 	program = gpg2
 [core]
-	editor = vim
+	editor = hx
 [safe]
     directory = /etc/nixos
