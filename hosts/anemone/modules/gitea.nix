@@ -5,6 +5,7 @@
   ...
 }: let
   anemone = infra.hosts.anemone;
+  coral = infra.hosts.coral;
 in {
   services.postgresql = {
     ensureDatabases = ["gitea"];
@@ -26,6 +27,7 @@ in {
         HTTP_PORT = anemone.ports.gitea;
         HTTP_ADDR = anemone.ips.vpn.A;
         START_SSH_SERVER = true;
+        SSH_SERVER_USE_PROXY_PROTOCOL = true;
         BUILTIN_SSH_SERVER_USER = "git";
         SSH_DOMAIN = "git.germond.org";
         SSH_LISTEN_HOST = anemone.ips.vpn.A;
@@ -45,6 +47,10 @@ in {
       };
       session = {
         COOKIE_SECURE = true;
+      };
+      security = {
+        REVERSE_PROXY_LIMIT = 1;
+        REVERSE_PROXY_TRUSTED_PROXIES = "${coral.ips.vpn.A}";
       };
       openid = {
         ENABLE_OPENID_SIGNIN = false;

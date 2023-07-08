@@ -43,6 +43,14 @@ in {
       };
     };
 
+    streamConfig = ''
+      server {
+        listen 22;
+        proxy_pass 10.100.10.2:2222;
+        proxy_protocol on;
+      }
+    '';
+
     virtualHosts = let
       withDefaultConfiguration = name: conf:
         lib.mkMerge [
@@ -268,8 +276,13 @@ in {
 
       "git.germond.org" = withDefaultConfiguration "git.germond.org" {
         locations."/" = {
+          recommendedProxySettings = true;
           proxyPass = "http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.gitea}";
         };
+
+        extraConfig = ''
+          client_max_body_size 512M;
+        '';
       };
     };
   };

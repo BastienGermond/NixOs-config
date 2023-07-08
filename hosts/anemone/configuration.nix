@@ -5,6 +5,7 @@
   config,
   pkgs,
   lib,
+  infra,
   ...
 }: {
   imports = [
@@ -114,7 +115,27 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  networking.firewall = {
+    enable = true;
+    logReversePathDrops = true;
+    allowedTCPPorts = with infra.hosts.anemone.ports; [
+      authentik
+      gitea
+      matrix-synapse-monitoring
+      minio
+      node-exporter
+      paperless
+      promtail
+      s3
+      gitea-ssh
+      22
+      80
+      8008
+    ];
+    extraCommands = ''
+
+    '';
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

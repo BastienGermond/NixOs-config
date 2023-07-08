@@ -282,6 +282,8 @@ in {
     };
   };
 
+  networking.firewall.allowedTCPPorts = [coral.ports.loki];
+
   services.loki = {
     enable = true;
     configuration = {

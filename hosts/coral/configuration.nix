@@ -72,7 +72,11 @@
     firewall = {
       enable = true;
       allowedTCPPorts = [22 2222];
-      extraCommands = "iptables -t nat -A POSTROUTING -d ${anemone.ips.vpn.A} -p tcp -m tcp --dport 2222 -j MASQUERADE";
+      extraCommands = ''
+      '';
+
+      extraStopCommands = ''
+      '';
     };
 
     # Gitea forward ssh port
@@ -81,11 +85,6 @@
       externalInterface = "enp1s0";
       enableIPv6 = true;
       forwardPorts = [
-        {
-          sourcePort = 22;
-          proto = "tcp";
-          destination = "${anemone.ips.vpn.A}:${builtins.toString anemone.ports.gitea-ssh}";
-        }
       ];
     };
 
