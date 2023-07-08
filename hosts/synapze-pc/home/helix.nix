@@ -1,17 +1,11 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.helix = {
     enable = true;
-    # package = (pkgs.helix.overrideAttrs (prev: rec {
-    #  version = "23.03"; 
-    #  src = pkgs.fetchzip {
-    #    url = "https://github.com/helix-editor/helix/releases/download/${version}/helix-${version}-source.tar.xz";
-    #    hash = "sha256-FtY2V7za3WGeUaC2t2f63CcDUEg9zAS2cGUWI0YeGwk=";
-    #    stripRoot = false;
-    #  };
-    # }));
-    package = pkgs.unstable.helix;
+    package = pkgs.helix;
     settings = {
       theme = "everforest_dark";
       editor = {
@@ -19,20 +13,54 @@
         mouse = false;
         cursorline = true;
         auto-format = true;
+        text-width = 100;
         soft-wrap = {
-          enable = true;
+          enable = false;
           wrap-at-text-width = true;
         };
       };
     };
     languages = {
+      language-server = {
+        ltex-ls = {
+          command = "${pkgs.ltex-ls}/bin/ltex-ls";
+        };
+        nixd = {
+          command = "${pkgs.nixd}/bin/nixd";
+        };
+      };
       language = [
-        { name = "c"; }
-        { name = "cpp"; }
-        { name = "nix"; }
-        { name = "tsx"; }
-        { name = "go"; }
-        { name = "cmake"; }
+        {
+          name = "c";
+          text-width = 100;
+          formatter = {
+            command = "clang-format";
+          };
+        }
+        {name = "cpp";}
+        {
+          name = "nix";
+          language-servers = ["nixd"];
+          formatter = {
+            command = "${pkgs.alejandra}/bin/alejandra";
+          };
+        }
+        {name = "tsx";}
+        {name = "go";}
+        {
+          name = "cmake";
+          language-servers = ["cmake-language-server"];
+          formatter = {
+            command = "${pkgs.cmake-format}/bin/cmake-format";
+          };
+        }
+        {name = "comment";}
+        {
+          name = "latex";
+          scope = "text.tex";
+          file-types = ["tex"];
+          language-servers = ["ltex-ls" "texlab"];
+        }
       ];
     };
   };

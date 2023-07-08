@@ -4,6 +4,7 @@
   nixpkgs.config.allowUnfree = true;
 
   fonts.fonts = with pkgs; [
+    fira
     font-awesome
     julia-mono
     noto-fonts
