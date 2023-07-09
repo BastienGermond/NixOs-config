@@ -2,7 +2,10 @@
   config,
   pkgs,
   ...
-}: {  
+}: {
+  # Allow port for fail2ban prometheus exporter
+  networking.firewall.allowedTCPPorts = [ 9191 ];
+
   systemd.services.fail2ban-prometheus-exporter = {
     description = "Fail2ban prometheus exporter";
     wantedBy = ["multi-user.target"];
@@ -16,7 +19,6 @@
   services.fail2ban = {
     enable = true;
     bantime = "-1"; # permanent ban
-    maxretry = 2;
 
     ignoreIP = [
       "10.100.10.0/24"
@@ -27,31 +29,25 @@
 
     jails = {
       sshd.settings.bantime = "-1";
-      sshd-invaliduser = ''
+      gitea-ssh = ''
         enabled = true
-        filter = sshd-invaliduser
+        filter = gitea-ssh
+        logpath = /var/lib/gitea/log/gitea.log
         maxretry = 1
-        port = ssh
-        logpath = %(sshd_log)s
-        backend = %(sshd_backend)s
+        action = iptables-allports
         bantime = -1
       '';
     };
   };
 
   environment.etc = {
-    "fail2ban/filter.d/sshd-invaliduser.conf".text = ''
+    "fail2ban/filter.d/gitea-ssh.conf".text = ''
       [INCLUDES]
       before = common.conf
 
       [Definition]
-      _daemon = sshd
-
-      failregex = ^%(__prefix_line)s[iI](?:llegal|nvalid) user .*? from <HOST>(?: port \d+)?\s*$
+      failregex =  .*(Failed authentication attempt|invalid credentials|Attempted access of unknown user).* from <HOST>
       ignoreregex =
-
-      [Init]
-      journalmatch = _SYSTEMD_UNIT=sshd.service + _COMM=sshd
     '';
   };
 }

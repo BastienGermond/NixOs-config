@@ -138,6 +138,15 @@ in {
           }
         ];
       }
+      {
+        job_name = "anemone-f2b";
+        scheme = "http";
+        static_configs = [
+          {
+            targets = ["${anemone.ips.vpn.A}:9191"];
+          }
+        ];
+      }
     ];
   };
 
