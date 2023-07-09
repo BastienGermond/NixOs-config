@@ -202,6 +202,10 @@ in {
         login_attribute_path = "preferred_username";
       };
 
+      "auth.anonymous" = {
+        enabled = true;
+      };
+
       security.secret_key = readFromFile config.sops.secrets.grafanaSecretKey.path;
 
       database = {
