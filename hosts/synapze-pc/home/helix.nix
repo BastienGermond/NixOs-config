@@ -18,6 +18,9 @@
           enable = false;
           wrap-at-text-width = true;
         };
+        smart-tab = {
+          enable = false;
+        };
       };
     };
     languages = {
@@ -61,6 +64,7 @@
           file-types = ["tex"];
           language-servers = ["ltex-ls" "texlab"];
         }
+        {name = "rust";}
       ];
     };
   };
