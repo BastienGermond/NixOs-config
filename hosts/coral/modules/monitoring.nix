@@ -7,27 +7,9 @@
 }: let
   lokiDataDir = config.services.loki.dataDir;
 
-  grafanaDbName = "grafana";
-  grafanaDbUser = "grafana";
-
   coral = infra.hosts.coral;
   anemone = infra.hosts.anemone;
 in {
-  services.postgresql = {
-    enable = true;
-    ensureUsers = [
-      {
-        name = grafanaDbUser;
-        ensurePermissions = {
-          "DATABASE \"${grafanaDbName}\"" = "ALL PRIVILEGES";
-        };
-      }
-    ];
-    ensureDatabases = [grafanaDbName];
-  };
-
-  services.postgresqlCipheredBackup.databases = [grafanaDbName];
-
   services.prometheus = {
     enable = true;
     port = coral.ports.prometheus;
@@ -154,95 +136,6 @@ in {
     # FIXME: Remove or keep ?
     # Without this grafana try to call sys_fchownat which is blocked without @chown;
     SystemCallFilter = ["@chown"];
-  };
-
-  services.grafana = let
-    readFromFile = path: "$__file{${path}}";
-    provisionConfDir = pkgs.runCommand "grafana-provisioning" {nativeBuildInputs = [pkgs.xorg.lndir];} ''
-      mkdir -p $out/{datasources,dashboards,notifiers,alerting,plugins}
-    '';
-  in {
-    enable = true;
-
-    settings = {
-      server = {
-        protocol = "socket";
-        domain = "grafana.germond.org";
-        root_url = "https://grafana.germond.org/";
-      };
-
-      paths = {
-        provisioning = provisionConfDir;
-      };
-
-      log = {
-        level = "info";
-      };
-
-      users = {
-        auto_assign_org = true;
-        auto_assign_org_id = 1;
-      };
-
-      "auth.generic_oauth" = {
-        enabled = true;
-        allow_sign_up = true;
-        name = "Germond SSO";
-        client_id = readFromFile config.sops.secrets.grafanaOAuthClientID.path;
-        client_secret = readFromFile config.sops.secrets.grafanaOAuthSecret.path;
-        scopes = "email openid profile grafana";
-        auth_url = "https://sso.germond.org/application/o/authorize/";
-        token_url = "https://sso.germond.org/application/o/token/";
-        api_url = "https://sso.germond.org/application/o/userinfo/";
-        allowed_domains = "gmail.com";
-        role_attribute_path = "grafanaRole";
-        email_attribute_path = "email";
-        groups_attribute_path = "groups";
-        name_attribute_path = "name";
-        login_attribute_path = "preferred_username";
-      };
-
-      "auth.anonymous" = {
-        enabled = true;
-      };
-
-      security.secret_key = readFromFile config.sops.secrets.grafanaSecretKey.path;
-
-      database = {
-        user = grafanaDbUser;
-        type = "postgres";
-        name = grafanaDbName;
-        host = "127.0.0.1:${builtins.toString config.services.postgresql.port}";
-      };
-    };
-
-    declarativePlugins = with pkgs.grafanaPlugins; [];
-
-    provision = {
-      enable = true;
-
-      datasources.settings = {
-        apiVersion = 1;
-
-        datasources = [
-          {
-            name = "Loki";
-            url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.loki}";
-            type = "loki";
-            access = "proxy";
-            jsonData = {
-              manageAlerts = false;
-            };
-          }
-          {
-            name = "Prometheus";
-            url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.prometheus}";
-            type = "prometheus";
-            access = "proxy";
-          }
-        ];
-      };
-    };
   };
 
   users.users.promtail.extraGroups = ["nginx"];
