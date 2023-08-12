@@ -35,7 +35,7 @@ in {
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud26;
+    package = pkgs.nextcloud27;
     hostName = "cloud.germond.org";
     home = "/datastore/nextcloud";
     https = true;
@@ -46,14 +46,15 @@ in {
 
     extraApps = {
       oidc_login = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-lQaoKjPTh1RMXk2OE+ULRYKw70OCCFq1jKcUQ+c6XkA=";
-        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.5.1/oidc_login.tar.gz";
+        sha256 = "sha256-MZ/Pgqrb8Y9aH1vd3BfuPhfLOmYyZQO2xVasdj+rCo4=";
+        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.6.0/oidc_login.tar.gz";
       };
 
-      breezedark = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-1/woeAdmvICUulv+mUdyeB92b64wKSxnw4XoP6hkiN0=";
-        url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v26.0.0/breezedark.tar.gz";
-      };
+      # FIXME: Don't support NC27 (https://github.com/mwalbeck/nextcloud-breeze-dark/issues/337)
+      # breezedark = pkgs.fetchNextcloudApp {
+      #   sha256 = "sha256-1/woeAdmvICUulv+mUdyeB92b64wKSxnw4XoP6hkiN0=";
+      #   url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v26.0.0/breezedark.tar.gz";
+      # };
 
       # FIXME: Not yet ready (https://github.com/icewind1991/files_markdown/issues/200)
       # files_markdown = pkgs.fetchNextcloudApp rec {
@@ -73,8 +74,8 @@ in {
       # };
 
       notes = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-53rKTAlsKUAonGzxgAgcMjuFX3Obpx3aKKEKlT89E0g=";
-        url = "https://github.com/nextcloud/notes/releases/download/v4.8.0-beta.2/notes.tar.gz";
+        sha256 = "sha256-7GkTGyGTvtDbZsq/zOdbBE7xh6DZO183W6I5XX1ekbw=";
+        url = "https://github.com/nextcloud/notes/releases/download/v4.8.1/notes.tar.gz";
       };
 
       announcementcenter = pkgs.fetchNextcloudApp {
@@ -83,8 +84,8 @@ in {
       };
 
       calendar = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-3qDrDs5XRkpNWR12MzZg6Th5uWUe7pD9El5p6iCkm1c=";
-        url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.4.1/calendar-v4.4.1.tar.gz";
+        sha256 = "sha256-+1jD05SY7Oz5GdICiQYXgPrzZLHDQgMaLj03OzvQPFI=";
+        url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.4.4/calendar-v4.4.4.tar.gz";
       };
     };
 

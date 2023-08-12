@@ -108,7 +108,7 @@
           neovim = nvim-flake.packages.${prev.system}.neovim;
           # neovim = nixpkgs-unstable.legacyPackages.${prev.system}.neovim;
 
-          nextcloud26 = nixpkgs.legacyPackages.${prev.system}.nextcloud26;
+          nextcloud27 = nixpkgs.legacyPackages.${prev.system}.nextcloud27;
 
           nginxStable = prev.nginxStable.override {openssl = prev.pkgs.libressl;};
         })
