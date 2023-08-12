@@ -5,7 +5,7 @@
   ...
 }: {
   services.authentik = {
-    enable = true;
+    enable = false;
     # image = "ghcr.io/goauthentik/dev-server";
     version = "2023.2.3";
     authentikServerEnvironmentFiles = [

@@ -22,14 +22,14 @@
         logo = "https://s3.germond.org/gatus/serveur-meduse.png";
       };
       endpoints = [
-        {
-          name = "Authentik";
-          group = "0 - Authentication";
-          url = "https://sso.germond.org/-/health/ready/";
-          conditions = [
-            "[STATUS] == 204"
-          ];
-        }
+        # {
+        #   name = "Authentik";
+        #   group = "0 - Authentication";
+        #   url = "https://sso.germond.org/-/health/ready/";
+        #   conditions = [
+        #     "[STATUS] == 204"
+        #   ];
+        # }
         {
           name = "Keycloak";
           group = "0 - Authentication";

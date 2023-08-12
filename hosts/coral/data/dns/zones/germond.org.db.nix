@@ -37,7 +37,7 @@ with dns.lib.combinators; {
     mx.CNAME = ["germond.org"];
     _dmarc.TXT = ["v=DMARC1; p=none"];
     cloud.CNAME = ["germond.org."];
-    sso.CNAME = ["germond.org."];
+    # sso.CNAME = ["germond.org."];
     grafana.CNAME = ["germond.org."];
     status.CNAME = ["germond.org."];
     minio.CNAME = ["germond.org."];

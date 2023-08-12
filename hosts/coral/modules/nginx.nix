@@ -126,12 +126,12 @@ in {
         }
       );
 
-      "sso.germond.org" = withDefaultConfiguration "sso.germond.org" {
-        locations."/" = {
-          proxyPass = "http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.authentik}/";
-          proxyWebsockets = true;
-        };
-      };
+      # "sso.germond.org" = withDefaultConfiguration "sso.germond.org" {
+      #   locations."/" = {
+      #     proxyPass = "http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.authentik}/";
+      #     proxyWebsockets = true;
+      #   };
+      # };
 
       "newsso.germond.org" = withDefaultConfiguration "newsso.germond.org" {
         extraConfig = ''

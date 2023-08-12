@@ -8,8 +8,18 @@
 
   sops.secrets = lib.mkMerge [
     {
+      minioCreds = {
+        owner = "minio";
+        restartUnits = ["minio.service"];
+      };
+    }
+
+    (lib.mkIf config.services.authentik.enable {
       authentik = {};
       geoipLicenseKey = {};
+    })
+
+    (lib.mkIf config.services.nextcloud.enable {
       nextcloudAdminPass = {
         owner = config.users.users.nextcloud.name;
         restartUnits = ["nextcloud-setup.service"];
@@ -18,11 +28,7 @@
         owner = config.users.users.nextcloud.name;
         restartUnits = ["nextcloud-setup.service"];
       };
-      minioCreds = {
-        owner = "minio";
-        restartUnits = ["minio.service"];
-      };
-    }
+    })
 
     (lib.mkIf config.services.postgresqlCipheredBackup.enable {
       PostgresBackupS3ConfigFile = {
