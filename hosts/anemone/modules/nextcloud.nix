@@ -1,17 +1,18 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
-  nextcloudRedisPort = 6380;
 in {
-  services.redis.servers.nextcloud = {
-    enable = true;
-    port = nextcloudRedisPort;
-  };
-
   services.postgresql = {
     enable = true;
+    enableTCPIP = true;
+    authentication = lib.mkOverride 10 ''
+      local all all trust
+      host all all 127.0.0.1/32 trust
+      host all all ::1/128 trust
+    '';
     ensureUsers = [
       {
         name = "nextcloud";
@@ -32,6 +33,7 @@ in {
 
   systemd.services.nextcloud-setup.after = ["postgresql.service"];
   systemd.services.nextcloud-setup.wants = ["postgresql.service"];
+  systemd.services.postgresql.wantedBy = ["nextcloud-setup.service"];
 
   services.nextcloud = {
     enable = true;
@@ -41,6 +43,7 @@ in {
     https = true;
 
     enableBrokenCiphersForSSE = false;
+    configureRedis = true;
 
     maxUploadSize = "10G";
 
@@ -117,7 +120,6 @@ in {
     extraAppsEnable = true;
 
     caching = {
-      redis = true;
       apcu = true;
     };
 
@@ -162,14 +164,6 @@ in {
 
       # Cache
       memcache.local = "\\OC\\Memcache\\APCu";
-      memcache.locking = "\\OC\\Memcache\\Redis";
-
-      redis = {
-        host = "localhost";
-        port = nextcloudRedisPort;
-        dbindex = 0;
-        timeout = 1.5;
-      };
     };
   };
 }
