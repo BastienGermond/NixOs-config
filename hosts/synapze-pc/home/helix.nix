@@ -21,6 +21,9 @@
         smart-tab = {
           enable = false;
         };
+        statusline = {
+          right = ["diagnostics" "selections" "register" "position-percentage" "position" "file-encoding"];
+        };
       };
     };
     languages = {
@@ -35,6 +38,7 @@
       language = [
         {
           name = "c";
+          auto-format = true;
           text-width = 100;
           formatter = {
             command = "clang-format";
