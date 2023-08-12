@@ -1,16 +1,16 @@
 {pkgs, ...}:
 pkgs.buildGoModule rec {
   pname = "gatus";
-  version = "5.3.2";
+  version = "5.5.1";
 
   src = pkgs.fetchFromGitHub {
     owner = "TwiN";
     repo = "gatus";
     rev = "v${version}";
-    sha256 = "sha256-0y6KHvYexZiBJX1Z+zQtvPzsZbLc0SAk1xirZFBGJSk=";
+    sha256 = "sha256-fKXLt0K6DduzXhvPs1Ma3ZOhMY515+IgKr9aTNZjbUw=";
   };
 
-  vendorSha256 = "sha256-ITkKaNlY3Q7A+7sMcSoyyVqiXgnVotfM/ZAn6QcUGII=";
+  vendorSha256 = "sha256-s+fZ/bVwVCEFu/lIIexGY+rPexsnTKqYcYqsRisfm90=";
 
   doCheck = false;
 }
