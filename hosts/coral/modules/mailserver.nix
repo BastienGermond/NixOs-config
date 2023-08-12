@@ -14,7 +14,7 @@
 
     lmtpSaveToDetailMailbox = "no";
 
-    certificateScheme = 1;
+    certificateScheme = "manual";
     certificateFile = "${config.security.acme.certs."germond.org".directory}/fullchain.pem";
     keyFile = "${config.security.acme.certs."germond.org".directory}/key.pem";
 
