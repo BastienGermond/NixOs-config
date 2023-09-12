@@ -24,6 +24,9 @@
         statusline = {
           right = ["diagnostics" "selections" "register" "position-percentage" "position" "file-encoding"];
         };
+        auto-pairs = {
+          "{" = "}";
+        };
       };
     };
     languages = {
