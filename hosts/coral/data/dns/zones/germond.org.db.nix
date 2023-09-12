@@ -47,15 +47,5 @@ with dns.lib.combinators; {
     hackmd.CNAME = ["germond.org."];
     newsso.CNAME = ["germond.org."];
     git.CNAME = ["germond.org."];
-    yamaha = {
-      A = ["193.48.57.161"];
-      AAAA = ["2001:660:4401:60a0:216:3eff:fe63:515a"];
-      MX = [
-        {
-          preference = 50;
-          exchange = "yamaha.germond.org.";
-        }
-      ];
-    };
   };
 }
