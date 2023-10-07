@@ -41,5 +41,11 @@
         owner = "matrix-synapse";
       };
     })
+
+    (lib.mkIf config.services.deluge.enable {
+      DelugeAuth = {
+        owner = config.services.deluge.user;
+      };
+    })
   ];
 }

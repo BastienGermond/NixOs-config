@@ -5,6 +5,8 @@
 }: {
   imports = [
     ./authentik.nix
+    # Disable deluge
+    # ./deluge.nix
     ./docker.nix
     ./fail2ban.nix
     ./gitea.nix

@@ -45,6 +45,12 @@
     options = ["zfsutil"];
   };
 
+  fileSystems."/datastore/deluge" = {
+    device = "datastore/deluge";
+    fsType = "zfs";
+    options = ["zfsutil"];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;

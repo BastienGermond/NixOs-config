@@ -4,7 +4,7 @@
   ...
 }: {
   # Allow port for fail2ban prometheus exporter
-  networking.firewall.allowedTCPPorts = [ 9191 ];
+  networking.firewall.allowedTCPPorts = [9191];
 
   systemd.services.fail2ban-prometheus-exporter = {
     description = "Fail2ban prometheus exporter";
@@ -25,7 +25,8 @@
     ];
 
     extraPackages = [pkgs.ipset];
-    banaction = "iptables-ipset-proto6-allports";
+    banaction = "iptables-allports";
+    banaction-allports = "iptables-allports";
 
     jails = {
       sshd.settings.bantime = "-1";
@@ -34,9 +35,11 @@
         filter = gitea-ssh
         logpath = /var/lib/gitea/log/gitea.log
         maxretry = 1
-        action = iptables-allports
         bantime = -1
+        journalmatch = _SYSTEMD_UNIT=gitea.service
+        action = %(banaction)s[protocol="all", blocktype="DROP"]
       '';
+      # action = iptables-allports
     };
   };
 
