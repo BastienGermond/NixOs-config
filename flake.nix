@@ -37,6 +37,10 @@
     };
     helix = {url = "github:helix-editor/helix";};
     nixd = {url = "github:nix-community/nixd";};
+    nix-matlab = {
+      url = "gitlab:doronbehar/nix-matlab";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -54,6 +58,7 @@
     nixos-mailserver,
     helix,
     nixd,
+    nix-matlab,
     ...
   } @ inputs: let
     supportedSystems = ["x86_64-linux"];
@@ -112,6 +117,8 @@
 
           nginxStable = prev.nginxStable.override {openssl = prev.pkgs.libressl;};
         })
+
+        (nix-matlab.overlay)
       ];
 
       hosts = {
