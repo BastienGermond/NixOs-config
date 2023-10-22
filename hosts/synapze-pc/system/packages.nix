@@ -46,6 +46,7 @@
     killall
     libcgroup
     librewolf-wayland
+    matlab
     man-pages
     man-pages-posix
     neovim

@@ -51,6 +51,7 @@
   time.timeZone = "Europe/Paris";
 
   networking.nameservers = ["1.1.1.1" "8.8.8.8"];
+  networking.hostId = "98af65ca";
 
   networking.interfaces.wlp0s20f3.useDHCP = true;
 
