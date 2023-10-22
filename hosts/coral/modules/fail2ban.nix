@@ -2,7 +2,7 @@
   config,
   pkgs,
   ...
-}: {  
+}: {
   systemd.services.fail2ban-prometheus-exporter = {
     description = "Fail2ban prometheus exporter";
     wantedBy = ["multi-user.target"];
@@ -23,7 +23,8 @@
     ];
 
     extraPackages = [pkgs.ipset];
-    banaction = "iptables-ipset-proto6-allports";
+    banaction = "iptables-ipset-proto6";
+    banaction-allports = "iptables-ipset-proto6-allports";
 
     jails = {
       sshd.settings.bantime = "-1";

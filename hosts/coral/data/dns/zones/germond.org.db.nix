@@ -47,5 +47,9 @@ with dns.lib.combinators; {
     hackmd.CNAME = ["germond.org."];
     newsso.CNAME = ["germond.org."];
     git.CNAME = ["germond.org."];
+    douarnenez.NS = [ "douarnenez.germond.org." ];
+    douarnenez.A = [ "193.48.57.162" ];
+    douarnenez.AAAA = [ "2001:660:4401:60a0:216:3eff:fe3d:cccf" ];
+    docs.CNAME = ["germond.org."];
   };
 }
