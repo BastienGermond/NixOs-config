@@ -51,6 +51,12 @@
     options = ["zfsutil"];
   };
 
+  fileSystems."/datastore/bookstack" = {
+    device = "datastore/bookstack";
+    fsType = "zfs";
+    options = ["zfsutil"];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;

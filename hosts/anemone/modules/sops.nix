@@ -47,5 +47,17 @@
         owner = config.services.deluge.user;
       };
     })
+
+    (lib.mkIf config.services.bookstack.enable {
+      BookstackAppKey = {
+        owner = config.services.bookstack.user;
+      };
+      BookstackOIDCSecret = {
+        owner = config.services.bookstack.user;
+      };
+      BookstackS3Secret = {
+        owner = config.services.bookstack.user;
+      };
+    })
   ];
 }
