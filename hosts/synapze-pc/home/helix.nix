@@ -72,6 +72,18 @@
           language-servers = ["ltex-ls" "texlab"];
         }
         {name = "rust";}
+        {name = "tfvars";}
+        {name = "hcl";}
+        {
+          name = "rst";
+          scope = "source.rst";
+          file-types = ["rst"];
+          language-servers = ["ltex-ls"];
+        }
+        {
+          name = "markdown";
+          language-servers = ["ltex-ls"];
+        }
       ];
     };
   };
