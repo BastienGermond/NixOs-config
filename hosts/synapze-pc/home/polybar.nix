@@ -90,6 +90,15 @@ in {
         format-underline = "#1db954";
         format-padding = 1;
       };
+      "module/dunst" = {
+        type = "custom/ipc";
+        initial = 1;
+        format-foreground = "$${colors.primary}";
+        hook = [
+          "echo \"%{A1:${pkgs.dunst}/bin/dunstctl set-paused true && polybar-msg hook dunst 2:} %{A}\""
+          "echo \"%{A1:${pkgs.dunst}/bin/dunstctl set-paused false && polybar-msg hook dunst 1:} %{A}\""
+        ];
+      };
     };
   };
 }
