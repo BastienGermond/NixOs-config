@@ -41,6 +41,7 @@
     "git/config".source = ../dotfiles/gitconfig;
     "i3/config".source = ../dotfiles/i3;
     "signature".source = ../dotfiles/signature;
-    "nvim/lua/plugins.lua".source = ../dotfiles/vim/lua/plugins.lua;
   };
+
+  xdg.configFile."mimeapps.list".force = true;
 }
