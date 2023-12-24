@@ -5,7 +5,7 @@
   ...
 }: {
   programs.neovim = {
-    enable = true;
+    enable = false;
     package = pkgs.neovim; # pkgs.neovim-nightly;
     vimAlias = true;
     viAlias = true;
