@@ -22,5 +22,5 @@ pkgs.buildGoModule rec {
 
   CGO_ENABLED = false;
 
-  vendorSha256 = "sha256-ngmmJga9vxNTp0UGyiKYfaPATipXny7DLjeEPhyW5m0=";
+  vendorHash = "sha256-ngmmJga9vxNTp0UGyiKYfaPATipXny7DLjeEPhyW5m0=";
 }

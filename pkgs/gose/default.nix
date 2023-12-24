@@ -51,7 +51,7 @@
 
     tags = ["embed"];
 
-    vendorSha256 = "sha256-ch9CVV6Dq5y8krTViPquc8eU6JQxXGB7o/G//1GB5mY=";
+    vendorHash = "sha256-ch9CVV6Dq5y8krTViPquc8eU6JQxXGB7o/G//1GB5mY=";
 
     doCheck = false;
   };

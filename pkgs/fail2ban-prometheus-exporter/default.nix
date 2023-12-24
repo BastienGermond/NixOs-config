@@ -16,7 +16,7 @@ pkgs.buildGoModule rec {
 
   sourceRoot = "source/src";
 
-  vendorSha256 = "sha256-2h7x8dGEGHIrKeubQnsjKs7+P+BN1Vrse6CbnpC8bxs=";
+  vendorHash = "sha256-2h7x8dGEGHIrKeubQnsjKs7+P+BN1Vrse6CbnpC8bxs=";
 
   ldflags = [
     "-s"
