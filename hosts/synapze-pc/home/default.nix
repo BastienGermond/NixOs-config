@@ -35,11 +35,11 @@
       scrot
       signal-desktop
       slack
-      spotibar
+      # spotibar
       spotify
       stm32cubemx
       super-slicer
-      teams
+      teams-for-linux
       texlab
     ];
   };

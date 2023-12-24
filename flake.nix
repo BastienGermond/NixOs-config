@@ -3,17 +3,13 @@
   description = "My NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     flake-utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
-    nvim-flake = {
-      url = "github:neovim/neovim/v0.8.3?dir=contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     dns = {
       url = "github:kirelagin/dns.nix";
@@ -50,7 +46,6 @@
     flake-utils,
     home-manager,
     nixos-hardware,
-    nvim-flake,
     dns,
     deploy-rs,
     sops-nix,
@@ -110,7 +105,7 @@
 
           kicad = nixpkgs-unstable.legacyPackages.${prev.system}.kicad;
 
-          neovim = nvim-flake.packages.${prev.system}.neovim;
+          # neovim = nvim-flake.packages.${prev.system}.neovim;
           # neovim = nixpkgs-unstable.legacyPackages.${prev.system}.neovim;
 
           nextcloud27 = nixpkgs.legacyPackages.${prev.system}.nextcloud27;

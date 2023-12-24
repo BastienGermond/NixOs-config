@@ -4,9 +4,7 @@
   pkgs,
   ...
 }: {
-  nixpkgs.config.allowUnfree = true;
-
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     fira
     font-awesome
     julia-mono
@@ -49,7 +47,6 @@
     matlab
     man-pages
     man-pages-posix
-    neovim
     networkmanagerapplet
     nixpkgs-fmt
     parted

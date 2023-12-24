@@ -66,30 +66,30 @@ in {
         tail = false;
         interval = 5;
       };
-      "module/spotibar-previous-track" = {
-        type = "custom/script";
-        exec = "echo ";
-        click-left = "${pkgs.spotibar}/bin/spotibar --previous-track";
-        exec-if = "[ $(${pkgs.spotibar}/bin/spotibar --is-live) = \"True\" ]";
-        format-underline = "#1db954";
-        format-padding = 1;
-      };
-      "module/spotibar-currently-playing" = {
-        type = "custom/script";
-        exec = "${pkgs.spotibar}/bin/spotibar --get-currently-playing";
-        click-right = "${pkgs.spotibar}/bin/spotibar --toggle-playback";
-        exec-if = "[ $(${pkgs.spotibar}/bin/spotibar --is-live) = \"True\" ]";
-        format-underline = "#1db954";
-        format-padding = 0;
-      };
-      "module/spotibar-next-track" = {
-        type = "custom/script";
-        exec = "echo ";
-        click-left = "${pkgs.spotibar}/bin/spotibar --next-track";
-        exec-if = "[ $(${pkgs.spotibar}/bin/spotibar --is-live) = \"True\" ]";
-        format-underline = "#1db954";
-        format-padding = 1;
-      };
+      # "module/spotibar-previous-track" = {
+      #   type = "custom/script";
+      #   exec = "echo ";
+      #   click-left = "${pkgs.spotibar}/bin/spotibar --previous-track";
+      #   exec-if = "[ $(${pkgs.spotibar}/bin/spotibar --is-live) = \"True\" ]";
+      #   format-underline = "#1db954";
+      #   format-padding = 1;
+      # };
+      # "module/spotibar-currently-playing" = {
+      #   type = "custom/script";
+      #   exec = "${pkgs.spotibar}/bin/spotibar --get-currently-playing";
+      #   click-right = "${pkgs.spotibar}/bin/spotibar --toggle-playback";
+      #   exec-if = "[ $(${pkgs.spotibar}/bin/spotibar --is-live) = \"True\" ]";
+      #   format-underline = "#1db954";
+      #   format-padding = 0;
+      # };
+      # "module/spotibar-next-track" = {
+      #   type = "custom/script";
+      #   exec = "echo ";
+      #   click-left = "${pkgs.spotibar}/bin/spotibar --next-track";
+      #   exec-if = "[ $(${pkgs.spotibar}/bin/spotibar --is-live) = \"True\" ]";
+      #   format-underline = "#1db954";
+      #   format-padding = 1;
+      # };
       "module/dunst" = {
         type = "custom/ipc";
         initial = 1;

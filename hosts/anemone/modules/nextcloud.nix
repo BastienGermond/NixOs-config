@@ -42,7 +42,6 @@ in {
     home = "/datastore/nextcloud";
     https = true;
 
-    enableBrokenCiphersForSSE = false;
     configureRedis = true;
 
     maxUploadSize = "10G";
@@ -51,13 +50,14 @@ in {
       oidc_login = pkgs.fetchNextcloudApp {
         sha256 = "sha256-MZ/Pgqrb8Y9aH1vd3BfuPhfLOmYyZQO2xVasdj+rCo4=";
         url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.6.0/oidc_login.tar.gz";
+        license = "agpl3Only";
       };
 
-      # FIXME: Don't support NC27 (https://github.com/mwalbeck/nextcloud-breeze-dark/issues/337)
-      # breezedark = pkgs.fetchNextcloudApp {
-      #   sha256 = "sha256-1/woeAdmvICUulv+mUdyeB92b64wKSxnw4XoP6hkiN0=";
-      #   url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v26.0.0/breezedark.tar.gz";
-      # };
+      breezedark = pkgs.fetchNextcloudApp {
+        sha256 = "sha256-ad+OGE8VcZHYG24S4y3283tSxtxG0EskExwh3174iRI=";
+        url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v27.0.0/breezedark.tar.gz";
+        license = "agpl3Only";
+      };
 
       # FIXME: Not yet ready (https://github.com/icewind1991/files_markdown/issues/200)
       # files_markdown = pkgs.fetchNextcloudApp rec {
@@ -79,16 +79,19 @@ in {
       notes = pkgs.fetchNextcloudApp {
         sha256 = "sha256-7GkTGyGTvtDbZsq/zOdbBE7xh6DZO183W6I5XX1ekbw=";
         url = "https://github.com/nextcloud/notes/releases/download/v4.8.1/notes.tar.gz";
+        license = "agpl3Only";
       };
 
       announcementcenter = pkgs.fetchNextcloudApp {
         sha256 = "sha256-mDQfzf3YLcCrlYYG8o9WfmBXYePSJS1W3W3MuL7SbLI=";
         url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v6.6.1/announcementcenter-v6.6.1.tar.gz";
+        license = "agpl3Only";
       };
 
       calendar = pkgs.fetchNextcloudApp {
         sha256 = "sha256-+1jD05SY7Oz5GdICiQYXgPrzZLHDQgMaLj03OzvQPFI=";
         url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.4.4/calendar-v4.4.4.tar.gz";
+        license = "agpl3Only";
       };
     };
 
