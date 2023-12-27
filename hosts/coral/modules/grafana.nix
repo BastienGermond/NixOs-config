@@ -74,7 +74,7 @@ in {
       };
 
       "auth.anonymous" = {
-        enabled = true;
+        enabled = false;
       };
 
       security.secret_key = readFromFile config.sops.secrets.grafanaSecretKey.path;
