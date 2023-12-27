@@ -48,5 +48,6 @@ with dns.lib.combinators; {
     newsso.CNAME = ["germond.org."];
     git.CNAME = ["germond.org."];
     docs.CNAME = ["germond.org."];
+    videos.CNAME = ["germond.org."];
   };
 }

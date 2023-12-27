@@ -55,6 +55,7 @@ rec {
         promtail = 3031;
         s3 = 9030;
         gitea-ssh = 2222;
+        peertube = 9010;
       };
       wireguard = {
         wg0 = {

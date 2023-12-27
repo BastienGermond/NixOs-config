@@ -57,6 +57,12 @@
     options = ["zfsutil"];
   };
 
+  fileSystems."/datastore/peertube" = {
+    device = "datastore/peertube";
+    fsType = "zfs";
+    options = ["zfsutil"];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;

@@ -59,5 +59,11 @@
         owner = config.services.bookstack.user;
       };
     })
+
+    (lib.mkIf config.services.peertube.enable {
+      PeertubeSecret = {
+        owner = config.services.peertube.user;
+      };
+    })
   ];
 }

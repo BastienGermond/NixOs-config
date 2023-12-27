@@ -16,6 +16,7 @@
     ./nfs.nix
     ./packages.nix
     ./paperless.nix
+    ./peertube.nix
     ./sops.nix
     ./ssh.nix
     ./synapse.nix
