@@ -88,6 +88,14 @@
           ];
         }
         {
+          name = "Germond Tube";
+          group = "2 - Services";
+          url = "https://videos.germond.org";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+        {
           name = "S3";
           group = "3 - Others";
           url = "https://s3.germond.org/minio/health/live";
