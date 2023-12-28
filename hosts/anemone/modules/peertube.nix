@@ -42,6 +42,34 @@ in {
       log = {
         level = "info";
       };
+
+      followers = {
+        instance = {
+          enabled = false;
+          manual_approval = true;
+        };
+      };
+
+      signup = {
+        enabled = false;
+      };
+
+      defaults = {
+        publish = {
+          # public = 1, unlisted = 2, private = 3, internal = 4
+          privacy = 4;
+        };
+
+        p2p = {
+          webapp = {
+            enabled = false;
+          };
+
+          embed = {
+            enabled = false;
+          };
+        };
+      };
     };
   };
 }
