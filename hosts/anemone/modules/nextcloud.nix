@@ -83,8 +83,8 @@ in {
       };
 
       announcementcenter = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-mDQfzf3YLcCrlYYG8o9WfmBXYePSJS1W3W3MuL7SbLI=";
-        url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v6.6.1/announcementcenter-v6.6.1.tar.gz";
+        sha256 = "sha256-GvX0MG2Ei00zaAqfKckkFO5esimmmBQsRVsV3oqAuII=";
+        url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v6.7.0/announcementcenter-v6.7.0.tar.gz";
         license = "agpl3Only";
       };
 
