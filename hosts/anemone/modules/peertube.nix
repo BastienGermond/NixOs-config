@@ -70,6 +70,12 @@ in {
           };
         };
       };
+
+      remote_redundancy = {
+        videos = {
+          accept_from = "nobody";
+        };
+      };
     };
   };
 }
