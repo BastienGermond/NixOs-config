@@ -93,6 +93,12 @@ in {
         url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.4.4/calendar-v4.4.4.tar.gz";
         license = "agpl3Only";
       };
+
+      user_usage_report = pkgs.fetchNextcloudApp {
+        sha256 = "sha256-kApb6pLm8pMVYHB66tLqBS7mJwQjjhD01N3mOOAZdmg=";
+        url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v1.11.1/user_usage_report-v1.11.1.tar.gz";
+        license = "agpl3Plus";
+      };
     };
 
     phpOptions = {
