@@ -25,7 +25,7 @@
 
       sshUser = "synapze";
       sshOpts =
-        ["-A" "-t"]
+        ["-A"]
         ++ (
           if (builtins.hasAttr "sshOpts" extra)
           then extra.sshOpts
