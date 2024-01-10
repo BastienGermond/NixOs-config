@@ -20,6 +20,10 @@ in {
     ];
     configureNginx = true;
     settings = {
+      instance = {
+        name = "Germond Tube";
+      };
+
       storage = {
         tmp = "/var/lib/peertube/storage/tmp/";
         tmp_persistent = "/var/lib/peertube/storage/tmp_persistent/";
