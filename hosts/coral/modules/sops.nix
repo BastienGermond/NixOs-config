@@ -73,5 +73,12 @@
         restartUnits = ["prometheus.service"];
       };
     })
+
+    (lib.mkIf config.services.vouch-proxy.enable {
+      vouchProxyEnv = {
+        owner = config.services.vouch-proxy.user;
+        restartUnits = ["vouch-proxy.service"];
+      };
+    })
   ];
 }

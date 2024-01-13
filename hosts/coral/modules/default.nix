@@ -18,6 +18,7 @@
     ./sops.nix
     ./ssh.nix
     ./transfer.sh.nix
+    ./vouch.nix
     ./wireguard.nix
   ];
 }

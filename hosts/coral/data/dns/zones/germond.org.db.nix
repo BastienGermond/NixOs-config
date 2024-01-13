@@ -49,5 +49,7 @@ with dns.lib.combinators; {
     git.CNAME = ["germond.org."];
     docs.CNAME = ["germond.org."];
     videos.CNAME = ["germond.org."];
+    vouch.CNAME = ["germond.org."];
+    prometheus.CNAME = ["germond.org."];
   };
 }
