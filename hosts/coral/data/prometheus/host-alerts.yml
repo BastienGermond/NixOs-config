@@ -10,7 +10,7 @@ groups:
           text: |
             {{ $labels.job }} has been down for more than 1 minute.
       - alert: DiskSpaceRunningLow
-        expr: (node_filesystem_avail_bytes{mountpoint="/",fstype!="rootfs"} * 100) / node_filesystem_size_bytes{mountpoint="/",fstype!="rootfs"} >= 90
+        expr: (node_filesystem_avail_bytes{fstype!="rootfs",mountpoint="/"}) / node_filesystem_size_bytes{fstype!="rootfs",mountpoint="/"} <= 0.05
         for: 1m
         labels:
           severity: warning
