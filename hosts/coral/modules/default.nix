@@ -10,6 +10,7 @@
     ./gatus.nix
     ./grafana.nix
     ./hedgedoc.nix
+    ./homepage-dashboard.nix
     ./keycloak.nix
     ./mailserver.nix
     ./monitoring.nix

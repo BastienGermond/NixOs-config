@@ -348,6 +348,13 @@ in {
           error_page 401 = @error401;
         '';
       };
+
+      "home.germond.org" = withDefaultConfiguration "home.germond.org" {
+        locations."/" = {
+          recommendedProxySettings = true;
+          proxyPass = "http://localhost:${builtins.toString coral.ports.homepage-dashboard}";
+        };
+      };
     };
   };
 

@@ -51,5 +51,6 @@ with dns.lib.combinators; {
     videos.CNAME = ["germond.org."];
     vouch.CNAME = ["germond.org."];
     prometheus.CNAME = ["germond.org."];
+    home.CNAME = ["germond.org."];
   };
 }
