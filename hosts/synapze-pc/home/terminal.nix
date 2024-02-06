@@ -26,7 +26,7 @@
       };
       shell.program = "/usr/bin/env";
       shell.args = ["zsh"];
-      key_bindings = [
+      keyboard.bindings = [
         {
           key = "Return";
           mods = "Control|Shift";
