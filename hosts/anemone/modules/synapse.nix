@@ -60,9 +60,7 @@
     ensureUsers = [
       {
         name = "matrix-synapse";
-        ensurePermissions = {
-          "DATABASE \"matrix-synapse\"" = "ALL PRIVILEGES";
-        };
+        ensureDBOwnership = true;
       }
     ];
     # If it's the first time, must run to fix issues with collate

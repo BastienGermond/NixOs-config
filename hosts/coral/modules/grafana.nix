@@ -15,9 +15,7 @@ in {
     ensureUsers = [
       {
         name = grafanaDbUser;
-        ensurePermissions = {
-          "DATABASE \"${grafanaDbName}\"" = "ALL PRIVILEGES";
-        };
+        ensureDBOwnership = true;
       }
     ];
     ensureDatabases = [grafanaDbName];

@@ -29,7 +29,7 @@
     };
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
     helix = {url = "github:helix-editor/helix";};
     nixd = {url = "github:nix-community/nixd";};

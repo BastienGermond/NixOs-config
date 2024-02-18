@@ -111,9 +111,7 @@
   services.postgresql.ensureUsers = [
     {
       name = "gatus";
-      ensurePermissions = {
-        "DATABASE \"gatus\"" = "ALL PRIVILEGES";
-      };
+      ensureDBOwnership = true;
     }
   ];
 

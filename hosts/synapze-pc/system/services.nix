@@ -22,8 +22,11 @@
   };
 
   # Configure keymap in X11
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "alt-intl";
+  # FIXME: Might be redundant with modules/xorg.nix
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "alt-intl";
+  };
 
   services.xserver.displayManager.autoLogin.enable = true;
 

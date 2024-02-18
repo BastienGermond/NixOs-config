@@ -16,9 +16,7 @@ in {
     ensureUsers = [
       {
         name = "nextcloud";
-        ensurePermissions = {
-          "DATABASE \"nextcloud\"" = "ALL PRIVILEGES";
-        };
+        ensureDBOwnership = true;
       }
     ];
     ensureDatabases = ["nextcloud"];
@@ -135,19 +133,18 @@ in {
     config = {
       dbuser = "nextcloud";
       dbtype = "pgsql";
-      dbport = 5432;
       dbname = "nextcloud";
-      dbhost = "localhost";
-
-      overwriteProtocol = "https";
+      dbhost = "localhost:5432";
 
       adminpassFile = config.sops.secrets.nextcloudAdminPass.path;
     };
 
     secretFile = config.sops.secrets.nextcloudSupwaSecrets.path;
 
-    extraOptions = {
+    settings = {
       allow_user_to_change_display_name = false;
+
+      overwriteprotocol = "https";
 
       lost_password_link = "disabled";
 

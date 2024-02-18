@@ -6,9 +6,12 @@
   services.xserver = {
     enable = true;
     videoDrivers = ["modesetting"];
-    layout = "us";
-    xkbVariant = "alt-intl";
     # displayManager.autoLogin.enable = true;
+
+    xkb = {
+      layout = "us";
+      variant = "alt-intl";
+    };
 
     windowManager.i3 = {
       enable = true;
