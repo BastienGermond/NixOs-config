@@ -12,6 +12,8 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  hardware.enableRedistributableFirmware = true;
+
   boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-amd"];
@@ -28,6 +30,4 @@
   };
 
   swapDevices = [{device = "/dev/disk/by-uuid/5dadd3ca-42d1-4de5-a1c1-63a507affa91";}];
-
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

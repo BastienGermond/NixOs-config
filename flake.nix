@@ -126,6 +126,8 @@
         ];
 
         "anemone".modules = [
+          nixos-hardware.nixosModules.common-cpu-amd
+          nixos-hardware.nixosModules.common-cpu-amd-pstate
           ./hosts/anemone
           ./home
           ./modules
