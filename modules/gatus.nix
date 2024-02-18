@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+with lib; let
   yaml = pkgs.formats.yaml {};
 
   cfg = config.services.gatus;
@@ -228,7 +229,7 @@
 
       port = lib.mkOption {
         type = lib.types.ints.positive;
-        default = "8080";
+        default = 8080;
         description = "Port to listen on.";
       };
     };
@@ -343,8 +344,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [cfg.package];
-
     users.users.${cfg.user} = {
       group = cfg.group;
       isSystemUser = true;
