@@ -12,6 +12,7 @@ rec {
         };
       };
       ports = {
+        alert-manager = 9093;
         prometheus = 9001;
         node-exporter = 9002;
         promtail = 3031;

@@ -84,6 +84,7 @@ in {
       "vouch.germond.org" = import ./nginx/vouch.germond.org.nix {inherit withDefaultConfiguration;};
       "prometheus.germond.org" = import ./nginx/prometheus.germond.org.nix {inherit pkgs lib config withDefaultConfiguration;};
       "home.germond.org" = import ./nginx/home.germond.org.nix {inherit coral withDefaultConfiguration;};
+      "alert.germond.org" = import ./nginx/alert.germond.org.nix {inherit coral withDefaultConfiguration;};
     };
   };
 

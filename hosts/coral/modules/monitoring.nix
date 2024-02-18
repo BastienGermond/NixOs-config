@@ -12,13 +12,19 @@
 in {
   services.prometheus = {
     enable = true;
+
     port = coral.ports.prometheus;
+
+    webExternalUrl = "https://prometheus.germond.org";
+
     retentionTime = "15d";
 
     checkConfig = "syntax-only";
 
     alertmanager = {
       enable = true;
+      port = coral.ports.alert-manager;
+      webExternalUrl = "https://alert.germond.org";
       environmentFile = config.sops.secrets.alertmanagerEnv.path;
       configuration = {
         route = {
@@ -45,7 +51,7 @@ in {
       {
         static_configs = [
           {
-            targets = ["${infra.hosts.coral.ips.vpn.A}:9093"];
+            targets = ["${coral.ips.vpn.A}:${toString coral.ports.alert-manager}"];
           }
         ];
       }

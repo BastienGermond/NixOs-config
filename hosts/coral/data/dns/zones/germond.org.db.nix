@@ -3,7 +3,7 @@ with dns.lib.combinators; {
   SOA = {
     nameServer = "ns1.synapze.fr.";
     adminEmail = "root@synapze.fr";
-    serial = 2022081101;
+    serial = 24021801; # YYMMDDPP
   };
 
   NS = [
@@ -36,6 +36,7 @@ with dns.lib.combinators; {
   subdomains = {
     mx.CNAME = ["germond.org"];
     _dmarc.TXT = ["v=DMARC1; p=none"];
+    alert.CNAME = ["germond.org."];
     cloud.CNAME = ["germond.org."];
     # sso.CNAME = ["germond.org."];
     grafana.CNAME = ["germond.org."];
