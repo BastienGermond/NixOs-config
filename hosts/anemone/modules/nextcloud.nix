@@ -35,7 +35,7 @@ in {
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud27;
+    package = pkgs.nextcloud28;
     hostName = "cloud.germond.org";
     home = "/datastore/nextcloud";
     https = true;
@@ -46,16 +46,17 @@ in {
 
     extraApps = {
       oidc_login = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-MZ/Pgqrb8Y9aH1vd3BfuPhfLOmYyZQO2xVasdj+rCo4=";
-        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v2.6.0/oidc_login.tar.gz";
+        sha256 = "sha256-cN5azlThKPKRVip14yfUNR85of5z+N6NVI7sg6pSGQI=";
+        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.0.2/oidc_login.tar.gz";
         license = "agpl3Only";
       };
 
-      breezedark = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-ad+OGE8VcZHYG24S4y3283tSxtxG0EskExwh3174iRI=";
-        url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v27.0.0/breezedark.tar.gz";
-        license = "agpl3Only";
-      };
+      # FIXME: Not yet ready for NC28: https://github.com/mwalbeck/nextcloud-breeze-dark/issues/339
+      # breezedark = pkgs.fetchNextcloudApp {
+      #   sha256 = "sha256-ad+OGE8VcZHYG24S4y3283tSxtxG0EskExwh3174iRI=";
+      #   url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v27.0.0/breezedark.tar.gz";
+      #   license = "agpl3Only";
+      # };
 
       # FIXME: Not yet ready (https://github.com/icewind1991/files_markdown/issues/200)
       # files_markdown = pkgs.fetchNextcloudApp rec {
@@ -87,14 +88,14 @@ in {
       };
 
       calendar = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-+1jD05SY7Oz5GdICiQYXgPrzZLHDQgMaLj03OzvQPFI=";
-        url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.4.4/calendar-v4.4.4.tar.gz";
+        sha256 = "sha256-WsNc55+4fJyaOMAIseU6AB6TxC4jxwqDwBIQgxkzsaI=";
+        url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.6.5/calendar-v4.6.5.tar.gz";
         license = "agpl3Only";
       };
 
       user_usage_report = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-kApb6pLm8pMVYHB66tLqBS7mJwQjjhD01N3mOOAZdmg=";
-        url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v1.11.1/user_usage_report-v1.11.1.tar.gz";
+        sha256 = "sha256-hBw+//hLJoiqBscuuUz/FApPXryFj8++gRpvk5ui22I=";
+        url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v1.12.0/user_usage_report-v1.12.0.tar.gz";
         license = "agpl3Plus";
       };
     };
@@ -111,7 +112,7 @@ in {
       "opcache.revalidate_freq" = "1";
       "opcache.fast_shutdown" = "1";
       "openssl.cafile" = "/etc/ssl/certs/ca-certificates.crt";
-      output_buffering = "on";
+      output_buffering = "false";
       catch_workers_output = "yes";
     };
 
@@ -143,8 +144,15 @@ in {
 
     settings = {
       allow_user_to_change_display_name = false;
+      default_phone_region = "FR";
 
+      # Maintenance
+      # Run background jobs during the morning/night
+      maintenance_window_start = 1; # 01:00am UTC and 05:00am UTC
+      
+      # Proxy stuff
       overwriteprotocol = "https";
+      trusted_proxies = [ "10.100.10.1" ];
 
       lost_password_link = "disabled";
 
