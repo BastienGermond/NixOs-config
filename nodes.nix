@@ -31,7 +31,9 @@
           then extra.sshOpts
           else []
         );
+
       magicRollback = false;
+      interactiveSudo = true;
 
       profiles.system = {
         user = "root";
