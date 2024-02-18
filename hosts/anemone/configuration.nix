@@ -20,6 +20,8 @@
     supportedFilesystems = ["zfs"];
   };
 
+  services.fwupd.enable = true;
+
   programs.zsh.enable = true;
 
   services.geoipupdate.settings = {
