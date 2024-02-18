@@ -149,10 +149,10 @@ in {
       # Maintenance
       # Run background jobs during the morning/night
       maintenance_window_start = 1; # 01:00am UTC and 05:00am UTC
-      
+
       # Proxy stuff
       overwriteprotocol = "https";
-      trusted_proxies = [ "10.100.10.1" ];
+      trusted_proxies = ["10.100.10.1"];
 
       lost_password_link = "disabled";
 
