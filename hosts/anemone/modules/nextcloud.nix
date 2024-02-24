@@ -152,6 +152,7 @@ in {
 
       # Proxy stuff
       overwriteprotocol = "https";
+      "overwrite.cli.url" = "https://cloud.germond.org";
       trusted_proxies = ["10.100.10.1"];
 
       lost_password_link = "disabled";
