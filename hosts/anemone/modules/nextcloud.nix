@@ -69,11 +69,11 @@ in {
       #   url = "https://github.com/nextcloud/files_texteditor/releases/download/v2.15.0/files_texteditor.tar.gz";
       # };
 
-      # FIXME: Not yet ready (https://github.com/PaulLereverend/NextcloudDuplicateFinder/issues/105)
-      # duplicatefinder = pkgs.fetchNextcloudApp rec {
-      #   sha256 = "sha256-ZJLwKsRpS0BZU6+HtLbxkQBDM15RL+F0mwynHKujy60=";
-      #   url = "https://github.com/PaulLereverend/NextcloudDuplicateFinder/releases/download/0.0.15/duplicatefinder.tar.gz";
-      # };
+      duplicatefinder = pkgs.fetchNextcloudApp rec {
+        sha256 = "sha256-sY9tZCS9WVwXzlp5+9JzoF1bn2vMMhB1MrewZKS1cQM=";
+        url = "https://github.com/eldertek/duplicatefinder/releases/download/v1.1.8/duplicatefinder-v1.1.8.tar.gz";
+        license = "agpl3Plus";
+      };
 
       notes = pkgs.fetchNextcloudApp {
         sha256 = "sha256-7GkTGyGTvtDbZsq/zOdbBE7xh6DZO183W6I5XX1ekbw=";
