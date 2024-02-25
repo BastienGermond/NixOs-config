@@ -18,7 +18,7 @@ groups:
           text: |
             {{ $labels.job }} is running low on disk space.
       - alert: RamAlmostUsedUp
-        expr: 100 - (100 * node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) >= 80
+        expr: 100 - (100 * node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) >= 90
         for: 1m
         labels:
           severity: critical
