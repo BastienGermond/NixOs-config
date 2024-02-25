@@ -95,6 +95,10 @@
         address = "2a01:4f9:c010:b3c0::";
         prefixLength = 64;
       }
+      {
+        address = "2a01:4f9:c010:b3c0::1";
+        prefixLength = 128;
+      }
     ];
 
     defaultGateway6 = {

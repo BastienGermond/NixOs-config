@@ -65,6 +65,7 @@
     (lib.mkIf config.mailserver.enable {
       noReplyMailPassword = {};
       testMailPassword = {};
+      abuseMailPassword = {};
     })
 
     (lib.mkIf config.services.prometheus.enable {

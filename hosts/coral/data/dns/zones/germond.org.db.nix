@@ -1,13 +1,14 @@
 {dns}:
 with dns.lib.combinators; {
   SOA = {
-    nameServer = "ns1.synapze.fr.";
-    adminEmail = "root@synapze.fr";
-    serial = 24021801; # YYMMDDPP
+    nameServer = "ns1.germond.org.";
+    adminEmail = "abuse@germond.org";
+    serial = 24022503; # YYMMDDPP
   };
 
   NS = [
-    "ns1.synapze.fr."
+    "ns1.germond.org."
+    "ns2.germond.org."
   ];
 
   A = ["135.181.36.15"];
@@ -21,7 +22,7 @@ with dns.lib.combinators; {
   ];
 
   TXT = [
-    "v=spf1 a:mx.germond.org ip4:135.181.36.15 ~all"
+    "v=spf1 a:mx.germond.org ip4:135.181.36.15 ip6:2a01:4f9:c010:b3c0::1 ~all"
   ];
 
   DKIM = [
@@ -34,8 +35,21 @@ with dns.lib.combinators; {
   ];
 
   subdomains = {
-    mx.CNAME = ["germond.org"];
-    _dmarc.TXT = ["v=DMARC1; p=none"];
+    mx = {
+      A = ["135.181.36.15"];
+      AAAA = ["2a01:4f9:c010:b3c0::1"];
+    };
+
+    ns1 = {
+      A = ["135.181.36.15"];
+      AAAA = ["2a01:4f9:c010:b3c0::1"];
+    };
+    ns2 = {
+      A = ["135.181.36.15"];
+      AAAA = ["2a01:4f9:c010:b3c0::1"];
+    };
+
+    _dmarc.TXT = ["v=DMARC1; p=quarantine; rua=mailto:abuse@germond.org;"];
     alert.CNAME = ["germond.org."];
     cloud.CNAME = ["germond.org."];
     # sso.CNAME = ["germond.org."];

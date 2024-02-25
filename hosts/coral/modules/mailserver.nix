@@ -24,6 +24,10 @@
         hashedPasswordFile = config.sops.secrets.noReplyMailPassword.path;
         sendOnly = true;
       };
+      "abuse@germond.org" = {
+        name = "abuse@germond.org";
+        hashedPasswordFile = config.sops.secrets.abuseMailPassword.path;
+      };
       "test@germond.org" = {
         name = "test@germond.org";
         hashedPasswordFile = config.sops.secrets.testMailPassword.path;
