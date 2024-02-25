@@ -14,23 +14,31 @@
     {
       Cloud = [
         {
-          Nextcloud = {
-            icon = "nextcloud-blue";
-            href = makeGermondLink "cloud";
-            description = "Stockage de fichier similaire de Google Drive.";
+          "Mon compte" = {
+            icon = "keycloak";
+            href = (makeGermondLink "newsso") + "/realms/germond/account";
+            description = "Changer son mot de passe, son email, ...";
           };
         }
         {
-          PeerTube = {
+          "Nextcloud - Stockage de fichier" = {
+            icon = "nextcloud-blue";
+            href = makeGermondLink "cloud";
+            description = "Stockage de fichier similaire à Google Drive.";
+            siteMonitor = makeGermondLink "cloud";
+          };
+        }
+        {
+          "PeerTube - Vidéos" = {
             icon = "peertube";
             href = makeGermondLink "videos";
             description = "Comme youtube mais les fichiers reste ici.";
           };
         }
         {
-          Hackmd = {
+          "Hackmd - Notes collaborative" = {
             href = makeGermondLink "hackmd";
-            description = "Notes colaboratives.";
+            description = "Notes collaborative.";
           };
         }
       ];
@@ -42,6 +50,10 @@
             icon = "gatus";
             href = makeGermondLink "status";
             description = "Surveille l'accessibilité des services.";
+            widget = {
+              type = "gatus";
+              url = makeGermondLink "status";
+            };
           };
         }
         {
@@ -49,6 +61,17 @@
             icon = "prometheus";
             href = makeGermondLink "prometheus";
             description = "Agrège et stoque les métrics (CPU, RAM, I/O..).";
+            widget = {
+              type = "prometheus";
+              url = "http://10.100.10.1:9001";
+            };
+          };
+        }
+        {
+          AlertManager = {
+            icon = "alertmanager";
+            href = makeGermondLink "alert";
+            description = "Envoi les alertes sur Telegram.";
           };
         }
         {
@@ -72,10 +95,12 @@ in {
     configDir = pkgs.linkFarm "homepage-dashboard-config" {
       "settings.yaml" = yaml.generate "settings.yaml" {
         title = "Germond Homelab";
+        background = "https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80";
         cardBlur = "sm";
         theme = "dark";
-        color = "slate";
+        color = "zinc";
         iconStyle = "theme";
+        statusStyle = "dot";
 
         language = "fr";
 
