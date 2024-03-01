@@ -37,6 +37,13 @@
         nixd = {
           command = "${pkgs.nixd}/bin/nixd";
         };
+        pylsp = {
+          command = "${pkgs.python311Packages.python-lsp-server}/bin/pylsp";
+          config.pylsp = {
+            "plugins.pylsp_mypy.enabled" = true;
+            "plugins.pylsp_mypy.live_mode" = true;
+          };
+        };
       };
       language = [
         {
@@ -85,6 +92,10 @@
           language-servers = ["ltex-ls"];
         }
         {name = "git-commit";}
+        # {
+        #   name = "python";
+        #   language-servers = ["pylsp"];
+        # }
       ];
     };
   };
