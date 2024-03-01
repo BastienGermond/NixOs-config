@@ -23,7 +23,7 @@ export CPU_THERMAL_ZONE=$CPU_THERMAL_ZONE
 
 if type "xrandr"; then
   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    MONITOR=$m polybar --reload default &
+    MONITOR=$m polybar default &
   done
 else
     # Launch Polybar, using default config location ~/.config/polybar/config
