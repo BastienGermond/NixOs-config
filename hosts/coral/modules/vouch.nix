@@ -19,6 +19,10 @@
           secure = true;
           domain = "germond.org";
         };
+
+        headers = {
+          claims = ["groups"];
+        };
       };
 
       oauth = {

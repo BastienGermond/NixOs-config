@@ -50,4 +50,26 @@ in {
       "gistre.fr".master = true;
     };
   };
+
+  systemd.services."mx-germond-org-dane-tsla-updater" = {
+    enable = true;
+
+    path = with pkgs; [openssl hash-slinger];
+
+    script = ''
+      set -e -o pipefail
+
+      CERTIFICATE_FOLDER=/var/lib/acme/germond.org
+
+      tlsa -c --port 25 --usage 3 --selector 1 --certificate $CERTIFICATE_FOLDER/cert.pem mx.germond.org > $CERTIFICATE_FOLDER/dane.line
+    '';
+
+    wantedBy = ["multi-user.target"];
+    after = ["network.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      User = "acme";
+    };
+  };
 }
