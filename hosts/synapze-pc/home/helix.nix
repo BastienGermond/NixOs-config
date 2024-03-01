@@ -88,4 +88,6 @@
       ];
     };
   };
+
+  home.sessionVariables.EDITOR = "hx";
 }

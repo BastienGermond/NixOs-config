@@ -43,6 +43,4 @@
       (lib.strings.fileContents ../dotfiles/vimrc)
     ];
   };
-
-  home.sessionVariables.EDITOR = "nvim";
 }
