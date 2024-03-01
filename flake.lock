@@ -294,6 +294,22 @@
         "type": "github"
       }
     },
+    "kicad-nixpkgs": {
+      "locked": {
+        "lastModified": 1696748673,
+        "narHash": "sha256-UbPHrH4dKN/66EpfFpoG4St4XZYDX9YcMVRQGWzAUNA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9957cd48326fe8dbd52fdc50dd2502307f188b0d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9957cd48326fe8dbd52fdc50dd2502307f188b0d",
+        "type": "github"
+      }
+    },
     "nix-matlab": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -454,11 +470,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1707092692,
-        "narHash": "sha256-ZbHsm+mGk/izkWtT4xwwqz38fdlwu7nUUKXTOmm4SyE=",
+        "lastModified": 1708807242,
+        "narHash": "sha256-sRTRkhMD4delO/hPxxi+XwLqPn8BuUq6nnj4JqLwOu0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "faf912b086576fd1a15fca610166c98d47bc667e",
+        "rev": "73de017ef2d18a04ac4bfd0c02650007ccb31c2a",
         "type": "github"
       },
       "original": {
@@ -539,6 +555,7 @@
         "gistre-fr-db": "gistre-fr-db",
         "helix": "helix",
         "home-manager": "home-manager",
+        "kicad-nixpkgs": "kicad-nixpkgs",
         "nix-matlab": "nix-matlab",
         "nixd": "nixd",
         "nixos-hardware": "nixos-hardware",

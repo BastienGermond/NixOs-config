@@ -4,6 +4,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    kicad-nixpkgs.url = "github:NixOS/nixpkgs/9957cd48326fe8dbd52fdc50dd2502307f188b0d"; # 7.0.7
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -44,6 +45,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    kicad-nixpkgs,
     flake-utils,
     home-manager,
     nixos-hardware,
@@ -103,7 +105,7 @@
           helix = helix.packages.${prev.system}.helix;
           nixd = nixd.packages.${prev.system}.nixd;
 
-          kicad = nixpkgs-unstable.legacyPackages.${prev.system}.kicad;
+          kicad = kicad-nixpkgs.legacyPackages.${prev.system}.kicad;
 
           # neovim = nvim-flake.packages.${prev.system}.neovim;
           # neovim = nixpkgs-unstable.legacyPackages.${prev.system}.neovim;
