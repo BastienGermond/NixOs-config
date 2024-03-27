@@ -115,6 +115,5 @@ in {
     kubernetes = {
       mode = "disabled";
     };
-
   };
 }

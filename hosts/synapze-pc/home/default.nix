@@ -38,7 +38,7 @@
       # spotibar
       spotify
       stm32cubemx
-      super-slicer
+      # super-slicer
       teams-for-linux
       texlab
     ];
