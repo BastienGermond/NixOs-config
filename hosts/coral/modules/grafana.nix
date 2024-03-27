@@ -85,7 +85,9 @@ in {
       };
     };
 
-    declarativePlugins = with pkgs.grafanaPlugins; [];
+    declarativePlugins = with pkgs.grafanaPlugins; [
+      grafana-piechart-panel
+    ];
 
     provision = {
       enable = true;

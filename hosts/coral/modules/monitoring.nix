@@ -61,6 +61,7 @@ in {
       ../data/prometheus/host-alerts.yml
       ../data/prometheus/gatus.yml
       ../data/prometheus/synapse-v2.rules
+      ../data/prometheus/dmarc-alerts.yml
     ];
 
     exporters = {
@@ -69,6 +70,15 @@ in {
         enabledCollectors = ["systemd" "processes" "cpu"];
         port = coral.ports.node-exporter;
       };
+      dmarc = {
+        enable = true;
+        imap = {
+          host = "germond.org";
+          username = "abuse@germond.org";
+          passwordFile = config.sops.secrets.imapPassword.path;
+        };
+        pollIntervalSeconds = 3600;
+      };
     };
 
     scrapeConfigs = [
@@ -76,7 +86,9 @@ in {
         job_name = "anemone";
         static_configs = [
           {
-            targets = ["${anemone.ips.vpn.A}:${builtins.toString anemone.ports.node-exporter}"];
+            targets = [
+              "${anemone.ips.vpn.A}:${builtins.toString anemone.ports.node-exporter}"
+            ];
           }
         ];
       }
@@ -84,7 +96,10 @@ in {
         job_name = "coral";
         static_configs = [
           {
-            targets = ["127.0.0.1:${builtins.toString coral.ports.node-exporter}"];
+            targets = [
+              "127.0.0.1:${builtins.toString coral.ports.node-exporter}"
+              "127.0.0.1:${toString config.services.prometheus.exporters.dmarc.port}"
+            ];
           }
         ];
       }

@@ -18,6 +18,7 @@ rec {
         promtail = 3031;
         loki = 3100;
         keycloak = 9042;
+        vault = 8200;
         homepage-dashboard = 8082;
       };
       wireguard = {

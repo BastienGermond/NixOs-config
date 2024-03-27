@@ -81,5 +81,13 @@
         restartUnits = ["vouch-proxy.service"];
       };
     })
+
+    (lib.mkIf config.services.prometheus.exporters.dmarc.enable {
+      imapPassword = {
+        owner = "dmarc-exporter";
+        group = "dmarc-exporter";
+        restartUnits = ["prometheus-dmarc-exporter.service"];
+      };
+    })
   ];
 }
