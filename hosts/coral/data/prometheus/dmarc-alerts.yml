@@ -1,0 +1,11 @@
+groups:
+  - name: dmarc
+    rules:
+      - alert: NewDMARCRejected
+        expr: rate(dmarc_reject_total[5m]) > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          text: |
+            {{ $labels.reporter }} has rejected DMARC verification for {{ $labels.dkim_domain }}.
