@@ -29,9 +29,7 @@
       inputs.dns.follows = "dns";
     };
     nixos-mailserver = {
-      # url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
-      url = "gitlab:dotlambda/nixos-mailserver/sieve-fix";
-      # inputs.nixpkgs.follows = "nixpkgs";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     };
     helix = {url = "github:helix-editor/helix";};
     nixd = {url = "github:nix-community/nixd";};

@@ -15,7 +15,7 @@
     enable = true;
     enableSSHSupport = false;
     enableBrowserSocket = true;
-    pinentryFlavor = "curses";
+    pinentryPackage = pkgs.pinentry-curses;
   };
 
   services.yubikey-agent.enable = true;
