@@ -31,7 +31,7 @@
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     };
-    helix = {url = "github:helix-editor/helix";};
+    # helix = {url = "github:helix-editor/helix";};
     nixd = {url = "github:nix-community/nixd";};
     nix-matlab = {
       url = "gitlab:doronbehar/nix-matlab";
@@ -52,7 +52,7 @@
     sops-nix,
     gistre-fr-db,
     nixos-mailserver,
-    helix,
+    # helix,
     nixd,
     nix-matlab,
     ...
@@ -100,7 +100,7 @@
           gose = final.callPackage ./pkgs/gose/default.nix {};
           fail2ban-prometheus-exporter = final.callPackage ./pkgs/fail2ban-prometheus-exporter {};
 
-          helix = helix.packages.${prev.system}.helix;
+          # helix = helix.packages.${prev.system}.helix;
           nixd = nixd.packages.${prev.system}.nixd;
 
           kicad = kicad-nixpkgs.legacyPackages.${prev.system}.kicad;

@@ -84,8 +84,8 @@
 
     (lib.mkIf config.services.prometheus.exporters.dmarc.enable {
       imapPassword = {
-        owner = "dmarc-exporter";
-        group = "dmarc-exporter";
+        owner = config.services.prometheus.exporters.dmarc.user;
+        group = config.services.prometheus.exporters.dmarc.group;
         restartUnits = ["prometheus-dmarc-exporter.service"];
       };
     })
