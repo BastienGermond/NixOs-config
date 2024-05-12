@@ -18,7 +18,7 @@
     extraGroups = ["wheel" "networkmanager" "audio" "vboxusers" "plugdev" "dialout" "scanner" "lp"];
   };
 
-  services.xserver.displayManager.autoLogin.user = "synapze";
+  services.displayManager.autoLogin.user = "synapze";
 
   security.sudo = {
     enable = true;

@@ -21,18 +21,18 @@
         at-spi2-core
       ];
     };
+  };
 
-    libinput = {
-      enable = true;
-      touchpad = {
-        naturalScrolling = true;
-        tapping = true;
-        tappingDragLock = false;
-      };
-      mouse = {
-        tapping = false;
-        tappingDragLock = false;
-      };
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      naturalScrolling = true;
+      tapping = true;
+      tappingDragLock = false;
+    };
+    mouse = {
+      tapping = false;
+      tappingDragLock = false;
     };
   };
 }

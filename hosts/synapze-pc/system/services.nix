@@ -16,7 +16,7 @@
     ];
   };
 
-  services.xserver.libinput = {
+  services.libinput = {
     enable = true;
     touchpad.naturalScrolling = true;
   };
@@ -28,7 +28,7 @@
     variant = "alt-intl";
   };
 
-  services.xserver.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.enable = true;
 
   # Required to use smart card mode (CCID)
   services.pcscd.enable = true;
