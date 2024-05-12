@@ -81,7 +81,7 @@ in {
         user = grafanaDbUser;
         type = "postgres";
         name = grafanaDbName;
-        host = "127.0.0.1:${builtins.toString config.services.postgresql.port}";
+        host = "127.0.0.1:${builtins.toString config.services.postgresql.settings.port}";
       };
     };
 
