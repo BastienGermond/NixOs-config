@@ -42,9 +42,6 @@
   users.extraGroups.vboxusers.members = ["user-with-access-to-virtualbox"];
 
   networking.hostName = "synapze-pc"; # Define your hostname.
-  networking.extraHosts = ''
-    127.0.0.1   gitea droneci
-  '';
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
