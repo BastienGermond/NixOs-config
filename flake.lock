@@ -251,17 +251,17 @@
     },
     "kicad-nixpkgs": {
       "locked": {
-        "lastModified": 1696748673,
-        "narHash": "sha256-UbPHrH4dKN/66EpfFpoG4St4XZYDX9YcMVRQGWzAUNA=",
+        "lastModified": 1714307651,
+        "narHash": "sha256-kwP/tgZHuxyI7dhfKl2/Ps0thLYhep2rgqHjWN5Pvdg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9957cd48326fe8dbd52fdc50dd2502307f188b0d",
+        "rev": "42da345f486d4206d06aa595370f7e211faec204",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9957cd48326fe8dbd52fdc50dd2502307f188b0d",
+        "rev": "42da345f486d4206d06aa595370f7e211faec204",
         "type": "github"
       }
     },

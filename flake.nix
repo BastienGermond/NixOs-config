@@ -4,7 +4,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    kicad-nixpkgs.url = "github:NixOS/nixpkgs/9957cd48326fe8dbd52fdc50dd2502307f188b0d"; # 7.0.7
+    # kicad-nixpkgs.url = "github:NixOS/nixpkgs/9957cd48326fe8dbd52fdc50dd2502307f188b0d"; # 7.0.7
+    kicad-nixpkgs.url = "github:NixOS/nixpkgs/42da345f486d4206d06aa595370f7e211faec204"; # 8.0.2
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
