@@ -103,6 +103,15 @@
             "[STATUS] == 200"
           ];
         }
+        {
+          name = "Scrutiny";
+          group = "3 - Others";
+          url = "https://scrutiny.germond.org/api/health";
+          conditions = [
+            "[STATUS] == 200"
+            "[BODY].success == true"
+          ];
+        }
       ];
     };
   };
