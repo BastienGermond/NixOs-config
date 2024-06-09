@@ -266,4 +266,13 @@ in {
       };
     };
   };
+
+  systemd.services."prometheus-dmarc-exporter".serviceConfig.DynamicUser = false;
+
+  users.users."dmarc-exporter" = {
+    isSystemUser = true;
+    group = "dmarc-exporter";
+  };
+
+  users.groups."dmarc-exporter" = {};
 }

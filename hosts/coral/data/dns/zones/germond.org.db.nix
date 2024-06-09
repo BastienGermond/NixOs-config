@@ -12,7 +12,7 @@ with dns.lib.combinators; {
   ];
 
   A = ["135.181.36.15"];
-  AAAA = ["2a01:4f9:c010:b3c0::"];
+  AAAA = ["2a01:4f9:c010:b3c0::1"];
 
   MX = [
     {

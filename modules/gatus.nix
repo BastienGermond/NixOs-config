@@ -356,14 +356,14 @@ in {
       wantedBy = ["multi-user.target"];
       after = ["network.target"];
       stopIfChanged = false;
-      startLimitIntervalSec = 60;
+      startLimitIntervalSec = 120;
       environment = {
         GATUS_CONFIG_PATH = cfg.configFile;
       };
       serviceConfig = {
         ExecStart = execCommand;
         Restart = "always";
-        RestartSec = "10s";
+        RestartSec = "30s";
         # User and Group
         User = cfg.user;
         Group = cfg.group;
