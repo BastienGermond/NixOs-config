@@ -51,12 +51,11 @@ in {
         license = "agpl3Only";
       };
 
-      # FIXME: Not yet ready for NC28: https://github.com/mwalbeck/nextcloud-breeze-dark/issues/339
-      # breezedark = pkgs.fetchNextcloudApp {
-      #   sha256 = "sha256-ad+OGE8VcZHYG24S4y3283tSxtxG0EskExwh3174iRI=";
-      #   url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v27.0.0/breezedark.tar.gz";
-      #   license = "agpl3Only";
-      # };
+      breezedark = pkgs.fetchNextcloudApp {
+        sha256 = "sha256-MyEZ8ksaS8jLORVRPaTsK4KnhjutAusOQuMgVW0XL10=";
+        url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v28.0.0/breezedark.tar.gz";
+        license = "agpl3Only";
+      };
 
       # FIXME: Not yet ready (https://github.com/icewind1991/files_markdown/issues/200)
       # files_markdown = pkgs.fetchNextcloudApp rec {
@@ -70,8 +69,8 @@ in {
       # };
 
       duplicatefinder = pkgs.fetchNextcloudApp rec {
-        sha256 = "sha256-sY9tZCS9WVwXzlp5+9JzoF1bn2vMMhB1MrewZKS1cQM=";
-        url = "https://github.com/eldertek/duplicatefinder/releases/download/v1.1.8/duplicatefinder-v1.1.8.tar.gz";
+        sha256 = "sha256-yRB+NYWTw5toc2G6ME5mwS1Obc7cF6nmfqMg+34ZFf0=";
+        url = "https://github.com/eldertek/duplicatefinder/releases/download/v1.1.10/duplicatefinder-v1.1.10.tar.gz";
         license = "agpl3Plus";
       };
 
@@ -88,8 +87,8 @@ in {
       };
 
       calendar = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-WsNc55+4fJyaOMAIseU6AB6TxC4jxwqDwBIQgxkzsaI=";
-        url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.6.5/calendar-v4.6.5.tar.gz";
+        sha256 = "sha256-DJ9RvvU2j7qJAYUAq0aDCdctAsRF/R5z5R+ra1W5Oic=";
+        url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.7.6/calendar-v4.7.6.tar.gz";
         license = "agpl3Only";
       };
 
