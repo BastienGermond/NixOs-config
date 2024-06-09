@@ -67,5 +67,6 @@ with dns.lib.combinators; {
     vouch.CNAME = ["germond.org."];
     prometheus.CNAME = ["germond.org."];
     home.CNAME = ["germond.org."];
+    scrutiny.CNAME = ["germond.org."];
   };
 }

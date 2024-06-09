@@ -17,6 +17,7 @@
     ./packages.nix
     ./paperless.nix
     ./peertube.nix
+    ./scrutiny.nix
     ./sops.nix
     ./ssh.nix
     ./synapse.nix

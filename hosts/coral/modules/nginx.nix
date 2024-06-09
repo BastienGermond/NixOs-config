@@ -85,6 +85,7 @@ in {
       "prometheus.germond.org" = import ./nginx/prometheus.germond.org.nix {inherit pkgs lib config withDefaultConfiguration;};
       "home.germond.org" = import ./nginx/home.germond.org.nix {inherit coral withDefaultConfiguration;};
       "alert.germond.org" = import ./nginx/alert.germond.org.nix {inherit coral withDefaultConfiguration;};
+      "scrutiny.germond.org" = import ./nginx/scrutiny.germond.org.nix {inherit config withDefaultConfiguration;};
     };
   };
 

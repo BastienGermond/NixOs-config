@@ -20,6 +20,7 @@ rec {
         keycloak = 9042;
         vault = 8200;
         homepage-dashboard = 8082;
+        scrutiny-dashboard = 8001;
       };
       wireguard = {
         wgs0 = {

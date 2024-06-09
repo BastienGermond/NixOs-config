@@ -16,6 +16,7 @@
     ./monitoring.nix
     ./nginx.nix
     ./packages.nix
+    ./scrutiny.nix
     ./sops.nix
     ./ssh.nix
     ./transfer.sh.nix
