@@ -3,8 +3,7 @@
   description = "My NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    # kicad-nixpkgs.url = "github:NixOS/nixpkgs/9957cd48326fe8dbd52fdc50dd2502307f188b0d"; # 7.0.7
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     kicad-nixpkgs.url = "github:NixOS/nixpkgs/42da345f486d4206d06aa595370f7e211faec204"; # 8.0.2
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
@@ -32,7 +31,6 @@
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     };
-    # helix = {url = "github:helix-editor/helix";};
     nixd = {url = "github:nix-community/nixd";};
     nix-matlab = {
       url = "gitlab:doronbehar/nix-matlab";
@@ -42,7 +40,6 @@
 
   outputs = {
     self,
-    nixpkgs,
     nixpkgs-unstable,
     kicad-nixpkgs,
     flake-utils,
@@ -53,7 +50,6 @@
     sops-nix,
     gistre-fr-db,
     nixos-mailserver,
-    # helix,
     nixd,
     nix-matlab,
     ...
@@ -101,15 +97,9 @@
           gose = final.callPackage ./pkgs/gose/default.nix {};
           fail2ban-prometheus-exporter = final.callPackage ./pkgs/fail2ban-prometheus-exporter {};
 
-          # helix = helix.packages.${prev.system}.helix;
           nixd = nixd.packages.${prev.system}.nixd;
 
           kicad = kicad-nixpkgs.legacyPackages.${prev.system}.kicad;
-
-          # neovim = nvim-flake.packages.${prev.system}.neovim;
-          # neovim = nixpkgs-unstable.legacyPackages.${prev.system}.neovim;
-
-          nextcloud27 = nixpkgs.legacyPackages.${prev.system}.nextcloud27;
 
           nginxStable = prev.nginxStable.override {openssl = prev.pkgs.libressl;};
         })
@@ -147,11 +137,13 @@
 
       outputsBuilder = channels: {
         devShells.default = channels.nixpkgs.mkShell {
-          buildInputs = with channels.nixpkgs; [
-            age-plugin-yubikey
-            deploy-rs.packages.${system}.deploy-rs
-            sops
-          ];
+          buildInputs =
+            (builtins.attrValues {
+              inherit (channels.nixpkgs) age-plugin-yubikey sops;
+            })
+            ++ [
+              deploy-rs.packages.${channels.nixpkgs.system}.deploy-rs
+            ];
         };
       };
 
