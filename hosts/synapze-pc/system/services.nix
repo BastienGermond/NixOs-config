@@ -88,4 +88,21 @@
 
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [hplipWithPlugin canon-cups-ufr2 carps-cups cups-bjnp gutenprintBin cnijfilter2];
+
+  services.davfs2.enable = true;
+
+  systemd.mounts = [
+    {
+      enable = true;
+      description = "Webdav mount point";
+      after = ["network-online.target"];
+      wants = ["network-online.target"];
+
+      what = "https://cloud.germond.org/remote.php/dav/files/bastien.germond";
+      where = "/cloud";
+      options = "uid=1000,gid=1000,file_mode=0664,dir_mode=2775";
+      type = "davfs";
+      mountConfig.TimeoutSec = 15;
+    }
+  ];
 }

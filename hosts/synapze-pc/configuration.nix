@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./fs.nix
     ./system
+    ./sops.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
