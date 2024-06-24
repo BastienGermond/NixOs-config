@@ -5,6 +5,7 @@
 }: {
   imports = [
     # ./nsd.nix
+    ./attic.nix
     ./bind.nix
     ./fail2ban.nix
     ./gatus.nix

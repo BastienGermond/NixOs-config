@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }: {
@@ -88,6 +87,10 @@
         group = config.services.prometheus.exporters.dmarc.group;
         restartUnits = ["prometheus-dmarc-exporter.service"];
       };
+    })
+
+    (lib.mkIf config.services.atticd.enable {
+      atticCredentials = {};
     })
   ];
 }

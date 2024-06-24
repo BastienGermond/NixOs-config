@@ -53,6 +53,8 @@
           formatter = {
             command = "clang-format";
           };
+          workspace-lsp-roots = [ ".clangd" "compile_commands.json" ];
+          roots = [ "compile_commands.json" ];
         }
         {name = "cpp";}
         {

@@ -51,6 +51,7 @@ with dns.lib.combinators; {
 
     _dmarc.TXT = ["v=DMARC1; p=quarantine; rua=mailto:abuse@germond.org;"];
     alert.CNAME = ["germond.org."];
+    cache.CNAME = ["germond.org."];
     cloud.CNAME = ["germond.org."];
     # sso.CNAME = ["germond.org."];
     grafana.CNAME = ["germond.org."];

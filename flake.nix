@@ -5,7 +5,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     kicad-nixpkgs.url = "github:NixOS/nixpkgs/42da345f486d4206d06aa595370f7e211faec204"; # 8.0.2
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/82c3726b76c025d6b6f6e5d8cecb59008a3a21be";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -36,6 +36,7 @@
       url = "gitlab:doronbehar/nix-matlab";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    attic.url = "github:zhaofengli/attic";
   };
 
   outputs = {
@@ -52,6 +53,7 @@
     nixos-mailserver,
     nixd,
     nix-matlab,
+    attic,
     ...
   } @ inputs: let
     supportedSystems = ["x86_64-linux"];
@@ -72,6 +74,7 @@
           gistre-fr-db.nixosModules.default
           home-manager.nixosModule
           nixos-mailserver.nixosModules.mailserver
+          attic.nixosModules.atticd
           ./modules
         ];
         extraArgs = {inherit dns infra;};
@@ -128,6 +131,12 @@
           ./hosts/coral
           ./home
           ./modules
+        ];
+
+        "rpi-1".modules = [
+          nixos-hardware.nixosModules.raspberry-pi-4
+          ./hosts/rpi-1
+          ./home
         ];
       };
 
