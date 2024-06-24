@@ -2,8 +2,12 @@
   config,
   pkgs,
   lib,
+  infra,
   ...
-}: {
+}:
+let
+  coral = infra.hosts.coral;
+in{
   services.gatus = {
     enable = true;
     config = {
@@ -106,7 +110,7 @@
         {
           name = "Scrutiny";
           group = "3 - Others";
-          url = "https://scrutiny.germond.org/api/health";
+          url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.scrutiny-dashboard}/api/health";
           conditions = [
             "[STATUS] == 200"
             "[BODY].success == true"

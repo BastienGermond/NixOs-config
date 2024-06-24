@@ -82,6 +82,13 @@
             description = "Affichage en graphique des données.";
           };
         }
+        {
+          Scrutiny = {
+            icon = "scrutiny";
+            href = makeGermondLink "scrutiny";
+            description = "Monitoring des disques.";
+          };
+        }
       ];
     }
   ];
