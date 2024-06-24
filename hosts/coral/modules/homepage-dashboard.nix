@@ -37,6 +37,7 @@
         }
         {
           "Hackmd - Notes collaborative" = {
+            icon = "hedgedoc";
             href = makeGermondLink "hackmd";
             description = "Notes collaborative.";
           };
