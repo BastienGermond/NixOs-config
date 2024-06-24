@@ -9,5 +9,6 @@ withDefaultConfiguration "hackmd.germond.org" {
     hedgedocPort = config.services.hedgedoc.settings.port;
   in {
     proxyPass = "http://${hedgedocHost}:${builtins.toString hedgedocPort}";
+    proxyWebsockets = true;
   };
 }
