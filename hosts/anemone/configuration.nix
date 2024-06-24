@@ -133,6 +133,7 @@
       22
       80
       8008
+      5201 # iperf3
     ];
     extraCommands = ''
 

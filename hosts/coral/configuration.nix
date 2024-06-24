@@ -71,7 +71,7 @@
 
     firewall = {
       enable = true;
-      allowedTCPPorts = [22 2222];
+      allowedTCPPorts = [22 2222 5201]; # 5201 is for iperf3
       extraCommands = ''
       '';
 
