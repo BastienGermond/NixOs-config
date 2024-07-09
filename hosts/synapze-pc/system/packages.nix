@@ -27,14 +27,13 @@
     cryptsetup
     ctags
     curl
+    dconf-editor
     evince
     feh
     flameshot
     fritzing
     gcc
     git
-    gnome.dconf-editor
-    gnome.nautilus
     gnumake
     gnupg
     gparted
@@ -44,9 +43,10 @@
     killall
     libcgroup
     librewolf-wayland
-    matlab
     man-pages
     man-pages-posix
+    matlab
+    nautilus
     networkmanagerapplet
     nixpkgs-fmt
     parted

@@ -13,6 +13,8 @@
 
   config = {
     home.packages = with pkgs; [
+      amber
+      attic-client
       cmake-language-server
       cura
       discord
