@@ -19,6 +19,7 @@ rec {
         promtail = 3031;
         loki = 3100;
         keycloak = 9042;
+        keycloak-management = 9000;
         vault = 8200;
         homepage-dashboard = 8082;
         scrutiny-dashboard = 8001;

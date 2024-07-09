@@ -1,13 +1,13 @@
 {
   config,
-  pkgs,
-  lib,
   infra,
   ...
-}:
-let
+}: let
   coral = infra.hosts.coral;
-in{
+  keycloakSettings = config.services.keycloak.settings;
+
+  inherit (builtins) toString;
+in {
   services.gatus = {
     enable = true;
     config = {
@@ -37,7 +37,7 @@ in{
         {
           name = "Keycloak";
           group = "0 - Authentication";
-          url = "https://newsso.germond.org/health/ready";
+          url = "http://${keycloakSettings.http-host}:${toString coral.ports.keycloak-management}/health/ready";
           conditions = [
             "[STATUS] == 200"
           ];
@@ -110,7 +110,7 @@ in{
         {
           name = "Scrutiny";
           group = "3 - Others";
-          url = "http://${coral.ips.vpn.A}:${builtins.toString coral.ports.scrutiny-dashboard}/api/health";
+          url = "http://${coral.ips.vpn.A}:${toString coral.ports.scrutiny-dashboard}/api/health";
           conditions = [
             "[STATUS] == 200"
             "[BODY].success == true"

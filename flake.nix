@@ -5,7 +5,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     kicad-nixpkgs.url = "github:NixOS/nixpkgs/42da345f486d4206d06aa595370f7e211faec204"; # 8.0.2
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/82c3726b76c025d6b6f6e5d8cecb59008a3a21be";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -56,7 +56,7 @@
     attic,
     ...
   } @ inputs: let
-    supportedSystems = ["x86_64-linux"];
+    supportedSystems = ["x86_64-linux" "aarch64-linux"];
     nodes = import ./nodes.nix {
       inherit deploy-rs;
       nixosConfigurations = self.nixosConfigurations;
@@ -133,11 +133,14 @@
           ./modules
         ];
 
-        "rpi-1".modules = [
-          nixos-hardware.nixosModules.raspberry-pi-4
-          ./hosts/rpi-1
-          ./home
-        ];
+        # "rpi-1" = {
+        #   system = "aarch64-linux";
+        #   modules = [
+        #     nixos-hardware.nixosModules.raspberry-pi-4
+        #     ./hosts/rpi-1
+        #     ./home
+        #   ];
+        # };
       };
 
       formatter.x86_64-linux = self.pkgs.x86_64-linux.nixpkgs.alejandra;

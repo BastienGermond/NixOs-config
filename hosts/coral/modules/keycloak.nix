@@ -33,6 +33,8 @@ in {
       http-port = coral.ports.keycloak;
       http-enabled = true;
 
+      http-management-port = coral.ports.keycloak-management;
+
       health-enabled = true;
     };
   };
