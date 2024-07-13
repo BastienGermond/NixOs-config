@@ -4,7 +4,7 @@
   ...
 }: {
   services.bookstack = {
-    enable = true;
+    enable = false;
     hostname = "docs.germond.org";
     dataDir = "/datastore/bookstack";
     appURL = "https://docs.germond.org";
