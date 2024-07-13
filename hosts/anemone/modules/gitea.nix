@@ -1,25 +1,10 @@
-{
-  config,
-  pkgs,
-  infra,
-  ...
-}: let
+{infra, ...}: let
   anemone = infra.hosts.anemone;
   coral = infra.hosts.coral;
 in {
-  services.postgresql = {
-    ensureDatabases = ["gitea"];
-    ensureUsers = [
-      {
-        name = "gitea";
-        ensureDBOwnership = true;
-      }
-    ];
-  };
-
-  services.gitea = {
+  services.forgejo = {
     enable = true;
-    stateDir = "/datastore/gitea";
+    stateDir = "/datastore/forgejo";
     settings = {
       server = {
         HTTP_PORT = anemone.ports.gitea;
@@ -64,9 +49,10 @@ in {
       };
     };
     database = {
+      createDatabase = true;
       type = "postgres";
-      name = "gitea";
-      user = "gitea";
+      name = "forgejo";
+      user = "forgejo";
       socket = "/var/run/postgresql";
     };
   };

@@ -45,6 +45,12 @@
     options = ["zfsutil"];
   };
 
+  fileSystems."/datastore/forgejo" = {
+    device = "datastore/forgejo";
+    fsType = "zfs";
+    options = ["zfsutil"];
+  };
+
   fileSystems."/datastore/deluge" = {
     device = "datastore/deluge";
     fsType = "zfs";
