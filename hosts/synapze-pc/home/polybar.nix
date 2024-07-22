@@ -56,7 +56,7 @@ in {
       for m in $(${pkgs.xorg.xrandr}/bin/xrandr --query | \
                  ${pkgs.gnugrep}/bin/grep " connected" | \
                  ${pkgs.coreutils}/bin/cut -d" " -f1); do
-        MONITOR=$m polybar --reload default &
+        MONITOR=$m polybar default &
       done
     '';
     settings = {
