@@ -202,9 +202,6 @@ exec --no-startup-id flameshot
 # NetworkManager applet, configure WiFi
 exec --no-startup-id nm-applet
 
-# Start discord minimized
-exec --no-startup-id discord --start-minimized
-
 set_from_resource $term_background background
 set_from_resource $term_foreground foreground
 set_from_resource $term_color0     color0
