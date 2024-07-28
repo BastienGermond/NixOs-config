@@ -63,4 +63,11 @@
       theme = "re5et";
     };
   };
+
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
 }
