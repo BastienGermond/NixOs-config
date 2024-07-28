@@ -151,7 +151,7 @@
         devShells.default = channels.nixpkgs.mkShell {
           buildInputs =
             (builtins.attrValues {
-              inherit (channels.nixpkgs) age-plugin-yubikey sops;
+              inherit (channels.nixpkgs) age-plugin-yubikey sops just;
             })
             ++ [
               deploy-rs.packages.${channels.nixpkgs.system}.deploy-rs
