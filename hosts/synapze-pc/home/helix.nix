@@ -53,8 +53,8 @@
           formatter = {
             command = "clang-format";
           };
-          workspace-lsp-roots = [ ".clangd" "compile_commands.json" ];
-          roots = [ "compile_commands.json" ];
+          workspace-lsp-roots = [".clangd" "compile_commands.json"];
+          roots = ["compile_commands.json"];
         }
         {name = "cpp";}
         {
@@ -80,7 +80,7 @@
           file-types = ["tex"];
           language-servers = ["ltex-ls" "texlab"];
         }
-        {name = "rust";}
+        # {name = "rust";}
         {name = "tfvars";}
         {name = "hcl";}
         {
