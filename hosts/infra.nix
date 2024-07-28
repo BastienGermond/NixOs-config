@@ -57,6 +57,7 @@ rec {
         matrix-synapse-monitoring = 9092;
         minio = 9031;
         node-exporter = 9002;
+        systemd-exporter = 9003;
         paperless = 28981;
         promtail = 3031;
         s3 = 9030;

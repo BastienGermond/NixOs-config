@@ -12,7 +12,15 @@ in {
       node = {
         enable = true;
         enabledCollectors = ["systemd" "processes" "cpu"];
+        listenAddress = anemone.ips.vpn.A;
         port = anemone.ports.node-exporter;
+      };
+
+      systemd = {
+        enable = true;
+        listenAddress = anemone.ips.vpn.A;
+        openFirewall = true;
+        port = anemone.ports.systemd-exporter;
       };
     };
   };

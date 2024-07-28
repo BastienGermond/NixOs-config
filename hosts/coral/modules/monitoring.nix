@@ -88,6 +88,7 @@ in {
           {
             targets = [
               "${anemone.ips.vpn.A}:${builtins.toString anemone.ports.node-exporter}"
+              "${anemone.ips.vpn.A}:${builtins.toString anemone.ports.systemd-exporter}"
             ];
           }
         ];
