@@ -9,6 +9,8 @@
       name = "${name}.zone";
       text = dns.lib.toString name (import ../data/dns/zones/${name}.db.nix {inherit dns;});
     };
+
+  germondOrgZone = writeZone "germond.org";
 in {
   networking.firewall.allowedTCPPorts = [53];
   networking.firewall.allowedUDPPorts = [53];
@@ -39,16 +41,34 @@ in {
       };
       "germond.org" = {
         master = true;
-        file = writeZone "germond.org";
+        file = "/etc/bind/germond.org.zone";
         extraConfig = ''
+          inline-signing yes;
           dnssec-policy default;
 
-          journal "/run/named/germond.org.zone.jnl";
+          journal "${config.services.bind.directory}/germond.org.zone.signed.jnl";
+
           allow-update { key rfc2136key.germond.org.; };
         '';
       };
       "gistre.fr".master = true;
     };
+  };
+
+  systemd.services."bind-pre-start" = {
+    enable = true;
+
+    wantedBy = ["bind.service"];
+    requiredBy = ["bind.service"];
+
+    script = ''
+      mkdir -m 0755 -p /etc/bind
+      chown named:named -R /etc/bind
+
+      # Copy germond.org zone in /etc/bind
+      ${pkgs.coreutils}/bin/cp ${germondOrgZone} /etc/bind/germond.org.zone
+      chown named:named /etc/bind/germond.org.zone
+    '';
   };
 
   systemd.services."mx-germond-org-dane-tsla-updater" = {

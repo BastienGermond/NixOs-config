@@ -12,4 +12,3 @@ withDefaultConfiguration "cache.germond.org" {
     '';
   };
 }
-
