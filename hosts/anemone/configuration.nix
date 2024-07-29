@@ -121,7 +121,6 @@
     enable = true;
     logReversePathDrops = true;
     allowedTCPPorts = with infra.hosts.anemone.ports; [
-      authentik
       gitea
       matrix-synapse-monitoring
       minio
