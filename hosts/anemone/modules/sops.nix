@@ -12,12 +12,9 @@
         owner = "minio";
         restartUnits = ["minio.service"];
       };
-    }
 
-    (lib.mkIf config.services.authentik.enable {
-      authentik = {};
       geoipLicenseKey = {};
-    })
+    }
 
     (lib.mkIf config.services.nextcloud.enable {
       nextcloudAdminPass = {

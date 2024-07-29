@@ -15,12 +15,6 @@
     options = ["zfsutil"];
   };
 
-  fileSystems."/datastore/authentik" = {
-    device = "datastore/authentik";
-    fsType = "zfs";
-    options = ["zfsutil"];
-  };
-
   fileSystems."/datastore/minio" = {
     device = "datastore/minio";
     fsType = "zfs";

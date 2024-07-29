@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    ./authentik.nix
     ./bookstack.nix
     ./docker.nix
     ./fail2ban.nix

@@ -52,7 +52,6 @@ rec {
         };
       };
       ports = {
-        authentik = 9000;
         cadvisor = 9004;
         gitea = 9006;
         gitea-ssh = 2222;

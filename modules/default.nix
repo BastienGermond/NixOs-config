@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    ./authentik.nix
     ./gatus.nix
     ./gose.nix
     ./nix.nix
