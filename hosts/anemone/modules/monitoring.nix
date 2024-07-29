@@ -57,4 +57,12 @@ in {
       ];
     };
   };
+
+  services.cadvisor = {
+    enable = true;
+    listenAddress = anemone.ips.vpn.A;
+    port = anemone.ports.cadvisor;
+  };
+
+  networking.firewall.allowedTCPPorts = [anemone.ports.cadvisor];
 }

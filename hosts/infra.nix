@@ -53,16 +53,17 @@ rec {
       };
       ports = {
         authentik = 9000;
+        cadvisor = 9004;
         gitea = 9006;
+        gitea-ssh = 2222;
         matrix-synapse-monitoring = 9092;
         minio = 9031;
         node-exporter = 9002;
-        systemd-exporter = 9003;
         paperless = 28981;
+        peertube = 9010;
         promtail = 3031;
         s3 = 9030;
-        gitea-ssh = 2222;
-        peertube = 9010;
+        systemd-exporter = 9003;
       };
       wireguard = {
         wg0 = {
