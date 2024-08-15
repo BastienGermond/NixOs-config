@@ -25,6 +25,7 @@
   programs.zsh.enable = true;
 
   services.geoipupdate.settings = {
+    enable = false;
     AccountID = 753286;
     LicenseKey = config.sops.secrets.geoipLicenseKey.path;
     EditionIDs = ["GeoLite2-City"];
