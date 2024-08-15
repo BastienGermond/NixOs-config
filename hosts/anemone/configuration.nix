@@ -33,6 +33,7 @@
 
   services.postgresql = {
     package = pkgs.postgresql_14;
+    enable = true;
     authentication = lib.mkOverride 20 ''
       local all all ident
       host all all 127.0.0.1/32 ident
