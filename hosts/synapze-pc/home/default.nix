@@ -16,7 +16,7 @@
       amber
       attic-client
       cmake-language-server
-      cura
+      # cura
       discord
       docker-buildx
       drawio

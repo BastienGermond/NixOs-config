@@ -46,13 +46,13 @@ in {
 
     extraApps = {
       oidc_login = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-cN5azlThKPKRVip14yfUNR85of5z+N6NVI7sg6pSGQI=";
+        sha256 = "sha256-1IYcbokVrTtHBojZwG/R7w7ZrmMuiNNjJc3yhFfYPeg=";
         url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.0.2/oidc_login.tar.gz";
         license = "agpl3Only";
       };
 
       breezedark = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-MyEZ8ksaS8jLORVRPaTsK4KnhjutAusOQuMgVW0XL10=";
+        sha256 = "sha256-HgShWxM42VUY0ZRQncImrhtenpg9yMqknsVsGGAajiw=";
         url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v28.0.0/breezedark.tar.gz";
         license = "agpl3Only";
       };
@@ -69,31 +69,31 @@ in {
       # };
 
       duplicatefinder = pkgs.fetchNextcloudApp rec {
-        sha256 = "sha256-yRB+NYWTw5toc2G6ME5mwS1Obc7cF6nmfqMg+34ZFf0=";
+        sha256 = "sha256-zW1LDTXjiqvVqC2nXXEpMPuJs2avtXR4Ug5aFePYB6E=";
         url = "https://github.com/eldertek/duplicatefinder/releases/download/v1.1.10/duplicatefinder-v1.1.10.tar.gz";
         license = "agpl3Plus";
       };
 
       notes = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-7GkTGyGTvtDbZsq/zOdbBE7xh6DZO183W6I5XX1ekbw=";
+        sha256 = "sha256-BfH1W+7TWKZRuAAhKQEQtlv8ePTtJQvZQVMMu3zULR4=";
         url = "https://github.com/nextcloud/notes/releases/download/v4.8.1/notes.tar.gz";
         license = "agpl3Only";
       };
 
       announcementcenter = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-GvX0MG2Ei00zaAqfKckkFO5esimmmBQsRVsV3oqAuII=";
+        sha256 = "sha256-g5f/IJ8KPkEroYn3VH7pExSnr+VWX/h01Pz2LyM5AAU=";
         url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v6.7.0/announcementcenter-v6.7.0.tar.gz";
         license = "agpl3Only";
       };
 
       calendar = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-DJ9RvvU2j7qJAYUAq0aDCdctAsRF/R5z5R+ra1W5Oic=";
+        sha256 = "sha256-WSz30rta3PdNaxisxUNE1Zcp5MPfw9jB9ervMjgjZss=";
         url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.7.6/calendar-v4.7.6.tar.gz";
         license = "agpl3Only";
       };
 
       user_usage_report = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-hBw+//hLJoiqBscuuUz/FApPXryFj8++gRpvk5ui22I=";
+        sha256 = "sha256-xXt2B10IH+O2UkkmvjvnBGHNCKG507UAF6RysDuqqwQ=";
         url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v1.12.0/user_usage_report-v1.12.0.tar.gz";
         license = "agpl3Plus";
       };

@@ -17,6 +17,4 @@
       extraBackends = [pkgs.sane-airscan];
     };
   };
-
-  sound.enable = true;
 }

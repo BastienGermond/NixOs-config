@@ -28,10 +28,8 @@
       url = "github:BastienGermond/gistre.fr.db";
       inputs.dns.follows = "dns";
     };
-    nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-    };
-    nixd = {url = "github:nix-community/nixd";};
+    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+    nixd.url = "github:nix-community/nixd";
     nix-matlab = {
       url = "gitlab:doronbehar/nix-matlab";
       inputs.nixpkgs.follows = "nixpkgs";
