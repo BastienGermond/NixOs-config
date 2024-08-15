@@ -48,7 +48,7 @@ border-size = 0
 border-color = #00000000
 
 padding-left = 0
-padding-right = 2
+padding-right = 0
 
 module-margin-left = 1
 module-margin-right = 0
@@ -57,20 +57,16 @@ font-0 = Terminess Nerd Font
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 
 modules-left = i3
-modules-center = spotibar-previous-track spotibar-currently-playing spotibar-next-track
-modules-right = nixosfs homefs eth cpu memory wireguard wlan date pulseaudio temperature dunst battery
-
-tray-position = right
-tray-padding = 2
-tray-background = #0063ff
+modules-center = 
+modules-right = nixosfs homefs eth cpu memory wireguard wlan date pulseaudio temperature dunst battery tray
 
 ;wm-restack = bspwm
 ;wm-restack = i3
 
 ;override-redirect = true
 
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+scroll-up = i3.next
+scroll-down = i3.prev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -135,42 +131,6 @@ label-urgent-padding = 1
 
 ; Separator in between workspaces
 label-separator = |
-
-
-;[module/mpd]
-;type = internal/mpd
-;format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-;
-;icon-prev = 
-;icon-stop = 
-;icon-play = 
-;icon-pause = 
-;icon-next = 
-;
-;label-song-maxlen = 25
-;label-song-ellipsis = true
-
-;[module/xbacklight]
-;type = internal/xbacklight
-;
-;format = <label> <bar>
-;label = BL
-;
-;bar-width = 10
-;bar-indicator = |
-;bar-indicator-foreground = #fff
-;bar-indicator-font = 2
-;bar-fill = ─
-;bar-fill-font = 2
-;bar-fill-foreground = #9f78e1
-;bar-empty = ─
-;bar-empty-font = 2
-;bar-empty-foreground = ${colors.foreground-alt}
-;
-;[module/backlight-acpi]
-;inherit = module/xbacklight
-;type = internal/backlight
-;card = intel_backlight
 
 [module/cpu]
 type = internal/cpu

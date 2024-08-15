@@ -66,6 +66,13 @@ in {
         tail = false;
         interval = 5;
       };
+      "module/tray" = {
+        type = "internal/tray";
+        tray-padding = 0;
+        tray-spacing = 2;
+        tray-size = "80%";
+        # tray-background = "#0063ff";
+      };
       # "module/spotibar-previous-track" = {
       #   type = "custom/script";
       #   exec = "echo ";
