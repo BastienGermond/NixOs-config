@@ -1,15 +1,11 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     # enableSyntaxHighlighting = true;
     shellAliases = {
       gs = "git status";
+      gaap = "git add -Ap";
     };
 
     initExtra = ''
