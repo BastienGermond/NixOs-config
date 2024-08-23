@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   services.xserver = {
     enable = true;
     videoDrivers = ["modesetting"];
@@ -16,9 +12,10 @@
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
+        alsa-utils
+        at-spi2-core
         i3lock
         polybarFull
-        at-spi2-core
       ];
     };
   };
