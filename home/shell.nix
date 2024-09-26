@@ -6,6 +6,7 @@
     shellAliases = {
       gs = "git status";
       gaap = "git add -Ap";
+      recommit = "git commit --cleanup=strip -e -F \"$(git rev-parse --git-dir)/COMMIT_EDITMSG\"";
     };
 
     initExtra = ''
