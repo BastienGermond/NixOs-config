@@ -24,8 +24,12 @@
           family = "JuliaMono";
         };
       };
-      shell.program = "/usr/bin/env";
-      shell.args = ["zsh"];
+      terminal = {
+        shell = {
+          program = "/usr/bin/env";
+          args = ["zsh"];
+        };
+      };
       keyboard.bindings = [
         {
           key = "Return";
