@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ./gatus.nix
+    # ./gatus.nix
     ./gose.nix
     ./nix.nix
     ./postgresql-ciphered-backup.nix

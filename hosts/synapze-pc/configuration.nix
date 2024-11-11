@@ -38,7 +38,7 @@
 
   environment.pathsToLink = ["/share/zsh"];
 
-  virtualisation.virtualbox.host.enable = false;
+  virtualisation.virtualbox.host.enable = true;
   virtualisation.docker.enable = true;
 
   users.extraGroups.vboxusers.members = ["user-with-access-to-virtualbox"];

@@ -28,7 +28,8 @@ in {
 
     settings = {
       hostname = "newsso.germond.org";
-      proxy = "edge";
+      # proxy = "edge";
+      proxy-headers = "xforwarded";
       http-host = "127.0.0.1";
       http-port = coral.ports.keycloak;
       http-enabled = true;

@@ -12,7 +12,7 @@ in {
   services.atticd = {
     enable = true;
 
-    credentialsFile = config.sops.secrets.atticCredentials.path;
+    environmentFile = config.sops.secrets.atticCredentials.path;
 
     settings = {
       listen = "127.0.0.1:${builtins.toString coral.ports.attic}";

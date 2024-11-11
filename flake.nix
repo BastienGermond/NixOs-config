@@ -4,13 +4,13 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    kicad-nixpkgs.url = "github:NixOS/nixpkgs/42da345f486d4206d06aa595370f7e211faec204"; # 8.0.2
+    kicad-nixpkgs.url = "github:NixOS/nixpkgs/d045216e9c0595cc44be18e7cc79372062e0448f"; # 8.0.5
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    flake-utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
+    flake-utils.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.5.1";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     dns = {
       url = "github:kirelagin/dns.nix";
@@ -28,13 +28,15 @@
       url = "github:BastienGermond/gistre.fr.db";
       inputs.dns.follows = "dns";
     };
-    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+    nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixd.url = "github:nix-community/nixd";
     nix-matlab = {
       url = "gitlab:doronbehar/nix-matlab";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    attic.url = "github:zhaofengli/attic";
   };
 
   outputs = {
@@ -51,7 +53,6 @@
     nixos-mailserver,
     nixd,
     nix-matlab,
-    attic,
     ...
   } @ inputs: let
     supportedSystems = ["x86_64-linux" "aarch64-linux"];
@@ -72,7 +73,6 @@
           gistre-fr-db.nixosModules.default
           home-manager.nixosModule
           nixos-mailserver.nixosModules.mailserver
-          attic.nixosModules.atticd
           ./modules
         ];
         extraArgs = {inherit dns infra;};
@@ -86,6 +86,11 @@
       };
 
       channels.nixpkgs.input = nixpkgs-unstable;
+
+      channels.nixpkgs.config = {
+        disabledModules = [
+        ];
+      };
 
       channels.nixpkgs.overlaysBuilder = channels: [
         (final: prev: {

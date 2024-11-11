@@ -3,7 +3,7 @@
   withDefaultConfiguration,
   ...
 }: let
-  gatusWebCfg = config.services.gatus.config.web;
+  gatusWebCfg = config.services.gatus.settings.web;
 in
   withDefaultConfiguration "status.germond.org" {
     locations."/" = {

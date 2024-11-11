@@ -36,6 +36,8 @@
   # Use to update Dell XPS 13 firmware
   services.fwupd.enable = true;
 
+  services.pipewire.enable = false;
+
   services.actkbd = {
     enable = true;
     bindings = [

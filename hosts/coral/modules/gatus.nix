@@ -10,7 +10,7 @@
 in {
   services.gatus = {
     enable = true;
-    config = {
+    settings = {
       metrics = true;
       web = {
         address = "127.0.0.1";
