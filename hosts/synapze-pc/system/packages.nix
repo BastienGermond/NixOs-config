@@ -12,6 +12,7 @@
     roboto
     termsyn
     (nerdfonts.override {fonts = ["FiraMono" "FiraCode" "Terminus"];})
+    liberation_ttf
   ];
 
   environment.systemPackages = with pkgs; [
