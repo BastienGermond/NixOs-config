@@ -98,6 +98,14 @@
         #   name = "python";
         #   language-servers = ["pylsp"];
         # }
+        {
+          name = "typst";
+          formatter = {
+            command = "typstfmt";
+            args = ["--output" "-"];
+          };
+          auto-format = true;
+        }
       ];
     };
   };
