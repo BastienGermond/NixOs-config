@@ -49,6 +49,7 @@
     matlab
     nautilus
     networkmanagerapplet
+    nextcloud-client
     nixpkgs-fmt
     parted
     pavucontrol
