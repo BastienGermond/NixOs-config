@@ -94,7 +94,7 @@ in {
   security.acme.acceptTerms = true;
   security.acme.defaults.email = certs_mail_addr;
   security.acme.certs = {
-    "gistre.fr" = {};
+    # "gistre.fr" = {};
     "germond.org" = {
       dnsProvider = "rfc2136";
       credentialsFile = config.sops.secrets.acmeGermondOrgCredsEnv.path;
