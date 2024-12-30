@@ -67,7 +67,7 @@ in {
         locations."/".return = "444"; # 444 with nginx close connection without response.
       };
 
-      "gistre.fr" = import ./nginx/gistre.fr.nix {inherit pkgs;};
+      # "gistre.fr" = import ./nginx/gistre.fr.nix {inherit pkgs;};
       "germond.org" = import ./nginx/germond.org.nix {inherit anemone withDefaultConfiguration;};
       "newsso.germond.org" = import ./nginx/newsso.germond.org.nix {inherit coral withDefaultConfiguration;};
       "cloud.germond.org" = import ./nginx/cloud.germond.org.nix {inherit anemone withDefaultConfiguration;};
@@ -87,6 +87,7 @@ in {
       "alert.germond.org" = import ./nginx/alert.germond.org.nix {inherit coral withDefaultConfiguration;};
       "scrutiny.germond.org" = import ./nginx/scrutiny.germond.org.nix {inherit config withDefaultConfiguration;};
       "cache.germond.org" = import ./nginx/cache.germond.org.nix {inherit coral withDefaultConfiguration;};
+      "immich.germond.org" = import ./nginx/immich.germond.org.nix {inherit anemone withDefaultConfiguration;};
     };
   };
 

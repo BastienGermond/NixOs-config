@@ -3,8 +3,9 @@
   description = "My NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     kicad-nixpkgs.url = "github:NixOS/nixpkgs/d045216e9c0595cc44be18e7cc79372062e0448f"; # 8.0.5
+    # immich-nixpkgs.url = "github:NixOS/nixpkgs/ceaedafdcb9cb3ffcaa34b3db2705fae0f28e840"; # 1.123.0
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -43,6 +44,7 @@
     self,
     nixpkgs-unstable,
     kicad-nixpkgs,
+    # immich-nixpkgs,
     flake-utils,
     home-manager,
     nixos-hardware,
@@ -108,6 +110,7 @@
           kicad = kicad-nixpkgs.legacyPackages.${prev.system}.kicad;
 
           nginxStable = prev.nginxStable.override {openssl = prev.pkgs.libressl;};
+          # immich-pinned = immich-nixpkgs.legacyPackages.${prev.system}.immich;
         })
 
         (nix-matlab.overlay)

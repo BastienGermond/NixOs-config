@@ -63,6 +63,12 @@
     options = ["zfsutil"];
   };
 
+  fileSystems."/datastore/immich" = {
+    device = "datastore/immich";
+    fsType = "zfs";
+    options = ["zfsutil"];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;

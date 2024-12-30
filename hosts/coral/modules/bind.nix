@@ -90,6 +90,7 @@ in {
     serviceConfig = {
       Type = "oneshot";
       User = "acme";
+      Group = "named";
     };
   };
 }

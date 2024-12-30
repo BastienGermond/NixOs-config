@@ -3,7 +3,7 @@ with dns.lib.combinators; {
   SOA = {
     nameServer = "ns1.germond.org.";
     adminEmail = "abuse@germond.org";
-    serial = 24022503; # YYMMDDPP
+    serial = 24122901; # YYMMDDPP
   };
 
   NS = [
@@ -53,21 +53,22 @@ with dns.lib.combinators; {
     alert.CNAME = ["germond.org."];
     cache.CNAME = ["germond.org."];
     cloud.CNAME = ["germond.org."];
-    # sso.CNAME = ["germond.org."];
-    grafana.CNAME = ["germond.org."];
-    status.CNAME = ["germond.org."];
-    minio.CNAME = ["germond.org."];
-    s3.CNAME = ["germond.org."];
-    t.CNAME = ["germond.org."];
-    paperless.CNAME = ["germond.org."];
-    hackmd.CNAME = ["germond.org."];
-    newsso.CNAME = ["germond.org."];
-    git.CNAME = ["germond.org."];
     docs.CNAME = ["germond.org."];
+    git.CNAME = ["germond.org."];
+    grafana.CNAME = ["germond.org."];
+    hackmd.CNAME = ["germond.org."];
+    home.CNAME = ["germond.org."];
+    immich.CNAME = ["germond.org."];
+    minio.CNAME = ["germond.org."];
+    newsso.CNAME = ["germond.org."];
+    paperless.CNAME = ["germond.org."];
+    prometheus.CNAME = ["germond.org."];
+    s3.CNAME = ["germond.org."];
+    scrutiny.CNAME = ["germond.org."];
+    sso.CNAME = ["germond.org."];
+    status.CNAME = ["germond.org."];
+    t.CNAME = ["germond.org."];
     videos.CNAME = ["germond.org."];
     vouch.CNAME = ["germond.org."];
-    prometheus.CNAME = ["germond.org."];
-    home.CNAME = ["germond.org."];
-    scrutiny.CNAME = ["germond.org."];
   };
 }

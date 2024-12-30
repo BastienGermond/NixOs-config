@@ -14,6 +14,10 @@
       };
 
       geoipLicenseKey = {};
+
+      ImmichOIDCSecret = {
+        owner = "immich";
+      };
     }
 
     (lib.mkIf config.services.nextcloud.enable {

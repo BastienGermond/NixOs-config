@@ -63,6 +63,7 @@ rec {
         promtail = 3031;
         s3 = 9030;
         systemd-exporter = 9003;
+        immich-server = 9012;
       };
       wireguard = {
         wg0 = {

@@ -8,6 +8,7 @@
     ./docker.nix
     ./fail2ban.nix
     ./gitea.nix
+    ./immich.nix
     ./k3s.nix
     ./minio.nix
     ./monitoring.nix
