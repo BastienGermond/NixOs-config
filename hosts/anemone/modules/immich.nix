@@ -86,8 +86,7 @@ in {
         # package = pkgs.immich-pinned;
         host = "192.168.100.11";
         environment = {
-          IMMICH_LOG_LEVEL = "verbose";
-          # IMMICH_HOST = lib.mkForce "192.168.100.11";
+          # IMMICH_LOG_LEVEL = "verbose";
           IMMICH_CONFIG_FILE = "/immich.config.json";
         };
 

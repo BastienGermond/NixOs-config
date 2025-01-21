@@ -29,6 +29,7 @@ rec {
           ips = ["${hosts.coral.ips.vpn.A}/24"];
           listenPort = 51821;
           privateKeyFile = "/root/.wg/wgs0.pkey";
+          # mtu = 1380;
 
           peers = [
             {
@@ -70,6 +71,7 @@ rec {
           ips = ["${hosts.anemone.ips.vpn.A}/32"];
           listenPort = 51821;
           privateKeyFile = "/root/.wg/wg0.pkey";
+          # mtu = 1380;
 
           peers = [
             {

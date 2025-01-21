@@ -107,7 +107,7 @@
   };
   oauth = {
     enabled = true;
-    autoLaunch = false;
+    autoLaunch = true;
     autoRegister = true;
 
     buttonText = "Login with Germond SSO";
