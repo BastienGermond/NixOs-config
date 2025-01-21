@@ -42,6 +42,7 @@
 
   outputs = {
     self,
+    nixpkgs,
     nixpkgs-unstable,
     kicad-nixpkgs,
     # immich-nixpkgs,
@@ -111,6 +112,7 @@
 
           nginxStable = prev.nginxStable.override {openssl = prev.pkgs.libressl;};
           # immich-pinned = immich-nixpkgs.legacyPackages.${prev.system}.immich;
+          immich = nixpkgs.legacyPackages.${prev.system}.immich;
         })
 
         (nix-matlab.overlay)
