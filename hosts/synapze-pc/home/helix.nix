@@ -27,6 +27,10 @@
         auto-pairs = {
           "{" = "}";
         };
+        inline-diagnostics = {
+          cursor-line = "warning";
+          other-lines = "error";
+        };
       };
     };
     languages = {
