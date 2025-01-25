@@ -1,6 +1,7 @@
 {
   config,
   infra,
+  lib,
   ...
 }: let
   coral = infra.hosts.coral;
@@ -46,6 +47,14 @@ in {
           name = "Nextcloud";
           group = "1 - Cloud";
           url = "https://cloud.germond.org/heartbeat";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+        {
+          name = "Immich";
+          group = "1 - Cloud";
+          url = "https://immich.germond.org/";
           conditions = [
             "[STATUS] == 200"
           ];
@@ -130,7 +139,15 @@ in {
 
   services.postgresqlCipheredBackup.databases = ["gatus"];
 
+  users.users.gatus = {
+    group = "gatus";
+    isSystemUser = true;
+  };
+  users.groups.gatus = {};
+
   systemd.services.gatus = {
+    serviceConfig.DynamicUser = lib.mkForce false;
+
     after = ["postgresql.service"];
     bindsTo = ["postgresql.service"];
   };
