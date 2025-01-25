@@ -5,7 +5,7 @@
 }: {
   services.transfer_sh = {
     enable = true;
-    package = pkgs.transfer_sh;
+    package = pkgs.transfer-sh;
     envFile = config.sops.secrets.transferShEnv.path;
     config = {
       listener = "127.0.0.1:9032";
