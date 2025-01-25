@@ -35,7 +35,7 @@ bindsym $mod+Return exec alacritty
 # kill focused window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+d exec --no-startup-id rofi -show drun -font "Terminess Nerd Font 15"
+bindsym $mod+d exec --no-startup-id rofi -show drun -font "FiraCode Nerd Font 15"
 
 bindsym Print exec --no-startup-id i3-scrot
 

@@ -11,7 +11,10 @@
     noto-fonts
     roboto
     termsyn
-    (nerdfonts.override {fonts = ["FiraMono" "FiraCode" "Terminus"];})
+    # (nerdfonts.override {fonts = ["FiraMono" "FiraCode" "Terminus"];})
+    nerd-fonts.fira-mono
+    nerd-fonts.fira-code
+    terminus_font
     liberation_ttf
   ];
 

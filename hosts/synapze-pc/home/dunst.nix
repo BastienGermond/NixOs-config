@@ -8,7 +8,7 @@
     settings = {
       global = {
         monitor = 0;
-        font = "Terminess Nerd Font 13";
+        font = "FiraCode Nerd Font 11";
         follow = "keyboard";
         width = 600;
         height = 100;
