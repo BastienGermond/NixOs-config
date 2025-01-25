@@ -26,13 +26,13 @@ in {
     extraConfig = ''
       include "${config.sops.secrets.bindDnsKey.path}";
 
-      logging {
-        channel dnssec_log {
-          file "/var/log/named/dnssec.log";
-          severity debug 3;
-        };
-        category dnssec { dnssec_log; };
-      };
+      # logging {
+      #   channel dnssec_log {
+      #     file "/var/log/named/dnssec.log";
+      #     severity debug 3;
+      #   };
+      #   category dnssec { dnssec_log; };
+      # };
     '';
     zones = {
       "synapze.fr" = {
