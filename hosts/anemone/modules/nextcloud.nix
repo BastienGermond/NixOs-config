@@ -46,8 +46,8 @@ in {
 
     extraApps = {
       oidc_login = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-b/tKk+y+ZypCHGNDtunDua2msYD6/TzA0haoC0k85F4=";
-        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.1.1/oidc_login.tar.gz";
+        sha256 = "sha256-DrbaKENMz2QJfbDKCMrNGEZYpUEvtcsiqw9WnveaPZA=";
+        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.2.0/oidc_login.tar.gz";
         license = "agpl3Only";
       };
 
@@ -69,8 +69,8 @@ in {
       # };
 
       duplicatefinder = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-gMrpbgXCZnKKWf1bEir71Ojd7N98i8xU/jg0N/DXKWM=";
-        url = "https://github.com/eldertek/duplicatefinder/releases/download/v1.2.5/duplicatefinder-v1.2.5.tar.gz";
+        sha256 = "sha256-J+P+9Ajz998ua1RRwuj1h4WOOl0WODu3uVJNGosbObI=";
+        url = "https://github.com/eldertek/duplicatefinder/releases/download/v1.6.0/duplicatefinder-v1.6.0.tar.gz";
         license = "agpl3Plus";
       };
 
