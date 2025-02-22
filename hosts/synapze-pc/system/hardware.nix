@@ -1,20 +1,17 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   hardware = {
     #Bluetooth
     bluetooth.enable = true;
     bluetooth.powerOnBoot = false;
-    ##for bluetooth headset support
-    pulseaudio.package = pkgs.pulseaudioFull;
-    pulseaudio.enable = true;
     # Scanner
     sane = {
       enable = true;
       extraBackends = [pkgs.sane-airscan];
     };
+  };
+
+  services.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
   };
 }
