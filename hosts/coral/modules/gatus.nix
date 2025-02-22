@@ -116,6 +116,14 @@ in {
           ];
         }
         {
+          name = "Attic (nix cache)";
+          group = "3 - Others";
+          url = "https://cache.germond.org";
+          conditions = [
+            "[STATUS] == 200"
+          ];
+        }
+        {
           name = "Scrutiny";
           group = "3 - Others";
           url = "http://${coral.ips.vpn.A}:${toString coral.ports.scrutiny-dashboard}/api/health";
