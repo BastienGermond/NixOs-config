@@ -1,10 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   imports = [
-    # ./gatus.nix
     ./gose.nix
     ./nix.nix
     ./postgresql-ciphered-backup.nix

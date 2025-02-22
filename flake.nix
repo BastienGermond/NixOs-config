@@ -102,7 +102,6 @@
 
           # Custom packages
           spotibar = final.callPackage ./pkgs/spotibar/default.nix {};
-          # transfer_sh = final.callPackage ./pkgs/transfer.sh/default.nix {};
           gose = final.callPackage ./pkgs/gose/default.nix {};
           fail2ban-prometheus-exporter = final.callPackage ./pkgs/fail2ban-prometheus-exporter {};
 
