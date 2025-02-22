@@ -26,7 +26,6 @@ in {
   };
 
   services.promtail = {
-    enable = true;
     configuration = {
       server.http_listen_port = anemone.ports.promtail;
       server.grpc_listen_port = 0;
@@ -59,7 +58,6 @@ in {
   };
 
   services.cadvisor = {
-    enable = true;
     listenAddress = anemone.ips.vpn.A;
     port = anemone.ports.cadvisor;
   };

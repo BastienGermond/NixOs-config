@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   imports = [
     ./bookstack.nix
     ./docker.nix

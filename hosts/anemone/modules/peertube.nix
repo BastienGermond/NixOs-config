@@ -7,7 +7,6 @@
   anemone = infra.hosts.anemone;
 in {
   services.peertube = {
-    enable = true;
     listenWeb = 443;
     enableWebHttps = true;
     redis.createLocally = true;

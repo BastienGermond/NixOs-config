@@ -1,13 +1,11 @@
 {
   config,
-  pkgs,
   infra,
   ...
 }: let
   ports = infra.hosts.anemone.ports;
 in {
   services.minio = {
-    enable = true;
     region = "eu-west-3"; # Paris
     dataDir = ["/datastore/minio/data"];
     configDir = "/datastore/minio/config";

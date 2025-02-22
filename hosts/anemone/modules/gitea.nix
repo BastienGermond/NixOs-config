@@ -3,7 +3,6 @@
   coral = infra.hosts.coral;
 in {
   services.forgejo = {
-    enable = true;
     stateDir = "/datastore/forgejo";
     settings = {
       server = {

@@ -1,11 +1,8 @@
 {
-  config,
-  pkgs,
   infra,
   ...
 }: {
   services.paperless = {
-    enable = true;
     dataDir = "/datastore/paperless";
     port = infra.hosts.anemone.ports.paperless;
     address = infra.hosts.anemone.ips.vpn.A;

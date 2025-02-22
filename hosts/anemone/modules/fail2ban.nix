@@ -17,7 +17,6 @@
   };
 
   services.fail2ban = {
-    enable = true;
     bantime = "-1"; # permanent ban
 
     ignoreIP = [

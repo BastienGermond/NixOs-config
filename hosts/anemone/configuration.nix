@@ -10,6 +10,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    ./services.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

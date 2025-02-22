@@ -34,7 +34,6 @@ in {
   systemd.services.postgresql.wantedBy = ["nextcloud-setup.service"];
 
   services.nextcloud = {
-    enable = true;
     package = pkgs.nextcloud29;
     hostName = "cloud.germond.org";
     home = "/datastore/nextcloud";

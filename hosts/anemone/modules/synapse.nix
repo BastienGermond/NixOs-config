@@ -6,7 +6,6 @@
   networking.firewall.allowedTCPPorts = [];
 
   services.matrix-synapse = {
-    enable = true;
     dataDir = "/datastore/matrix-synapse/data";
     settings = {
       server_name = "germond.org";
