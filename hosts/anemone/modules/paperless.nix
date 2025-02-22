@@ -1,7 +1,4 @@
-{
-  infra,
-  ...
-}: {
+{infra, ...}: {
   services.paperless = {
     dataDir = "/datastore/paperless";
     port = infra.hosts.anemone.ports.paperless;
