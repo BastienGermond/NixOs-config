@@ -15,7 +15,6 @@ in {
   networking.firewall.allowedTCPPorts = [80 443 8448];
 
   services.nginx = {
-    enable = true;
     package = pkgs.nginxStable;
     recommendedProxySettings = true;
 

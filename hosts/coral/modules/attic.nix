@@ -10,8 +10,6 @@
   pgDbUser = config.services.atticd.user;
 in {
   services.atticd = {
-    enable = true;
-
     environmentFile = config.sops.secrets.atticCredentials.path;
 
     settings = {

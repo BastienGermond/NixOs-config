@@ -16,7 +16,6 @@ in {
   networking.firewall.allowedUDPPorts = [53];
 
   services.bind = {
-    enable = true;
     enableGistreFr = true;
     extraOptions = ''
       dnssec-validation auto;
@@ -56,7 +55,7 @@ in {
   };
 
   systemd.services."bind-pre-start" = {
-    enable = true;
+    enable = config.services.bind.enable;
 
     wantedBy = ["bind.service"];
     requiredBy = ["bind.service"];
@@ -72,7 +71,7 @@ in {
   };
 
   systemd.services."mx-germond-org-dane-tsla-updater" = {
-    enable = true;
+    enable = config.services.bind.enable;
 
     path = with pkgs; [openssl hash-slinger];
 

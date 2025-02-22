@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   systemd.services.fail2ban-prometheus-exporter = {
     description = "Fail2ban prometheus exporter";
     wantedBy = ["multi-user.target"];
@@ -14,7 +10,6 @@
   };
 
   services.fail2ban = {
-    enable = true;
     bantime = "-1"; # permanent ban
     maxretry = 2;
 

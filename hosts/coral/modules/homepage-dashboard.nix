@@ -1,12 +1,9 @@
 {
   pkgs,
-  config,
-  lib,
   infra,
   ...
 }: let
   coral = infra.hosts.coral;
-  yaml = pkgs.formats.yaml {};
 
   makeGermondLink = alias: "https://${alias}.germond.org";
 
@@ -94,7 +91,6 @@
   ];
 in {
   services.homepage-dashboard = {
-    enable = true;
     package = pkgs.homepage-dashboard;
     listenPort = coral.ports.homepage-dashboard;
     settings = {

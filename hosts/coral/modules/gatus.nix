@@ -10,7 +10,6 @@
   inherit (builtins) toString;
 in {
   services.gatus = {
-    enable = true;
     settings = {
       metrics = true;
       web = {

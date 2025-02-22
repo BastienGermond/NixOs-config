@@ -1,10 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{config, ...}: {
   mailserver = {
-    enable = true;
     debug = true;
     fqdn = "mx.germond.org";
     sendingFqdn = "germond.org";

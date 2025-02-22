@@ -4,8 +4,6 @@
   ...
 }: {
   services.vouch-proxy = {
-    enable = true;
-
     envFile = config.sops.secrets.vouchProxyEnv.path;
 
     settings = {

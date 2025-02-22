@@ -12,8 +12,6 @@
   };
 in {
   services.keycloak = {
-    enable = true;
-
     database = {
       type = "postgresql";
       createLocally = true;

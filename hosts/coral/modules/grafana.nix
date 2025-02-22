@@ -29,8 +29,6 @@ in {
       mkdir -p $out/{datasources,dashboards,notifiers,alerting,plugins}
     '';
   in {
-    enable = true;
-
     settings = {
       server = {
         protocol = "socket";

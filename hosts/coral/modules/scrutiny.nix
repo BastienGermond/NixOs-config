@@ -2,7 +2,6 @@
   coral = infra.hosts.coral;
 in {
   services.scrutiny = {
-    enable = true;
     collector.enable = false;
     openFirewall = true;
     influxdb.enable = true;

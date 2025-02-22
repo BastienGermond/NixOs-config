@@ -4,7 +4,6 @@
   ...
 }: {
   services.transfer_sh = {
-    enable = true;
     package = pkgs.transfer-sh;
     envFile = config.sops.secrets.transferShEnv.path;
     config = {

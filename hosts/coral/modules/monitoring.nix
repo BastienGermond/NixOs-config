@@ -11,8 +11,6 @@
   anemone = infra.hosts.anemone;
 in {
   services.prometheus = {
-    enable = true;
-
     port = coral.ports.prometheus;
 
     webExternalUrl = "https://prometheus.germond.org";
@@ -22,7 +20,6 @@ in {
     checkConfig = "syntax-only";
 
     alertmanager = {
-      enable = true;
       port = coral.ports.alert-manager;
       webExternalUrl = "https://alert.germond.org";
       environmentFile = config.sops.secrets.alertmanagerEnv.path;
@@ -66,12 +63,10 @@ in {
 
     exporters = {
       node = {
-        enable = true;
         enabledCollectors = ["systemd" "processes" "cpu"];
         port = coral.ports.node-exporter;
       };
       dmarc = {
-        enable = true;
         imap = {
           host = "germond.org";
           username = "abuse@germond.org";
@@ -164,7 +159,6 @@ in {
   users.users.promtail.extraGroups = ["nginx"];
 
   services.promtail = {
-    enable = true;
     configuration = {
       server.http_listen_port = coral.ports.promtail;
       server.grpc_listen_port = 0;
@@ -214,7 +208,6 @@ in {
   networking.firewall.allowedTCPPorts = [coral.ports.loki];
 
   services.loki = {
-    enable = true;
     configuration = {
       auth_enabled = false;
 

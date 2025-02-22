@@ -1,10 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{config, ...}: {
   services.hedgedoc = {
-    enable = true;
     environmentFile = config.sops.secrets.hedgedocEnv.path;
     settings = {
       domain = "hackmd.germond.org";
