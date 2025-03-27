@@ -32,6 +32,13 @@
         backend = %(sshd_backend)s
         bantime = -1
       '';
+      postfix = ''
+        enabled  = true
+        filter   = postfix
+        backend = systemd
+        maxretry = 2
+        bantime = -1
+      '';
     };
   };
 
