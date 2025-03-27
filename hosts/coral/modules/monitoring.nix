@@ -229,6 +229,13 @@ in {
         chunk_retain_period = "30s";
       };
 
+      compactor = {
+        retention_enabled = true;
+        delete_request_store = "filesystem";
+        compaction_interval = "10m";
+        retention_delete_delay = "2h";
+      };
+
       schema_config = {
         configs = [
           {
@@ -255,6 +262,7 @@ in {
 
       limits_config = {
         # enforce_metric_name = false;
+        retention_period = "60d";
         allow_structured_metadata = false;
         reject_old_samples = true;
         reject_old_samples_max_age = "168h";
