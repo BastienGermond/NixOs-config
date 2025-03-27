@@ -1,6 +1,6 @@
 {config, ...}: {
   mailserver = {
-    debug = true;
+    debug = false;
     fqdn = "mx.germond.org";
     sendingFqdn = "germond.org";
     domains = ["germond.org"];
