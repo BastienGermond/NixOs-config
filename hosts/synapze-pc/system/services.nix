@@ -28,6 +28,10 @@
     variant = "alt-intl";
   };
 
+  services.avahi = {
+    enable = true;
+  };
+
   services.displayManager.autoLogin.enable = true;
 
   # Required to use smart card mode (CCID)
