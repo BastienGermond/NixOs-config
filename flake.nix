@@ -30,7 +30,7 @@
       inputs.dns.follows = "dns";
     };
     nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.05";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/b4fbffe79c00f19be94b86b4144ff67541613659";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixd.url = "github:nix-community/nixd";
@@ -74,7 +74,7 @@
         modules = [
           sops-nix.nixosModules.sops
           gistre-fr-db.nixosModules.default
-          home-manager.nixosModule
+          home-manager.nixosModules.home-manager
           nixos-mailserver.nixosModules.mailserver
           ./modules
         ];
