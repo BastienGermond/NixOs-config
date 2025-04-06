@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   fileSystems."/datastore/nextcloud" = {
     device = "datastore/nextcloud";
     fsType = "zfs";
@@ -65,6 +61,12 @@
 
   fileSystems."/datastore/immich" = {
     device = "datastore/immich";
+    fsType = "zfs";
+    options = ["zfsutil"];
+  };
+
+  fileSystems."/datastore/komga" = {
+    device = "datastore/komga";
     fsType = "zfs";
     options = ["zfsutil"];
   };

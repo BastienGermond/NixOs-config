@@ -6,6 +6,7 @@
     ./gitea.nix
     ./immich.nix
     ./k3s.nix
+    ./manga/komga.nix
     ./minio.nix
     ./monitoring.nix
     ./nextcloud.nix

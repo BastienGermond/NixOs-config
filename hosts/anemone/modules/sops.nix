@@ -66,5 +66,11 @@
         owner = config.services.peertube.user;
       };
     })
+
+    (lib.mkIf config.services.komga.enable {
+      KomgaSecretsEnvFile = {
+        owner = config.services.komga.user;
+      };
+    })
   ];
 }

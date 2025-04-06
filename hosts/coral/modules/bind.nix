@@ -59,6 +59,7 @@ in {
 
     wantedBy = ["bind.service"];
     requiredBy = ["bind.service"];
+    restartTriggers = [ germondOrgZone ];
 
     script = ''
       mkdir -m 0755 -p /etc/bind

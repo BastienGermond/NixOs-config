@@ -5,6 +5,7 @@
     cadvisor.enable = true;
     fail2ban.enable = true;
     forgejo.enable = true;
+    komga.enable = true;
     matrix-synapse.enable = true;
     minio.enable = true;
     nextcloud.enable = true;

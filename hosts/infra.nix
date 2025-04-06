@@ -65,6 +65,7 @@ rec {
         s3 = 9030;
         systemd-exporter = 9003;
         immich-server = 9012;
+        komga = 25600;
       };
       wireguard = {
         wg0 = {

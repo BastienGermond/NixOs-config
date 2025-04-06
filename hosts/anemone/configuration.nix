@@ -125,13 +125,14 @@
     logReversePathDrops = true;
     allowedTCPPorts = with infra.hosts.anemone.ports; [
       gitea
+      gitea-ssh
+      komga
       matrix-synapse-monitoring
       minio
       node-exporter
       paperless
       promtail
       s3
-      gitea-ssh
       22
       80
       8008

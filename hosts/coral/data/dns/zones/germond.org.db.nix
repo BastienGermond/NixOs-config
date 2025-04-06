@@ -3,7 +3,7 @@ with dns.lib.combinators; {
   SOA = {
     nameServer = "ns1.germond.org.";
     adminEmail = "abuse@germond.org";
-    serial = 24122901; # YYMMDDPP
+    serial = 25032901; # YYMMDDPP
   };
 
   NS = [
@@ -59,6 +59,7 @@ with dns.lib.combinators; {
     hackmd.CNAME = ["germond.org."];
     home.CNAME = ["germond.org."];
     immich.CNAME = ["germond.org."];
+    komga.CNAME = ["germond.org."];
     minio.CNAME = ["germond.org."];
     newsso.CNAME = ["germond.org."];
     paperless.CNAME = ["germond.org."];

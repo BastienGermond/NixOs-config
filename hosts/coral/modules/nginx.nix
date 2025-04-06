@@ -91,6 +91,7 @@ in {
       "scrutiny.germond.org" = importHost ./nginx/scrutiny.germond.org.nix {};
       "cache.germond.org" = importHost ./nginx/cache.germond.org.nix {};
       "immich.germond.org" = importHost ./nginx/immich.germond.org.nix {};
+      "komga.germond.org" = importHost ./nginx/komga.germond.org.nix {};
     };
   };
 
