@@ -6,6 +6,7 @@
   imports = [
     ./dunst.nix
     ./helix.nix
+    ./librewolf.nix
     ./polybar.nix
     ./rofi.nix
     ./terminal.nix
