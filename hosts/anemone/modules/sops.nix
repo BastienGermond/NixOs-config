@@ -73,6 +73,12 @@
       };
     })
 
+    (lib.mkIf config.services.komf.enable {
+      KomfApiKey = {
+        owner = config.services.komf.user;
+      };
+    })
+
     (lib.mkIf config.services.garage.enable {
       GarageRpcSecret = {
         owner = "garage";

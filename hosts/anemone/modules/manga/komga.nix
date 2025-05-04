@@ -5,8 +5,11 @@
 }: let
   komgaPort = infra.hosts.anemone.ports.komga;
 in {
+  users.groups.manga = {};
+  
   services.komga = {
     stateDir = "/datastore/komga";
+    group = "manga";
     settings = {
       server = {
         port = komgaPort;

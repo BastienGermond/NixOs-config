@@ -7,6 +7,10 @@
     kicad-nixpkgs.url = "github:NixOS/nixpkgs/d045216e9c0595cc44be18e7cc79372062e0448f"; # 8.0.5
     # immich-nixpkgs.url = "github:NixOS/nixpkgs/ceaedafdcb9cb3ffcaa34b3db2705fae0f28e840"; # 1.123.0
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    komf = {
+      url = "github:christian-blades-cb/komf.nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -56,6 +60,7 @@
     nixos-mailserver,
     nixd,
     nix-matlab,
+    komf,
     ...
   } @ inputs: let
     supportedSystems = ["x86_64-linux" "aarch64-linux"];
@@ -72,6 +77,7 @@
 
       hostDefaults = {
         modules = [
+          komf.nixosModules.default
           sops-nix.nixosModules.sops
           gistre-fr-db.nixosModules.default
           home-manager.nixosModules.home-manager

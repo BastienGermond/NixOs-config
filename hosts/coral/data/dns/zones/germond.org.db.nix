@@ -3,7 +3,7 @@ with dns.lib.combinators; {
   SOA = {
     nameServer = "ns1.germond.org.";
     adminEmail = "abuse@germond.org";
-    serial = 25050402; # YYMMDDPP
+    serial = 25050403; # YYMMDDPPb
   };
 
   NS = [
@@ -73,5 +73,6 @@ with dns.lib.combinators; {
     vouch.CNAME = ["germond.org."];
     s3-garage.CNAME = ["germond.org."];
     web-garage.CNAME = ["germond.org."];
+    komf.CNAME = ["germond.org."];
   };
 }

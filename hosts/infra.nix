@@ -68,6 +68,7 @@ rec {
         systemd-exporter = 9003;
         immich-server = 9012;
         komga = 25600;
+        komf = 25601;
       };
       wireguard = {
         wg0 = {

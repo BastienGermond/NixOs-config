@@ -6,6 +6,7 @@
     fail2ban.enable = true;
     forgejo.enable = true;
     garage.enable = true;
+    komf.enable = true;
     komga.enable = true;
     matrix-synapse.enable = true;
     minio.enable = true;

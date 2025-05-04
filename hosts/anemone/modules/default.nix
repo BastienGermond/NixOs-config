@@ -8,6 +8,7 @@
     ./immich.nix
     ./k3s.nix
     ./manga/komga.nix
+    ./manga/komf.nix
     ./minio.nix
     ./monitoring.nix
     ./nextcloud.nix

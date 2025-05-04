@@ -94,6 +94,7 @@ in {
       "videos.germond.org" = importHost ./nginx/videos.germond.org.nix {};
       "vouch.germond.org" = importHost ./nginx/vouch.germond.org.nix {};
       "web-garage.germond.org" = importHost ./nginx/web.garage.germond.org.nix {};
+      "komf.germond.org" = importHost ./nginx/komf.germond.org.nix {};
     };
   };
 
