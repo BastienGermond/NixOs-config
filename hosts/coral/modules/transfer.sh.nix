@@ -11,12 +11,12 @@
 
       # Provider
       provider = "s3";
-      s3-endpoint = "https://s3.germond.org";
-      s3-region = "eu-west-3";
+      s3-endpoint = "https://s3-garage.germond.org";
+      s3-region = "anemone";
       s3-path-style = true;
       bucket = "transfer.sh";
 
-      max-upload-size = 5000000; # Restrict to 5GB
+      max-upload-size = 31457280; # Restrict to 30GiB
 
       purge-days = 7;
     };

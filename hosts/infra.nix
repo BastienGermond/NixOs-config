@@ -63,6 +63,8 @@ rec {
         peertube = 9010;
         promtail = 3031;
         s3 = 9030;
+        garage-s3 = 9032;
+        garage-web = 9033;
         systemd-exporter = 9003;
         immich-server = 9012;
         komga = 25600;

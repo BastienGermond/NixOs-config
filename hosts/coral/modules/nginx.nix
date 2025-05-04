@@ -71,27 +71,29 @@ in {
         locations."/".return = "444"; # 444 with nginx close connection without response.
       };
 
-      "germond.org" = importHost ./nginx/germond.org.nix {};
-      "newsso.germond.org" = importHost ./nginx/newsso.germond.org.nix {};
-      "cloud.germond.org" = importHost ./nginx/cloud.germond.org.nix {};
-      "grafana.germond.org" = importHost ./nginx/grafana.germond.org.nix {};
-      "status.germond.org" = importHost ./nginx/status.germond.org.nix {};
-      "minio.germond.org" = importHost ./nginx/minio.germond.org.nix {};
-      "s3.germond.org" = importHost ./nginx/s3.germond.org.nix {};
-      "t.germond.org" = importHost ./nginx/t.germond.org.nix {};
-      "paperless.germond.org" = importHost ./nginx/paperless.germond.org.nix {};
-      "hackmd.germond.org" = importHost ./nginx/hackmd.germond.org.nix {};
-      "git.germond.org" = importHost ./nginx/git.germond.org.nix {};
-      "docs.germond.org" = importHost ./nginx/docs.germond.org.nix {};
-      "videos.germond.org" = importHost ./nginx/videos.germond.org.nix {};
-      "vouch.germond.org" = importHost ./nginx/vouch.germond.org.nix {};
-      "prometheus.germond.org" = importHost ./nginx/prometheus.germond.org.nix {};
-      "home.germond.org" = importHost ./nginx/home.germond.org.nix {};
       "alert.germond.org" = importHost ./nginx/alert.germond.org.nix {};
-      "scrutiny.germond.org" = importHost ./nginx/scrutiny.germond.org.nix {};
       "cache.germond.org" = importHost ./nginx/cache.germond.org.nix {};
+      "cloud.germond.org" = importHost ./nginx/cloud.germond.org.nix {};
+      "docs.germond.org" = importHost ./nginx/docs.germond.org.nix {};
+      "germond.org" = importHost ./nginx/germond.org.nix {};
+      "git.germond.org" = importHost ./nginx/git.germond.org.nix {};
+      "grafana.germond.org" = importHost ./nginx/grafana.germond.org.nix {};
+      "hackmd.germond.org" = importHost ./nginx/hackmd.germond.org.nix {};
+      "home.germond.org" = importHost ./nginx/home.germond.org.nix {};
       "immich.germond.org" = importHost ./nginx/immich.germond.org.nix {};
       "komga.germond.org" = importHost ./nginx/komga.germond.org.nix {};
+      "minio.germond.org" = importHost ./nginx/minio.germond.org.nix {};
+      "newsso.germond.org" = importHost ./nginx/newsso.germond.org.nix {};
+      "paperless.germond.org" = importHost ./nginx/paperless.germond.org.nix {};
+      "prometheus.germond.org" = importHost ./nginx/prometheus.germond.org.nix {};
+      "s3-garage.germond.org" = importHost ./nginx/s3.garage.germond.org.nix {};
+      "s3.germond.org" = importHost ./nginx/s3.germond.org.nix {};
+      "scrutiny.germond.org" = importHost ./nginx/scrutiny.germond.org.nix {};
+      "status.germond.org" = importHost ./nginx/status.germond.org.nix {};
+      "t.germond.org" = importHost ./nginx/t.germond.org.nix {};
+      "videos.germond.org" = importHost ./nginx/videos.germond.org.nix {};
+      "vouch.germond.org" = importHost ./nginx/vouch.germond.org.nix {};
+      "web-garage.germond.org" = importHost ./nginx/web.garage.germond.org.nix {};
     };
   };
 

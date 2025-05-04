@@ -71,6 +71,12 @@
     options = ["zfsutil"];
   };
 
+  fileSystems."/datastore/garage" = {
+    device = "datastore/garage";
+    fsType = "zfs";
+    options = ["zfsutil"];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;

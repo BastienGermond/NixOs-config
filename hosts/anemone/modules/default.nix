@@ -3,6 +3,7 @@
     ./bookstack.nix
     ./docker.nix
     ./fail2ban.nix
+    ./garage.nix
     ./gitea.nix
     ./immich.nix
     ./k3s.nix

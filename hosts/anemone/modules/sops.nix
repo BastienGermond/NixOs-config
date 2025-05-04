@@ -72,5 +72,11 @@
         owner = config.services.komga.user;
       };
     })
+
+    (lib.mkIf config.services.garage.enable {
+      GarageRpcSecret = {
+        owner = "garage";
+      };
+    })
   ];
 }

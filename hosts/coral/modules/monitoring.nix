@@ -1,7 +1,5 @@
 {
   config,
-  pkgs,
-  lib,
   infra,
   ...
 }: let
@@ -231,9 +229,11 @@ in {
 
       compactor = {
         retention_enabled = true;
+        working_directory = "${lokiDataDir}/retention";
         delete_request_store = "filesystem";
         compaction_interval = "10m";
         retention_delete_delay = "2h";
+        retention_delete_worker_count = 150;
       };
 
       schema_config = {
@@ -262,7 +262,7 @@ in {
 
       limits_config = {
         # enforce_metric_name = false;
-        retention_period = "60d";
+        retention_period = "30d";
         allow_structured_metadata = false;
         reject_old_samples = true;
         reject_old_samples_max_age = "168h";
