@@ -69,6 +69,7 @@ rec {
         immich-server = 9012;
         komga = 25600;
         komf = 25601;
+        suwayomi = 9080;
       };
       wireguard = {
         wg0 = {

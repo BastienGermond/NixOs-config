@@ -15,5 +15,6 @@
     peertube.enable = true;
     promtail.enable = true;
     scrutiny.collector.enable = true;
+    suwayomi-server.enable = true;
   };
 }

@@ -7,8 +7,9 @@
     ./gitea.nix
     ./immich.nix
     ./k3s.nix
-    ./manga/komga.nix
     ./manga/komf.nix
+    ./manga/komga.nix
+    ./manga/suwayomi.nix
     ./minio.nix
     ./monitoring.nix
     ./nextcloud.nix
