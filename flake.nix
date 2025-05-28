@@ -4,7 +4,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    kicad-nixpkgs.url = "github:NixOS/nixpkgs/d045216e9c0595cc44be18e7cc79372062e0448f"; # 8.0.5
+    kicad-nixpkgs.url = "github:NixOS/nixpkgs/62b852f6c6742134ade1abdd2a21685fd617a291"; # 9.0.2
     # immich-nixpkgs.url = "github:NixOS/nixpkgs/ceaedafdcb9cb3ffcaa34b3db2705fae0f28e840"; # 1.123.0
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     komf = {
