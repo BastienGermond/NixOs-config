@@ -9,15 +9,17 @@ withDefaultConfiguration "alert.germond.org" {
     recommendedProxySettings = true;
     proxyPass = "http://127.0.0.1:9090/validate";
 
-    extraConfig = ''
-      proxy_pass_request_body off;
-      proxy_set_header Content-Length "";
+    extraConfig =
+      # nginx
+      ''
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
 
-      auth_request_set $auth_resp_x_vouch_user $upstream_http_x_vouch_user;
-      auth_request_set $auth_resp_jwt $upstream_http_x_vouch_jwt;
-      auth_request_set $auth_resp_err $upstream_http_x_vouch_err;
-      auth_request_set $auth_resp_failcount $upstream_http_x_vouch_failcount;
-    '';
+        auth_request_set $auth_resp_x_vouch_user $upstream_http_x_vouch_user;
+        auth_request_set $auth_resp_jwt $upstream_http_x_vouch_jwt;
+        auth_request_set $auth_resp_err $upstream_http_x_vouch_err;
+        auth_request_set $auth_resp_failcount $upstream_http_x_vouch_failcount;
+      '';
   };
 
   locations."@error401" = {
@@ -28,13 +30,17 @@ withDefaultConfiguration "alert.germond.org" {
   locations."/" = {
     recommendedProxySettings = true;
     proxyPass = "http://127.0.0.1:${toString coral.ports.alert-manager}";
-    extraConfig = ''
-      proxy_set_header X-Vouch-User $auth_resp_x_vouch_user;
-    '';
+    extraConfig =
+      # nginx
+      ''
+        proxy_set_header X-Vouch-User $auth_resp_x_vouch_user;
+      '';
   };
 
-  extraConfig = ''
-    auth_request /validate;
-    error_page 401 = @error401;
-  '';
+  extraConfig =
+    # nginx
+    ''
+      auth_request /validate;
+      error_page 401 = @error401;
+    '';
 }

@@ -9,8 +9,10 @@ withDefaultConfiguration "videos.germond.org" {
     # proxyPass = "http://${anemone.ips.vpn.A}:${builtins.toString anemone.ports.peertube}";
     proxyPass = "http://${anemone.ips.vpn.A}";
 
-    extraConfig = ''
-      client_max_body_size 10G;
-    '';
+    extraConfig =
+      # nginx
+      ''
+        client_max_body_size 10G;
+      '';
   };
 }

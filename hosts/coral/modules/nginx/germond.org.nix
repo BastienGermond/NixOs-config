@@ -10,19 +10,23 @@ withDefaultConfiguration "germond.org" (
       "m.identity_server" = {};
     };
     serverConfig."germond.org" = "https://germond.org:443";
-    mkWellKnown = data: ''
+    mkWellKnown = data:
+    # nginx
+    ''
       add_header Content-Type application/json;
       add_header Access-Control-Allow-Origin *;
       return 200 '${builtins.toJSON data}';
     '';
   in {
-    extraConfig = ''
-      # For the federation port
-      listen 8448 ssl http2 default_server;
-      listen [::]:8448 ssl http2 default_server;
+    extraConfig =
+      # nginx
+      ''
+        # For the federation port
+        listen 8448 ssl http2 default_server;
+        listen [::]:8448 ssl http2 default_server;
 
-      client_max_body_size 50M;
-    '';
+        client_max_body_size 50M;
+      '';
 
     locations."= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;
     locations."= /.well-known/matrix/client".extraConfig = mkWellKnown clientConfig;
