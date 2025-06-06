@@ -7,6 +7,7 @@
 
   services.matrix-synapse = {
     dataDir = "/datastore/matrix-synapse/data";
+    log.root.level = "WARNING";
     settings = {
       server_name = "germond.org";
       database.name = "psycopg2";
