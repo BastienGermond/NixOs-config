@@ -39,7 +39,7 @@
 
   xdg.configFile = {
     "git/config".source = ../dotfiles/gitconfig;
-    "i3/config".source = ../dotfiles/i3;
+    # "i3/config".source = ../dotfiles/i3;
     "signature".source = ../dotfiles/signature;
   };
 

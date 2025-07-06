@@ -90,7 +90,7 @@ rec {
       };
     };
 
-    synapze-pc = {
+    nautilus = {
       ips = {
         vpn = {
           A = "10.100.10.3";
@@ -99,9 +99,9 @@ rec {
       };
       wireguard = {
         wg0 = {
-          ips = ["${hosts.synapze-pc.ips.vpn.A}/32"];
+          ips = ["${hosts.nautilus.ips.vpn.A}/32"];
           listenPort = 51821;
-          privateKeyFile = "/home/synapze/.wg/wg0.pkey";
+          privateKeyFile = "/home/bastien/.wg/wg0.pkey";
 
           peers = [
             {

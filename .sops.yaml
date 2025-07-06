@@ -2,20 +2,27 @@ keys:
   - &anemone    9CBFBC534818602C8B4A6985D6A2FD9E9534E9A9
   - &coral      B099AFEF54FCB9B55B8477E2EF8C1FDF01B61551
   - &synapze-pc 126874497541FBDAC6FB67156B17B82DF006F302
+  - &nautilus   9CA51DC45ACA299C623C7E10D70F011FE6846362
   - &synapze    226DA8B3D66AC3FE15E7C062FE50306EBDEFC265
+  - &bastien    226DA8B3D66AC3FE15E7C062FE50306EBDEFC265
 creation_rules:
   - path_regex: hosts/anemone/secrets/[^/]+\.yml$
     key_groups:
       - pgp:
         - *anemone
-        - *synapze
+        - *bastien
   - path_regex: hosts/coral/secrets/[^/]+\.yml$
     key_groups:
       - pgp:
         - *coral
-        - *synapze
+        - *bastien
+  - path_regex: hosts/nautilus/secrets/[^/]+\.yml$
+    key_groups:
+      - pgp:
+        - *nautilus
+        - *bastien
   - path_regex: hosts/synapze-pc/secrets/[^/]+\.yml$
     key_groups:
       - pgp:
         - *synapze-pc
-        - *synapze
+        - *bastien

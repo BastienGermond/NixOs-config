@@ -1,4 +1,3 @@
-# vim:shiftwidth=2
 {
   description = "My NixOS Configuration";
 
@@ -38,10 +37,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixd.url = "github:nix-community/nixd";
-    nix-matlab = {
-      url = "gitlab:doronbehar/nix-matlab";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -59,7 +54,6 @@
     gistre-fr-db,
     nixos-mailserver,
     nixd,
-    nix-matlab,
     komf,
     ...
   } @ inputs: let
@@ -80,7 +74,7 @@
           komf.nixosModules.default
           sops-nix.nixosModules.sops
           gistre-fr-db.nixosModules.default
-          home-manager.nixosModules.home-manager
+          home-manager.nixosModules.default
           nixos-mailserver.nixosModules.mailserver
           ./modules
         ];
@@ -110,6 +104,7 @@
           spotibar = final.callPackage ./pkgs/spotibar/default.nix {};
           gose = final.callPackage ./pkgs/gose/default.nix {};
           fail2ban-prometheus-exporter = final.callPackage ./pkgs/fail2ban-prometheus-exporter {};
+          chitubox-free-bin = final.callPackage ./pkgs/chitubox/default.nix {};
 
           nixd = nixd.packages.${prev.system}.nixd;
 
@@ -119,14 +114,28 @@
           # immich-pinned = immich-nixpkgs.legacyPackages.${prev.system}.immich;
           immich = nixpkgs.legacyPackages.${prev.system}.immich;
         })
-
-        (nix-matlab.overlay)
       ];
 
       hosts = {
         "synapze-pc".modules = [
           nixos-hardware.nixosModules.dell-xps-13-9360
           ./hosts/synapze-pc
+          ./home
+          ./modules
+          ./modules/xorg.nix
+        ];
+
+        "nautilus".modules = [
+          nixos-hardware.nixosModules.framework-amd-ai-300-series
+          ./hosts/nautilus
+          ./home
+          ./modules
+          ./modules/xorg.nix
+        ];
+
+        "capucine".modules = [
+          nixos-hardware.nixosModules.lenovo-thinkpad-p14s-amd-gen4
+          ./hosts/capucine
           ./home
           ./modules
           ./modules/xorg.nix

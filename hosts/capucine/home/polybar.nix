@@ -1,31 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
-  polybar-wg = pkgs.writeShellScript "polybar-wg.sh" ''
-    # https://github.com/polybar/polybar/wiki/Formatting#format-tags-inside-polybar-config
-    green=#55aa55
-
-    connected_interface="wg0"
-    ip=$(${pkgs.iproute2}/bin/ip a show "$connected_interface" | ${pkgs.toybox}/bin/grep inet | ${pkgs.gawk}/bin/awk '{ print $2 }' | ${pkgs.toybox}/bin/cut -d '/' -f 1)
-
-    print() {
-        if [[ -n "$connected_interface" ]]
-        then
-            echo %{u"$green"}%{+u}%{F"$green"}󰒄 %{F-}" $connected_interface $ip"
-        else
-            echo %{u"$green"}%{+u}%{F"$green"}󰒄 %{F-}" wg nc."
-        fi
-    }
-
-    case "$1" in
-        *)
-            print
-            ;;
-    esac
-  '';
-in {
+{pkgs, ...}: {
   services.polybar = {
     enable = true;
     package = pkgs.polybarFull;
@@ -39,7 +12,7 @@ in {
 
       # Find the right thermal zone number
       for thermal in /sys/class/thermal/thermal_zone*; do
-          if [ "$(${pkgs.toybox}/bin/cat "$thermal/type")" = 'x86_pkg_temp' ]; then
+          if [ "$(${pkgs.toybox}/bin/cat "$thermal/type")" = 'acpitz' ]; then
               CPU_THERMAL_ZONE=$(echo $thermal | ${pkgs.toybox}/bin/sed 's/\/sys\/class\/thermal\/thermal_zone//')
               break;
           fi
@@ -86,7 +59,7 @@ in {
 
         modules-left = "i3";
         modules-center = "";
-        modules-right = "nixosfs homefs eth cpu memory wireguard wlan date pulseaudio temperature dunst battery tray";
+        modules-right = "nixosfs eth cpu memory wireguard wlan date pulseaudio temperature dunst battery tray";
 
         scroll-up = "i3.next";
         scroll-down = "i3.prev";
@@ -95,6 +68,29 @@ in {
         cusror-scroll = "ns-resize";
 
         enable-ipc = true;
+      };
+      "module/wlan" = {
+        type = "internal/network";
+        interface = "wlp2s0";
+        interval = 3.0;
+
+        format-connected = "<label-connected>";
+        format-connected-underline = "#9f78e1";
+        label-connected = "%essid% (%local_ip%)";
+
+        format-disconnected = "";
+      };
+      "module/eth" = {
+        type = "internal/network";
+        interface = "enp1s0f0";
+        interval = 3.0;
+
+        format-connected-underline = "#55aa55";
+        format-connected-prefix = "ETH ";
+        format-connected-prefix-foreground = "\${colors.foreground-alt}";
+        label-connected = "%local_ip%";
+
+        format-disconnected = "";
       };
       "module/xwindow" = {
         type = "internal/xwindow";
@@ -105,16 +101,16 @@ in {
         blacklist-0 = "num lock";
 
         format-prefix = " ";
-        format-prefix-foreground = "\$\$colors.foreground-alt}";
-        format-prefix-underline = "\$\$colors.secondary}";
+        format-prefix-foreground = "\${colors.foreground-alt}";
+        format-prefix-underline = "\${colors.secondary}";
 
         label-layout = "%layout%";
-        label-layout-underline = "\$\$colors.secondary}";
+        label-layout-underline = "\${colors.secondary}";
 
         label-indicator-padding = 2;
         label-indicator-margin = 1;
-        label-indicator-background = "\$\$colors.secondary}";
-        label-indicator-underline = "\$\$colors.secondary}";
+        label-indicator-background = "\${colors.secondary}";
+        label-indicator-underline = "\${colors.secondary}";
       };
       "module/i3" = {
         type = "internal/i3";
@@ -127,42 +123,26 @@ in {
 
         label-mode-padding = 1;
         label-mode-foreground = "#000";
-        label-mode-background = "\$\$colors.primary}";
+        label-mode-background = "\${colors.primary}";
 
         label-focused = "%name%";
-        label-focused-background = "\$\$colors.background-alt}";
-        label-focused-underline = "\$\$colors.primary}";
+        label-focused-background = "\${colors.background-alt}";
+        label-focused-underline = "\${colors.primary}";
         label-focused-padding = 1;
 
         label-unfocused = "%name%";
         label-unfocused-padding = 1;
 
         label-visible = "%name%";
-        label-visible-background = "\$\$self.label-focused-background}";
-        label-visible-underline = "\$\$self.label-focused-underline}";
-        label-visible-padding = "\$\$self.label-focused-padding}";
+        label-visible-background = "\${self.label-focused-background}";
+        label-visible-underline = "\${self.label-focused-underline}";
+        label-visible-padding = "\${self.label-focused-padding}";
 
         label-urgent = "%name%";
-        label-urgent-background = "\$\$colors.alert}";
+        label-urgent-background = "\${colors.alert}";
         label-urgent-padding = 1;
 
         label-separator = "|";
-      };
-      "module/homefs" = {
-        type = "internal/fs";
-        interval = 25;
-
-        mount-0 = "/home";
-
-        label-mounted = "  %free%";
-        label-unmounted = "%mountpoint% not mounted";
-        label-unmounted-foreground = "\$\$colors.foreground-alt}";
-      };
-      "module/wireguard" = {
-        type = "custom/script";
-        exec = "${polybar-wg} ";
-        tail = false;
-        interval = 5;
       };
       "module/tray" = {
         type = "internal/tray";
@@ -171,34 +151,10 @@ in {
         tray-size = "80%";
         # tray-background = "#0063ff";
       };
-      # "module/spotibar-previous-track" = {
-      #   type = "custom/script";
-      #   exec = "echo ";
-      #   click-left = "${pkgs.spotibar}/bin/spotibar --previous-track";
-      #   exec-if = "[ $(${pkgs.spotibar}/bin/spotibar --is-live) = \"True\" ]";
-      #   format-underline = "#1db954";
-      #   format-padding = 1;
-      # };
-      # "module/spotibar-currently-playing" = {
-      #   type = "custom/script";
-      #   exec = "${pkgs.spotibar}/bin/spotibar --get-currently-playing";
-      #   click-right = "${pkgs.spotibar}/bin/spotibar --toggle-playback";
-      #   exec-if = "[ $(${pkgs.spotibar}/bin/spotibar --is-live) = \"True\" ]";
-      #   format-underline = "#1db954";
-      #   format-padding = 0;
-      # };
-      # "module/spotibar-next-track" = {
-      #   type = "custom/script";
-      #   exec = "echo ";
-      #   click-left = "${pkgs.spotibar}/bin/spotibar --next-track";
-      #   exec-if = "[ $(${pkgs.spotibar}/bin/spotibar --is-live) = \"True\" ]";
-      #   format-underline = "#1db954";
-      #   format-padding = 1;
-      # };
       "module/dunst" = {
         type = "custom/ipc";
         initial = 1;
-        format-foreground = "\$\$colors.primary}";
+        format-foreground = "\${colors.primary}";
         hook = [
           "echo \"%{A1:${pkgs.dunst}/bin/dunstctl set-paused true && polybar-msg hook dunst 2:} %{A}\""
           "echo \"%{A1:${pkgs.dunst}/bin/dunstctl set-paused false && polybar-msg hook dunst 1:} %{A}\""
