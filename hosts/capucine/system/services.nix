@@ -18,7 +18,10 @@
 
   services.libinput = {
     enable = true;
-    touchpad.naturalScrolling = true;
+    touchpad = {
+      naturalScrolling = true;
+      accelSpeed = "0.70";
+    };
   };
 
   # Configure keymap in X11
