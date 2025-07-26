@@ -74,6 +74,12 @@
             "${config.xsession.windowManager.i3.config.modifier}+Down" = "focus down";
             "${config.xsession.windowManager.i3.config.modifier}+Up" = "focus up";
 
+            # Move
+            "${config.xsession.windowManager.i3.config.modifier}+Shift+Left" = "move left";
+            "${config.xsession.windowManager.i3.config.modifier}+Shift+Right" = "move right";
+            "${config.xsession.windowManager.i3.config.modifier}+Shift+Down" = "move down";
+            "${config.xsession.windowManager.i3.config.modifier}+Shift+Up" = "move up";
+
             # Toggle floating
             "${config.xsession.windowManager.i3.config.modifier}+Shift+space" = "floating toggle";
           }
