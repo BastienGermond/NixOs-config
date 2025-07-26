@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
+{...}: {
   xdg.enable = true;
 
   xdg.mime.enable = true;
@@ -39,7 +34,6 @@
 
   xdg.configFile = {
     "git/config".source = ../dotfiles/gitconfig;
-    # "i3/config".source = ../dotfiles/i3;
     "signature".source = ../dotfiles/signature;
   };
 
