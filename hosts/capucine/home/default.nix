@@ -1,14 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
-    ./dunst.nix
-    ./helix.nix
-    ./polybar.nix
-    ./rofi.nix
-    ./terminal.nix
   ];
 
   config = {
