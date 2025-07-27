@@ -1,10 +1,14 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   services.autorandr = {
     enable = true;
     matchEdid = true;
     hooks.postswitch = {
       "notify-i3" = "${pkgs.i3}/bin/i3-msg restart";
-      "restart-polybar" = "systemctl restart --user polybar";
+      "restart-polybar" = "pkill -9 polybar";
     };
     profiles = {
       "default" = {
@@ -75,4 +79,6 @@
 
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [hplipWithPlugin carps-cups gutenprintBin cnijfilter2];
+
+  services.libinput.touchpad.accelSpeed = lib.mkForce "1.0";
 }
