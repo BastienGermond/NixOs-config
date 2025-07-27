@@ -1,9 +1,6 @@
 {
-  config,
-  pkgs,
   lib,
-  # useSnapze,
-  # useBastien,
+  config,
   ...
 }:
 lib.mkMerge [
@@ -26,16 +23,10 @@ lib.mkMerge [
       };
     };
   }
-  # (lib.mkIf useSynapze {
-  # users.users.synapze.openssh.authorizedKeys.keys = [
-  # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJh2B4ZYF7UfJ//s1kK+uaSDYKfvcO94JMpk3VHLJY3h synapze@synapze-pc"
-  # ];
-  # }
-  # )
-  # (lib.mkIf useBastien {
-  # users.users.bastien.openssh.authorizedKeys.keys = [
-  # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJh2B4ZYF7UfJ//s1kK+uaSDYKfvcO94JMpk3VHLJY3h synapze@synapze-pc"
-  # ];
-  # }
-  # )
+
+  (lib.mkIf config.my.isAServer {
+    users.users.${config.my.mainUser}.openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJh2B4ZYF7UfJ//s1kK+uaSDYKfvcO94JMpk3VHLJY3h"
+    ];
+  })
 ]

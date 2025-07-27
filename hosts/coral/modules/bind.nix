@@ -72,7 +72,7 @@ in {
   };
 
   systemd.services."mx-germond-org-dane-tsla-updater" = {
-    enable = config.services.bind.enable;
+    enable = false; # FIXME: It's buggy for now. config.services.bind.enable;
 
     path = with pkgs; [openssl hash-slinger];
 

@@ -33,8 +33,8 @@
       inputs.dns.follows = "dns";
     };
     nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/b4fbffe79c00f19be94b86b4144ff67541613659";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
     nixd.url = "github:nix-community/nixd";
   };

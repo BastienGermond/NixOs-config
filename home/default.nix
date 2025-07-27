@@ -4,7 +4,7 @@
     sharedModules = [];
     extraSpecialArgs = {inherit (config) my fileSystems;};
     users = {
-      bastien = {
+      "${config.my.mainUser}" = {
         home.stateVersion = "22.05";
 
         imports = [

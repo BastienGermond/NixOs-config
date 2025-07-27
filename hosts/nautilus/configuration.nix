@@ -20,7 +20,10 @@
     hostname = "nautilus";
     enableDocker = true;
     enableInfraVpn = true;
-    wirelessInterfaces = ["wlp192s0"];
+    networking = {
+      enableFirewall = true;
+      wirelessInterfaces = ["wlp192s0"];
+    };
   };
 
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";

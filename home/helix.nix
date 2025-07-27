@@ -31,6 +31,10 @@
           cursor-line = "warning";
           other-lines = "error";
         };
+        lsp = {
+          display-progress-messages = true;
+          display-inlay-hints = true;
+        };
       };
     };
     languages = {
@@ -40,6 +44,7 @@
         };
         nixd = {
           command = "${pkgs.nixd}/bin/nixd";
+          args = ["--inlay-hints=true"];
         };
         pylsp = {
           command = "pylsp";

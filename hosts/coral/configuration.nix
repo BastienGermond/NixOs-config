@@ -5,7 +5,6 @@
   config,
   pkgs,
   lib,
-  infra,
   ...
 }: {
   imports = [
@@ -17,6 +16,23 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.tmp.cleanOnBoot = true;
+
+  my = {
+    hostname = "coral";
+    mainUser = "synapze";
+    color = "red";
+    isAServer = true;
+    enableDocker = false;
+    enableInfraVpn = true;
+    networking = {
+      enableFirewall = true;
+      extraAllowedTCPPorts = [22 2222 5201];
+    };
+  };
+
+  # It's a VPS and doesn't need fwupd and light.
+  services.fwupd.enable = lib.mkForce false;
+  programs.light.enable = lib.mkForce false;
 
   # Required for postgres authentication.
   services.oidentd.enable = true;
@@ -41,44 +57,10 @@
     };
   };
 
-  programs.zsh.enable = true;
-
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
-  environment.variables.EDITOR = "vim";
 
-  environment.extraInit = ''
-    # these are the defaults, but some applications are buggy so we set them
-    # here anyway
-    export XDG_CONFIG_HOME=$HOME/.config
-    export XDG_DATA_HOME=$HOME/.local/share
-    export XDG_CACHE_HOME=$HOME/.cache
-  '';
-
-  environment.interactiveShellInit = ''
-    alias gs='git status'
-  '';
-
-  environment.pathsToLink = ["/share/zsh"];
-
-  # Set your time zone.
-  time.timeZone = "Europe/Paris";
-
-  networking = let
-    anemone = infra.hosts.anemone;
-  in {
-    hostName = "coral";
-    nameservers = ["1.1.1.1" "8.8.8.8"];
+  networking = {
     useDHCP = true;
-
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [22 2222 5201]; # 5201 is for iperf3
-      extraCommands = ''
-      '';
-
-      extraStopCommands = ''
-      '';
-    };
 
     # Gitea forward ssh port
     nat = {
@@ -88,8 +70,6 @@
       forwardPorts = [
       ];
     };
-
-    enableIPv6 = true;
 
     interfaces.enp1s0.ipv6.addresses = [
       {
@@ -112,29 +92,5 @@
     };
   };
 
-  systemd.services.NetworkManager-wait-online.enable = false;
-
-  documentation = {
-    enable = true;
-    info.enable = true;
-    doc.enable = true;
-    dev.enable = true;
-    nixos.enable = true;
-
-    man = {
-      enable = true;
-      generateCaches = true;
-    };
-  };
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "21.11"; # Did you read the comment?
+  system.stateVersion = "21.11";
 }

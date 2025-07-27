@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     bind
     ctags
@@ -14,7 +10,6 @@
     htop
     man-pages
     man-pages-posix
-    neovim
     parted
     ripgrep
     tree

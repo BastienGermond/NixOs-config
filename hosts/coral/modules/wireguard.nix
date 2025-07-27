@@ -9,7 +9,6 @@
   networking.firewall.allowedUDPPorts = [51821];
 
   networking.wireguard.interfaces = lib.mkMerge [
-    infra.hosts.coral.wireguard
     {
       wgs0 = {
         postSetup = ''

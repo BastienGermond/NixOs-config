@@ -33,9 +33,9 @@ in {
 
       storage = {
         type = "s3";
-        region = "eu-west-3";
+        region = "anemone";
         bucket = "nix-cache";
-        endpoint = "https://s3.germond.org/";
+        endpoint = "https://s3-garage.germond.org/";
       };
     };
   };

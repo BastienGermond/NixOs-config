@@ -1,6 +1,5 @@
 {config, ...}: {
   mailserver = {
-    debug = false;
     fqdn = "mx.germond.org";
     sendingFqdn = "germond.org";
     domains = ["germond.org"];
@@ -28,5 +27,7 @@
         hashedPasswordFile = config.sops.secrets.testMailPassword.path;
       };
     };
+
+    stateVersion = 3;
   };
 }

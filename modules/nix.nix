@@ -1,13 +1,15 @@
 {
-  config,
   pkgs,
+  config,
+  inputs,
   ...
 }: {
   nix = {
     package = pkgs.nixVersions.latest;
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
     settings = {
       auto-optimise-store = true;
-      trusted-users = ["synapze"];
+      trusted-users = [config.my.mainUser];
       substituters = [
         "https://helix.cachix.org"
         "https://numtide.cachix.org"

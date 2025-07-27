@@ -38,7 +38,7 @@ rec {
             }
             {
               publicKey = "hHWuxL+GuQ78uZNcUqTqyTdsCNDXXlsMlxf6IFm5ZUM=";
-              allowedIPs = [hosts.synapze-pc.ips.vpn.A];
+              allowedIPs = [hosts.nautilus.ips.vpn.A];
             }
           ];
         };

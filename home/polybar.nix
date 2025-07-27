@@ -49,7 +49,7 @@
         };
       };
 
-      wlanModules = builtins.foldl' (acc: interface: acc // mkWlanModule interface) {} my.wirelessInterfaces;
+      wlanModules = builtins.foldl' (acc: interface: acc // mkWlanModule interface) {} my.networking.wirelessInterfaces;
     in
       wlanModules
       // {
@@ -95,7 +95,7 @@
 
           modules-left = "i3";
           modules-center = "";
-          modules-right = "rootfs ${lib.optionalString (fileSystems ? "/home") "homefs"} cpu memory ${(lib.strings.concatStringsSep " " my.wirelessInterfaces)} date pulseaudio temperature dunst battery tray";
+          modules-right = "rootfs ${lib.optionalString (fileSystems ? "/home") "homefs"} cpu memory ${(lib.strings.concatStringsSep " " my.networking.wirelessInterfaces)} date pulseaudio temperature dunst battery tray";
 
           scroll-up = "i3.next";
           scroll-down = "i3.prev";

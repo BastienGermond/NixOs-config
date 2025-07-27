@@ -2,9 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
-  config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }: {
@@ -25,6 +23,4 @@
   };
 
   swapDevices = [];
-
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

@@ -24,9 +24,20 @@ in {
       description = "Machine hostname.";
     };
 
-    wirelessInterfaces = mkOption {
-      type = types.listOf types.str;
-      description = "Wireless card interfaces";
+    networking = {
+      wirelessInterfaces = mkOption {
+        type = types.listOf types.str;
+        description = "Wireless card interfaces";
+        default = [];
+      };
+
+      enableFirewall = mkEnableOption "firewall";
+
+      extraAllowedTCPPorts = mkOption {
+        type = types.listOf types.int;
+        description = "Extra allowed tcp ports";
+        default = [];
+      };
     };
 
     isAServer = mkOption {
@@ -88,7 +99,15 @@ in {
         nameservers = ["1.1.1.1" "8.8.8.8"];
         wireguard.interfaces = mkIf my.enableInfraVpn infra.hosts.${my.hostname}.wireguard;
         networkmanager.enable = mkDefault (!my.isAServer);
-        interfaces = builtins.foldl' (acc: name: acc // {${name}.useDHCP = true;}) {} my.wirelessInterfaces;
+        enableIPv6 = true;
+        interfaces = mkMerge [
+          (builtins.foldl' (acc: name: acc // {${name}.useDHCP = true;}) {} my.networking.wirelessInterfaces)
+        ];
+
+        firewall = {
+          enable = my.networking.enableFirewall;
+          allowedTCPPorts = my.networking.extraAllowedTCPPorts;
+        };
 
         nat = {
           internalInterfaces = mkMerge [
@@ -162,6 +181,8 @@ in {
         [
           (mkIf (my.shell == pkgs.zsh) ["/share/zsh"])
         ];
+
+      programs.zsh.enable = mkDefault (pkgs.zsh == my.shell);
 
       # Select internationalisation properties.
       i18n.defaultLocale = "en_US.UTF-8";

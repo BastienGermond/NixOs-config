@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   ...
 }: {
@@ -9,7 +8,7 @@
     settings = {
       vouch = {
         testing = false;
-        logLevel = "debug";
+        logLevel = "info";
         listen = "127.0.0.1";
         port = 9090;
         allowAllUsers = true;
