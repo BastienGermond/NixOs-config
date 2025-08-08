@@ -15,6 +15,7 @@
       firefox
       freecad
       gimp
+      glab
       gopls
       helix
       inkscape

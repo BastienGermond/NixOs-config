@@ -18,7 +18,10 @@
     hostname = "capucine";
     enableDocker = true;
     enableInfraVpn = false;
-    wirelessInterfaces = ["wlp2s0"];
+    networking = {
+      enableFirewall = true;
+      wirelessInterfaces = ["wlp2s0"];
+    };
   };
 
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
