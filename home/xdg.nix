@@ -5,7 +5,7 @@
   xdg.mimeApps = {
     enable = true;
     associations.added = {
-      "application/pdf" = ["evince.desktop"];
+      "application/pdf" = ["org.gnome.Evince.desktop"];
       "text/html" = ["librewolf.desktop"];
       "x-scheme-handler/http" = ["librewolf.desktop"];
       "x-scheme-handler/https" = ["librewolf.desktop"];
@@ -13,12 +13,23 @@
       "x-scheme-handler/unknown" = ["librewolf.desktop"];
     };
     defaultApplications = {
-      "application/pdf" = "evince.desktop";
+      "application/pdf" = "org.gnome.Evince.desktop";
       "text/html" = ["librewolf.desktop"];
       "x-scheme-handler/http" = ["librewolf.desktop"];
       "x-scheme-handler/https" = ["librewolf.desktop"];
       "x-scheme-handler/about" = ["librewolf.desktop"];
       "x-scheme-handler/unknown" = ["librewolf.desktop"];
+    };
+  };
+
+  xdg.desktopEntries = {
+    librewolf = {
+      name = "Librewolf";
+      genericName = "Web Browser";
+      exec = "librewolf %U";
+      terminal = false;
+      categories = [ "Application" "Network" "WebBrowser" ];
+      mimeType = [ "text/html" "text/xml" "application/pdf" ];
     };
   };
 
