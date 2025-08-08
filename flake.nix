@@ -105,6 +105,7 @@
           gose = final.callPackage ./pkgs/gose/default.nix {};
           fail2ban-prometheus-exporter = final.callPackage ./pkgs/fail2ban-prometheus-exporter {};
           chitubox-free-bin = final.callPackage ./pkgs/chitubox/default.nix {};
+          freecad-assembly3 = final.callPackage ./pkgs/freecad-assembly3/default.nix {};
 
           nixd = nixd.packages.${prev.system}.nixd;
 
