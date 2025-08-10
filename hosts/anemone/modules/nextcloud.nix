@@ -34,7 +34,7 @@ in {
   systemd.services.postgresql.wantedBy = ["nextcloud-setup.service"];
 
   services.nextcloud = {
-    package = pkgs.nextcloud29;
+    package = pkgs.nextcloud30;
     hostName = "cloud.germond.org";
     home = "/datastore/nextcloud";
     https = true;
@@ -45,16 +45,16 @@ in {
 
     extraApps = {
       oidc_login = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-DrbaKENMz2QJfbDKCMrNGEZYpUEvtcsiqw9WnveaPZA=";
-        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.2.0/oidc_login.tar.gz";
+        sha256 = "sha256-RLYquOE83xquzv+s38bahOixQ+y4UI6OxP9HfO26faI=";
+        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.2.2/oidc_login.tar.gz";
         license = "agpl3Only";
       };
 
-      breezedark = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-9xMH9IcQrzzMJ5bL6RP/3CS1QGuByriCjGkJQJxQ4CU=";
-        url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v29.0.0/breezedark.tar.gz";
-        license = "agpl3Only";
-      };
+      # breezedark = pkgs.fetchNextcloudApp {
+      #   sha256 = "sha256-9xMH9IcQrzzMJ5bL6RP/3CS1QGuByriCjGkJQJxQ4CU=";
+      #   url = "https://github.com/mwalbeck/nextcloud-breeze-dark/releases/download/v29.0.0/breezedark.tar.gz";
+      #   license = "agpl3Only";
+      # };
 
       # FIXME: Not yet ready (https://github.com/icewind1991/files_markdown/issues/200)
       # files_markdown = pkgs.fetchNextcloudApp rec {
@@ -67,33 +67,34 @@ in {
       #   url = "https://github.com/nextcloud/files_texteditor/releases/download/v2.15.0/files_texteditor.tar.gz";
       # };
 
-      duplicatefinder = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-J+P+9Ajz998ua1RRwuj1h4WOOl0WODu3uVJNGosbObI=";
-        url = "https://github.com/eldertek/duplicatefinder/releases/download/v1.6.0/duplicatefinder-v1.6.0.tar.gz";
-        license = "agpl3Plus";
-      };
+      # FIXME: Check for release
+      # duplicatefinder = pkgs.fetchNextcloudApp {
+      #   sha256 = "sha256-J+P+9Ajz998ua1RRwuj1h4WOOl0WODu3uVJNGosbObI=";
+      #   url = "https://github.com/eldertek/duplicatefinder/releases/download/v1.6.0/duplicatefinder-v1.6.0.tar.gz";
+      #   license = "agpl3Plus";
+      # };
 
       notes = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-dpMCehjhPQoOA+MVdLeGc370hmqWzmsMczgV08m/cO4=";
-        url = "https://github.com/nextcloud-releases/notes/releases/download/v4.11.0/notes-v4.11.0.tar.gz";
+        sha256 = "sha256-WpxRJ45N+aO+cOp5u6+uwlijzofpmdcUg07ax3p3WDA=";
+        url = "https://github.com/nextcloud-releases/notes/releases/download/v4.12.2/notes-v4.12.2.tar.gz";
         license = "agpl3Only";
       };
 
       announcementcenter = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-4oQbb0Rt9sHAtz0ahHuOazThvgEH8iyhgtEdsBHWhYU=";
-        url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v7.0.0/announcementcenter-v7.0.0.tar.gz";
+        sha256 = "sha256-uHSe+IggFYt3g6Pv3YahXpDFjcgpQnHQsgQGN89ThVo=";
+        url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v7.1.4/announcementcenter-v7.1.4.tar.gz";
         license = "agpl3Only";
       };
 
       calendar = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-NwXTuSHl278Q2Wko4DC3rzqvNHnDI513UJ+8/3Rp5/U=";
-        url = "https://github.com/nextcloud-releases/calendar/releases/download/v4.7.16/calendar-v4.7.16.tar.gz";
+        sha256 = "sha256-R5L0EAoLGr1CfzhtHO4FfUstqR+EDsOIdgFYccgnEMc=";
+        url = "https://github.com/nextcloud-releases/calendar/releases/download/v5.3.8/calendar-v5.3.8.tar.gz";
         license = "agpl3Only";
       };
 
       user_usage_report = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-x3JDHXZ9LElcr/DKRsrNXjl1iVM7WgN/dVBC6PUCZHk=";
-        url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v1.13.1/user_usage_report-v1.13.1.tar.gz";
+        sha256 = "sha256-qDJExE/zYhg1aQFqlVrTEstaHkuRbTOTRfwedEoQgQQ=";
+        url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v1.14.0/user_usage_report-v1.14.0.tar.gz";
         license = "agpl3Plus";
       };
     };

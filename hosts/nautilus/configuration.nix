@@ -26,6 +26,8 @@
     };
   };
 
+  services.xserver.dpi = 120;
+
   environment.variables.XDG_CONFIG_HOME = "$HOME/.config";
 
   environment.extraInit = ''

@@ -118,13 +118,13 @@
       ];
 
       hosts = {
-        "synapze-pc".modules = [
-          nixos-hardware.nixosModules.dell-xps-13-9360
-          ./hosts/synapze-pc
-          ./home
-          ./modules
-          ./modules/xorg.nix
-        ];
+        # "synapze-pc".modules = [
+        #   nixos-hardware.nixosModules.dell-xps-13-9360
+        #   ./hosts/synapze-pc
+        #   ./home
+        #   ./modules
+        #   ./modules/xorg.nix
+        # ];
 
         "nautilus".modules = [
           nixos-hardware.nixosModules.framework-amd-ai-300-series

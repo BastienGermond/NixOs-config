@@ -115,7 +115,7 @@
     clientId = "immich";
     clientSecret = ""; # added by activation script
     defaultStorageQuota = 0;
-    issuerUrl = "https://newsso.germond.org/realms/germond/";
+    issuerUrl = "https://newsso.germond.org/realms/germond";
     mobileOverrideEnabled = false;
     mobileRedirectUri = "";
     scope = "openid email profile";

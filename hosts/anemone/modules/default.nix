@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ./bookstack.nix
+    # ./bookstack.nix
     ./docker.nix
     ./fail2ban.nix
     ./garage.nix

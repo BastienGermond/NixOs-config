@@ -12,7 +12,7 @@ in
         env.TERM = "xterm-256color";
         debug.log_level = "INFO";
         font = {
-          size = 7.5;
+          size = 13;
           normal = {
             family = "JuliaMono";
           };
