@@ -2,7 +2,7 @@
   description = "My NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     kicad-nixpkgs.url = "github:NixOS/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb1"; # 9.0.2
     # immich-nixpkgs.url = "github:NixOS/nixpkgs/ceaedafdcb9cb3ffcaa34b3db2705fae0f28e840"; # 1.123.0
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
