@@ -12,6 +12,7 @@
     man-pages-posix
     parted
     ripgrep
+    tmux
     tree
     unzip
     wget
