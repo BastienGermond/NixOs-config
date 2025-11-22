@@ -34,7 +34,7 @@ in {
   systemd.services.postgresql.wantedBy = ["nextcloud-setup.service"];
 
   services.nextcloud = {
-    package = pkgs.nextcloud30;
+    package = pkgs.nextcloud31;
     hostName = "cloud.germond.org";
     home = "/datastore/nextcloud";
     https = true;
@@ -75,26 +75,26 @@ in {
       # };
 
       notes = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-WpxRJ45N+aO+cOp5u6+uwlijzofpmdcUg07ax3p3WDA=";
-        url = "https://github.com/nextcloud-releases/notes/releases/download/v4.12.2/notes-v4.12.2.tar.gz";
+        sha256 = "sha256-iiNXIvq+rUbbecU646pyRpHP0EjUdQT1ybKMS2JQbwc=";
+        url = "https://github.com/nextcloud-releases/notes/releases/download/v4.12.4/notes-v4.12.4.tar.gz";
         license = "agpl3Only";
       };
 
       announcementcenter = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-uHSe+IggFYt3g6Pv3YahXpDFjcgpQnHQsgQGN89ThVo=";
-        url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v7.1.4/announcementcenter-v7.1.4.tar.gz";
+        sha256 = "sha256-dH0blE+NjRLBdmGakG3TrlUqgABvqFeHYMuF0IN2aMU=";
+        url = "https://github.com/nextcloud-releases/announcementcenter/releases/download/v7.2.2/announcementcenter-v7.2.2.tar.gz";
         license = "agpl3Only";
       };
 
       calendar = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-R5L0EAoLGr1CfzhtHO4FfUstqR+EDsOIdgFYccgnEMc=";
-        url = "https://github.com/nextcloud-releases/calendar/releases/download/v5.3.8/calendar-v5.3.8.tar.gz";
+        sha256 = "sha256-uYGVGot8iBbLDyDNrz2HJ+jcYhKg20fCdI9jHi1i2a4=";
+        url = "https://github.com/nextcloud-releases/calendar/releases/download/v6.1.0/calendar-v6.1.0.tar.gz";
         license = "agpl3Only";
       };
 
       user_usage_report = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-qDJExE/zYhg1aQFqlVrTEstaHkuRbTOTRfwedEoQgQQ=";
-        url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v1.14.0/user_usage_report-v1.14.0.tar.gz";
+        sha256 = "sha256-itWaJUHnBZmsBrL4O0fps/DgSm7MEt0JeIrNM1LlRUk=";
+        url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v2.0.0/user_usage_report-v2.0.0.tar.gz";
         license = "agpl3Plus";
       };
     };
