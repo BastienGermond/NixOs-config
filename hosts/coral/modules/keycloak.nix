@@ -7,8 +7,8 @@
   coral = infra.hosts.coral;
 
   keycloak-restrict-client-auth = pkgs.fetchurl {
-    url = "https://github.com/sventorben/keycloak-restrict-client-auth/releases/download/v20.0.1/keycloak-restrict-client-auth.jar";
-    sha256 = "sha256-BHS2qMwufpfsI0B9b+g80dvPX29XMb7up25rgPm7gZY=";
+    url = "https://github.com/sventorben/keycloak-restrict-client-auth/releases/download/v26.1.0/keycloak-restrict-client-auth.jar";
+    sha256 = "sha256-3FrEjFcdKtcnQHR8wGOs/rL10U5WNlTi1KU7YIMZbrs=";
   };
 in {
   services.keycloak = {
