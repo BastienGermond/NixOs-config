@@ -33,6 +33,7 @@
     fritzing
     gcc
     git
+    gns3-gui
     gnumake
     gnupg
     gparted

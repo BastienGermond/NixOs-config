@@ -40,6 +40,35 @@ in {
       };
     };
 
+    autorandr = {
+      enable = mkEnableOption "autorandr with preconfigured profiles";
+
+      profiles = mkOption {
+        type = types.listOf (types.enum ["home" "office"]);
+        description = "List of autorandr profiles to include";
+        default = ["home"];
+      };
+
+      default = {
+        fingerprint = mkOption {
+          type = types.str;
+        };
+
+        mode = mkOption {
+          type = types.str;
+        };
+
+        rate = mkOption {
+          type = types.str;
+        };
+
+        dpi = mkOption {
+          type = types.int;
+          default = 120;
+        };
+      };
+    };
+
     isAServer = mkOption {
       type = types.bool;
       description = "Machine is a server.";
@@ -269,5 +298,58 @@ in {
     (mkIf my.alacritty.enable {
       environment.variables.TERM = "alacritty";
     })
+
+    (mkIf (my.autorandr.enable)
+      {
+        services.autorandr = {
+          enable = mkDefault true;
+          matchEdid = true;
+          hooks.postswitch =
+            lib.attrsets.optionalAttrs config.services.xserver.windowManager.i3.enable {
+              "notify-i3" = "${pkgs.i3}/bin/i3-msg restart";
+            }
+            // lib.attrsets.optionalAttrs my.i3.enable {
+              "restart-polybar" = "pkill -9 polybar";
+            };
+          profiles =
+            {
+              "default" = {
+                fingerprint = {
+                  eDP-1 = my.autorandr.default.fingerprint;
+                };
+                config = {
+                  eDP-1 = {
+                    enable = true;
+                    inherit (my.autorandr.default) mode rate dpi;
+                    # position = "0x1080";
+                  };
+                };
+              };
+            }
+            // lib.attrsets.filterAttrs (n: v: builtins.elem n my.autorandr.profiles) {
+              "home" = {
+                fingerprint = {
+                  eDP-1 = my.autorandr.default.fingerprint;
+                  DP-10 = "00ffffffffffff0010aca4a053414c341c19010380351e78ee7e75a755529c270f5054a54b00714f8180a9c0a940d1c0010101010101023a801871382d40582c45000f282100001e000000ff003954473436353738344c41530a000000fc0044454c4c205532343134480a20000000fd00384c1e5311000a202020202020016a02031ff14c9005040302071601141f12132309070765030c00100083010000023a801871382d40582c45000f282100001e011d8018711c1620582c25000f282100009e011d007251d01e206e2855000f282100001e8c0ad08a20e02d10103e96000f282100001800000000000000000000000000000000000000000000000037";
+                };
+                config = {
+                  eDP-1 = {
+                    enable = true;
+                    inherit (my.autorandr.default) mode rate dpi;
+                    position = "0x1080";
+                  };
+                  DP-10 = {
+                    enable = true;
+                    primary = true;
+                    dpi = 120;
+                    mode = "1920x1080";
+                    rate = "60.00";
+                    position = "0x0";
+                  };
+                };
+              };
+            };
+        };
+      })
   ];
 }
