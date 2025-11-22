@@ -87,8 +87,8 @@ in {
       };
 
       calendar = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-uYGVGot8iBbLDyDNrz2HJ+jcYhKg20fCdI9jHi1i2a4=";
-        url = "https://github.com/nextcloud-releases/calendar/releases/download/v6.1.0/calendar-v6.1.0.tar.gz";
+        sha256 = "sha256-GcoHXCAsyoWyXT5/55+Eu/G1D4pZe2A8iR1wRo9S/9s=";
+        url = "https://github.com/nextcloud-releases/calendar/releases/download/v5.5.9/calendar-v5.5.9.tar.gz";
         license = "agpl3Only";
       };
 
