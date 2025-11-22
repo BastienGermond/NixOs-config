@@ -78,7 +78,7 @@
       iftop
       killall
       libcgroup
-      librewolf-wayland
+      librewolf
       lycheeslicer
       man-pages
       man-pages-posix

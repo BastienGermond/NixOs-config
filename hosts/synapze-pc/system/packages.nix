@@ -46,7 +46,7 @@
     iftop
     killall
     libcgroup
-    librewolf-wayland
+    librewolf
     man-pages
     man-pages-posix
     matlab

@@ -69,7 +69,6 @@
       pkgs.yubikey-personalization
       pkgs.platformio
       pkgs.openocd
-      pkgs.android-udev-rules
       pkgs.qmk-udev-rules
     ];
   };
