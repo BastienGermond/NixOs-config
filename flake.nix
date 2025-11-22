@@ -118,14 +118,6 @@
       ];
 
       hosts = {
-        # "synapze-pc".modules = [
-        #   nixos-hardware.nixosModules.dell-xps-13-9360
-        #   ./hosts/synapze-pc
-        #   ./home
-        #   ./modules
-        #   ./modules/xorg.nix
-        # ];
-
         "nautilus".modules = [
           nixos-hardware.nixosModules.framework-amd-ai-300-series
           ./hosts/nautilus
@@ -172,13 +164,9 @@
 
       outputsBuilder = channels: {
         devShells.default = channels.nixpkgs.mkShell {
-          buildInputs =
-            (builtins.attrValues {
-              inherit (channels.nixpkgs) age-plugin-yubikey sops just;
-            })
-            ++ [
-              deploy-rs.packages.${channels.nixpkgs.system}.deploy-rs
-            ];
+          buildInputs = builtins.attrValues {
+            inherit (channels.nixpkgs) age-plugin-yubikey sops just deploy-rs;
+          };
         };
       };
 
