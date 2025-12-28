@@ -16,7 +16,6 @@ in {
   networking.firewall.allowedUDPPorts = [53];
 
   services.bind = {
-    enableGistreFr = true;
     extraOptions = ''
       dnssec-validation auto;
 
@@ -50,7 +49,7 @@ in {
           allow-update { key rfc2136key.germond.org.; };
         '';
       };
-      "gistre.fr".master = true;
+      # "gistre.fr".master = false;
     };
   };
 

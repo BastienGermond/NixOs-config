@@ -6,6 +6,7 @@
   environment.systemPackages = with pkgs; [
     alacritty
     bind
+    borgbackup
     ctags
     curl
     git

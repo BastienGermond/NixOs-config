@@ -15,7 +15,6 @@
         keyFile = config.sops.secrets.nsdGermondOrgTsigSecret.path;
       };
     };
-    enableGistreFr = true;
     zones = {
       "synapze.fr" = {
         data = dns.lib.toString "synapze.fr" (import ../data/dns/zones/synapze.fr.db.nix {inherit dns;});

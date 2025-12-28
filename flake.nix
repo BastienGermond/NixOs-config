@@ -28,10 +28,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    gistre-fr-db = {
-      url = "github:BastienGermond/gistre.fr.db";
-      inputs.dns.follows = "dns";
-    };
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
       # inputs.nixpkgs.follows = "nixpkgs";
@@ -51,7 +47,6 @@
     dns,
     deploy-rs,
     sops-nix,
-    gistre-fr-db,
     nixos-mailserver,
     nixd,
     komf,
@@ -73,7 +68,6 @@
         modules = [
           komf.nixosModules.default
           sops-nix.nixosModules.sops
-          gistre-fr-db.nixosModules.default
           home-manager.nixosModules.default
           nixos-mailserver.nixosModules.mailserver
           ./modules
@@ -164,9 +158,13 @@
 
       outputsBuilder = channels: {
         devShells.default = channels.nixpkgs.mkShell {
-          buildInputs = builtins.attrValues {
-            inherit (channels.nixpkgs) age-plugin-yubikey sops just deploy-rs;
-          };
+          buildInputs =
+            (builtins.attrValues {
+              inherit (channels.nixpkgs) age-plugin-yubikey sops just;
+            })
+            ++ [
+              deploy-rs.packages.${channels.nixpkgs.system}.deploy-rs
+            ];
         };
       };
 

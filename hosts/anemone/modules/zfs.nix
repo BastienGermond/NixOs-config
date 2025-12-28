@@ -77,6 +77,12 @@
     options = ["zfsutil"];
   };
 
+  fileSystems."/datastore/borg" = {
+    device = "datastore/borg";
+    fsType = "zfs";
+    options = ["zfsutil"];
+  };
+
   services.zfs = {
     autoScrub = {
       enable = true;

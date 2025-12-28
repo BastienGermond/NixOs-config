@@ -28,6 +28,9 @@
         owner = config.users.users.nextcloud.name;
         restartUnits = ["nextcloud-setup.service"];
       };
+      BorgDatastorePassphrase = {
+        owner = "root";
+      };
     })
 
     (lib.mkIf config.services.postgresqlCipheredBackup.enable {
