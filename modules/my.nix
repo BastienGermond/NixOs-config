@@ -170,10 +170,6 @@ in {
 
       services.fwupd.enable = true;
 
-      # Manage backlight without xserver
-      # e.g light -U 30 (darker) light -A 30 (lighter)
-      programs.light.enable = true;
-
       services.actkbd = {
         enable = true;
         bindings = [
@@ -181,12 +177,12 @@ in {
           {
             keys = [224];
             events = ["key"];
-            command = "/run/current-system/sw/bin/light -U 10";
+            command = "${lib.getExe pkgs.brightnessctl} set 10%-";
           }
           {
             keys = [225];
             events = ["key"];
-            command = "/run/current-system/sw/bin/light -A 10";
+            command = "${lib.getExe pkgs.brightnessctl} set 10%+";
           }
         ];
       };

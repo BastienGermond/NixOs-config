@@ -21,32 +21,34 @@
   environment.systemPackages = let
     inherit (pkgs) makeDesktopItem;
 
-    lycheeslicer = pkgs.stdenv.mkDerivation (finalAttrs: {
-      inherit (pkgs.LycheeSlicer) pname version meta;
+    lycheeslicer = pkgs.lycheeslicer;
+    
+    # pkgs.stdenv.mkDerivation (finalAttrs: {
+    #   inherit (pkgs.LycheeSlicer) pname version meta;
 
-      buildInputs = [pkgs.makeWrapper];
-      nativeBuildInputs = [pkgs.makeWrapper];
-      propagatedBuildInputs = [pkgs.xorg.libxshmfence];
+    #   buildInputs = [pkgs.makeWrapper];
+    #   nativeBuildInputs = [pkgs.makeWrapper];
+    #   propagatedBuildInputs = [pkgs.xorg.libxshmfence];
 
-      unpackPhase = "true"; # No source to unpack
+    #   unpackPhase = "true"; # No source to unpack
 
-      desktopItem = makeDesktopItem {
-        name = "LycheeSlicer";
-        exec = "LycheeSlicer";
-        comment = "All-in-one 3D slicer for Resin and Filament";
-        desktopName = "Lychee Slicer";
-        categories = ["Graphics"];
-      };
+    #   desktopItem = makeDesktopItem {
+    #     name = "LycheeSlicer";
+    #     exec = "LycheeSlicer";
+    #     comment = "All-in-one 3D slicer for Resin and Filament";
+    #     desktopName = "Lychee Slicer";
+    #     categories = ["Graphics"];
+    #   };
 
-      installPhase = ''
-        mkdir -p $out/{bin,share}
+    #   installPhase = ''
+    #     mkdir -p $out/{bin,share}
 
-        install -Dm644 "$desktopItem/share/applications/LycheeSlicer.desktop" "$out/share/applications/LycheeSlicer.desktop"
+    #     install -Dm644 "$desktopItem/share/applications/LycheeSlicer.desktop" "$out/share/applications/LycheeSlicer.desktop"
 
-        makeWrapper ${pkgs.LycheeSlicer}/bin/LycheeSlicer $out/bin/LycheeSlicer \
-          --set LD_LIBRARY_PATH ${pkgs.xorg.libxshmfence}/lib
-      '';
-    });
+    #     makeWrapper ${pkgs.LycheeSlicer}/bin/LycheeSlicer $out/bin/LycheeSlicer \
+    #       --set LD_LIBRARY_PATH ${pkgs.xorg.libxshmfence}/lib
+    #   '';
+    # });
   in
     with pkgs; [
       adapta-gtk-theme
@@ -58,7 +60,6 @@
       aspellDicts.fr
       bind
       # chitubox-free-bin
-      clipit
       cryptsetup
       ctags
       cura-appimage

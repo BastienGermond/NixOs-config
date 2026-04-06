@@ -93,7 +93,6 @@
         startup = [
           {command = "xss-lock --transfer-sleep-lock -- i3lock --nofork";}
           {command = "nm-applet";}
-          {command = "clipit -d";}
           {command = "flameshot";}
           {
             command = "systemctl --user restart polybar";

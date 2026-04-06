@@ -4,7 +4,7 @@ list:
 
 # Run nixos-rebuild switch on current system
 switch:
-    nixos-rebuild --use-remote-sudo switch
+    nixos-rebuild --sudo switch --flake .#
 
 # Deploy configuration for `hostname`
 deploy hostname:

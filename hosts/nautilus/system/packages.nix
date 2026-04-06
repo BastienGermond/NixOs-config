@@ -22,7 +22,6 @@
     aspellDicts.en
     aspellDicts.fr
     bind
-    clipit
     cryptsetup
     ctags
     curl
