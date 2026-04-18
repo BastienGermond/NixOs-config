@@ -53,6 +53,10 @@
             "plugins.pylsp_mypy.live_mode" = true;
           };
         };
+        tofu-ls = {
+          command = "tofu-ls";
+          args = ["serve"];
+        };
       };
       language = [
         {
@@ -90,8 +94,20 @@
           language-servers = ["ltex-ls" "texlab"];
         }
         # {name = "rust";}
-        {name = "tfvars";}
-        {name = "hcl";}
+        {
+          name = "tfvars";
+          language-servers = ["tofu-ls"];
+        }
+        {
+          name = "hcl";
+          language-servers = ["tofu-ls"];
+          auto-format = true;
+          comment-token = "#";
+          indent = {
+            tab-width = 2;
+            unit = "  ";
+          };
+        }
         {
           name = "rst";
           scope = "source.rst";
