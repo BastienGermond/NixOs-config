@@ -31,7 +31,7 @@
       export CPU_THERMAL_ZONE=$CPU_THERMAL_ZONE
 
       # Run polybar on every connected monitor.
-      for m in $(${pkgs.xorg.xrandr}/bin/xrandr --query | \
+      for m in $(${pkgs.xrandr}/bin/xrandr --query | \
                  ${pkgs.gnugrep}/bin/grep " connected" | \
                  ${pkgs.coreutils}/bin/cut -d" " -f1); do
         MONITOR=$m polybar default &

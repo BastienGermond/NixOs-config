@@ -25,7 +25,7 @@ in {
 
   services.grafana = let
     readFromFile = path: "$__file{${path}}";
-    provisionConfDir = pkgs.runCommand "grafana-provisioning" {nativeBuildInputs = [pkgs.xorg.lndir];} ''
+    provisionConfDir = pkgs.runCommand "grafana-provisioning" {nativeBuildInputs = [pkgs.lndir];} ''
       mkdir -p $out/{datasources,dashboards,notifiers,alerting,plugins}
     '';
   in {

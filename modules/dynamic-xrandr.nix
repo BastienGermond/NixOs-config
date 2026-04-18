@@ -10,7 +10,7 @@
     ''
       #!${pkgs.bash}/bin/bash
 
-      XRANDR=${pkgs.xorg.xrandr}/bin/xrandr
+      XRANDR=${pkgs.xrandr}/bin/xrandr
       GAWK=${pkgs.gawk}/bin/awk
       BC=${pkgs.bc}/bin/bc
 
