@@ -4,80 +4,7 @@
   lib,
   ...
 }: let
-  ncCfg = config.services.nextcloud;
-
-  borgZfsBackup =
-    pkgs.writeShellScriptBin "borg-zfs-backup"
-    # bash
-    ''
-      #!/usr/bin/env bash
-      set -euo pipefail
-      IFS=$'\n\t'
-
-      : "''${DATASET:?}"
-      : "''${MOUNTPOINT:=/''${DATASET}}"
-      : "''${BORG_REPO:?}"
-      : "''${BORG_PASSPHRASE_FILE:?}"
-      : "''${DB_NAME:?}"
-      : "''${DB_USER:?}"
-      : "''${DB_HOST:=localhost}"
-      : "''${DB_PORT:=5432}"
-
-      RETENTION_KEEP_DAILY="''${RETENTION_KEEP_DAILY:-7}"
-      RETENTION_KEEP_WEEKLY="''${RETENTION_KEEP_WEEKLY:-4}"
-      RETENTION_KEEP_MONTHLY="''${RETENTION_KEEP_MONTHLY:-6}"
-      COMPRESSION="''${COMPRESSION:-lz4}"
-      KEEP_SNAPSHOT_ON_FAILURE="''${KEEP_SNAPSHOT_ON_FAILURE:-no}"
-
-      BORG_BIN=${pkgs.borgbackup}/bin/borg
-      ZFS_BIN=/run/current-system/sw/bin/zfs
-      PG_DUMP=${pkgs.postgresql}/bin/pg_dump
-
-      DATESTR="$(date +%Y-%m-%d_%H-%M-%S)"
-      SNAPNAME="backup-''${DATESTR}"
-      SNAP_REF="''${DATASET}@''${SNAPNAME}"
-
-      SNAPSHOT_PATH="''${MOUNTPOINT}/.zfs/snapshot/''${SNAPNAME}"
-      LOG="/var/log/borg-zfs-backup-''${DATESTR}.log"
-
-      export BORG_PASSPHRASE="$(cat "''${BORG_PASSPHRASE_FILE}")"
-      export BORG_REPO
-
-      cleanup() {
-        rc=$?
-        [ -n "''${TMP_DB_DUMP:-}" ] && rm -f "''${TMP_DB_DUMP}"
-        if [ "''${SNAP_CREATED:-no}" = "yes" ]; then
-          if [ $rc -eq 0 ] || [ "''${KEEP_SNAPSHOT_ON_FAILURE}" = "yes" ]; then
-            :
-          else
-            $ZFS_BIN destroy -r "''${SNAP_REF}" || true
-          fi
-        fi
-        unset BORG_PASSPHRASE
-        exit $rc
-      }
-      trap cleanup EXIT HUP INT TERM
-
-      mkdir -p /var/log
-      $ZFS_BIN snapshot "''${SNAP_REF}"
-      SNAP_CREATED=yes
-
-      TMP_DB_DUMP="$(mktemp "/tmp/pgdump.XXXXXX")"
-      PGHOST="''${DB_HOST}" PGUSER="''${DB_USER}" PGPORT="''${DB_PORT}" \
-        "$PG_DUMP" --format=custom --file="''${TMP_DB_DUMP}" "''${DB_NAME}"
-
-      "$BORG_BIN" create -s \
-        --compression "''${COMPRESSION}" \
-        "::''${DATESTR}" \
-        "''${SNAPSHOT_PATH}" \
-        "''${TMP_DB_DUMP}"
-
-      "$BORG_BIN" prune \
-        --keep-daily="''${RETENTION_KEEP_DAILY}" \
-        --keep-weekly="''${RETENTION_KEEP_WEEKLY}" \
-        --keep-monthly="''${RETENTION_KEEP_MONTHLY}"
-    '';
-in {
+in {  
   services.postgresql = {
     enable = true;
     enableTCPIP = true;
@@ -107,7 +34,7 @@ in {
   systemd.services.postgresql.wantedBy = ["nextcloud-setup.service"];
 
   services.nextcloud = {
-    package = pkgs.nextcloud31;
+    package = pkgs.nextcloud32;
     hostName = "cloud.germond.org";
     home = "/datastore/nextcloud";
     https = true;
@@ -118,8 +45,8 @@ in {
 
     extraApps = {
       oidc_login = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-RLYquOE83xquzv+s38bahOixQ+y4UI6OxP9HfO26faI=";
-        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.2.2/oidc_login.tar.gz";
+        sha256 = "sha256-KBa8A7aC0uS6FQoOSa7nIkaaYe+A2KeAtzfqoKw0Gn4=";
+        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.3.1/oidc_login.tar.gz";
         license = "agpl3Only";
       };
 
@@ -129,27 +56,9 @@ in {
       #   license = "agpl3Only";
       # };
 
-      # FIXME: Not yet ready (https://github.com/icewind1991/files_markdown/issues/200)
-      # files_markdown = pkgs.fetchNextcloudApp rec {
-      #   sha256 = "sha256-vv/PVDlQOm7Rjhzv8KXxkGpEnyidrV2nsl+Z2fdAFLY=";
-      #   url = "https://github.com/icewind1991/files_markdown/releases/download/v2.3.6/files_markdown.tar.gz";
-      # };
-
-      # files_texteditor = pkgs.fetchNextcloudApp {
-      #   sha256 = "sha256-Wvd5FhB0kAokaezqBK2QpfIDZgCVjmt1QO2SwSMJs2Y=";
-      #   url = "https://github.com/nextcloud/files_texteditor/releases/download/v2.15.0/files_texteditor.tar.gz";
-      # };
-
-      # FIXME: Check for release
-      # duplicatefinder = pkgs.fetchNextcloudApp {
-      #   sha256 = "sha256-J+P+9Ajz998ua1RRwuj1h4WOOl0WODu3uVJNGosbObI=";
-      #   url = "https://github.com/eldertek/duplicatefinder/releases/download/v1.6.0/duplicatefinder-v1.6.0.tar.gz";
-      #   license = "agpl3Plus";
-      # };
-
       notes = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-iiNXIvq+rUbbecU646pyRpHP0EjUdQT1ybKMS2JQbwc=";
-        url = "https://github.com/nextcloud-releases/notes/releases/download/v4.12.4/notes-v4.12.4.tar.gz";
+        sha256 = "sha256-iZmmdiwqBnDquPM+bUyzhiAbiI8Q67JR+pjDDRQW4sI=";
+        url = "https://github.com/nextcloud-releases/notes/releases/download/v4.13.1/notes-v4.13.1.tar.gz";
         license = "agpl3Only";
       };
 
@@ -160,14 +69,14 @@ in {
       };
 
       calendar = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-GcoHXCAsyoWyXT5/55+Eu/G1D4pZe2A8iR1wRo9S/9s=";
-        url = "https://github.com/nextcloud-releases/calendar/releases/download/v5.5.9/calendar-v5.5.9.tar.gz";
+        sha256 = "sha256-/N9fzOO0q/BIF0HQwhyFZXf+rafQ8rdQL+hJoyY4pUQ=";
+        url = "https://github.com/nextcloud-releases/calendar/releases/download/v6.2.2/calendar-v6.2.2.tar.gz";
         license = "agpl3Only";
       };
 
       user_usage_report = pkgs.fetchNextcloudApp {
-        sha256 = "sha256-itWaJUHnBZmsBrL4O0fps/DgSm7MEt0JeIrNM1LlRUk=";
-        url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v2.0.0/user_usage_report-v2.0.0.tar.gz";
+        sha256 = "sha256-VMITsw+x1w9KHJbF5e2lvMQLjQwrY5AvrhIXME9Y3Os=";
+        url = "https://github.com/nextcloud-releases/user_usage_report/releases/download/v3.0.0/user_usage_report-v3.0.0.tar.gz";
         license = "agpl3Plus";
       };
     };
@@ -252,36 +161,5 @@ in {
       # Cache
       memcache.local = "\\OC\\Memcache\\APCu";
     };
-  };
-
-  # Backups
-
-  environment.systemPackages = with pkgs; [borgbackup];
-
-  systemd.services.borg-zfs-backup = {
-    description = "Borg ZFS backup (oneshot)";
-    wants = ["network-online.target"];
-    after = ["network-online.target"];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${borgZfsBackup}/bin/borg-zfs-backup";
-      User = "root";
-      Environment = [
-        "DATASET=datastore/nextcloud"
-        "BORG_REPO=/datastore/borg"
-        "BORG_PASSPHRASE_FILE=${config.sops.secrets.BorgDatastorePassphrase.path}"
-
-        "DB_NAME=${ncCfg.config.dbname}"
-        "DB_USER=${ncCfg.config.dbuser}"
-        "DB_HOST=localhost"
-        "DB_PORT=5432"
-      ];
-    };
-  };
-
-  systemd.timers.borg-zfs-backup = {
-    wantedBy = ["timers.target"];
-    timerConfig.OnCalendar = "daily";
-    timerConfig.Persistent = true;
   };
 }

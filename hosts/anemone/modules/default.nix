@@ -12,6 +12,7 @@
     ./manga/suwayomi.nix
     ./minio.nix
     ./monitoring.nix
+    ./nc-borg.nix
     ./nextcloud.nix
     ./nfs.nix
     ./packages.nix
