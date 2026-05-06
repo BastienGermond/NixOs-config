@@ -30,9 +30,8 @@
     };
   };
 
-  # It's a VPS and doesn't need fwupd and light.
+  # It's a VPS and doesn't need fwupd.
   services.fwupd.enable = lib.mkForce false;
-  programs.light.enable = lib.mkForce false;
 
   # Required for postgres authentication.
   services.oidentd.enable = true;

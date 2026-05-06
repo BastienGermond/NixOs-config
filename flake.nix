@@ -2,7 +2,7 @@
   description = "My NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     kicad-nixpkgs.url = "github:NixOS/nixpkgs/e6f23dc08d3624daab7094b701aa3954923c6bbb1"; # 9.0.2
     # immich-nixpkgs.url = "github:NixOS/nixpkgs/ceaedafdcb9cb3ffcaa34b3db2705fae0f28e840"; # 1.123.0
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -29,7 +29,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/master";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/main";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
     nixd.url = "github:nix-community/nixd";
@@ -160,11 +160,8 @@
         devShells.default = channels.nixpkgs.mkShell {
           buildInputs =
             (builtins.attrValues {
-              inherit (channels.nixpkgs) age-plugin-yubikey sops just;
-            })
-            ++ [
-              deploy-rs.packages.${channels.nixpkgs.system}.deploy-rs
-            ];
+              inherit (channels.nixpkgs) age-plugin-yubikey sops just deploy-rs;
+            });
         };
       };
 

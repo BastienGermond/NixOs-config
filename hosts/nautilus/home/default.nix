@@ -20,9 +20,9 @@
       kicad
       languagetool
       libreoffice
-      nodePackages.eslint
-      nodePackages.prettier
-      nodePackages.typescript-language-server
+      eslint
+      prettier
+      typescript-language-server
       rofi
       scrot
       signal-desktop

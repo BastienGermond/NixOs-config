@@ -11,9 +11,9 @@
     matrix-synapse.enable = true;
     minio.enable = true;
     nextcloud.enable = true;
-    paperless.enable = true;
+    paperless.enable = false;
     peertube.enable = true;
-    promtail.enable = true;
+    # promtail.enable = true;
     scrutiny.collector.enable = true;
     suwayomi-server.enable = true;
   };

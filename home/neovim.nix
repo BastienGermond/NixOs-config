@@ -22,9 +22,9 @@
       ccls
       texlab
       gopls
-      nodePackages.typescript-language-server
-      nodePackages.prettier
-      nodePackages.eslint
+      typescript-language-server
+      prettier
+      eslint
       rust-analyzer
       clippy
       ltex-ls

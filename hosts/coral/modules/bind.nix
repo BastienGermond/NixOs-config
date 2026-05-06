@@ -15,14 +15,18 @@ in {
   networking.firewall.allowedTCPPorts = [53];
   networking.firewall.allowedUDPPorts = [53];
 
+  systemd.services.bind.serviceConfig.StateDirectory = "named";
+
   services.bind = {
+    checkConfig = false;
     extraOptions = ''
       dnssec-validation auto;
 
       allow-recursion { cachenetworks; 10.100.10.0/24; };
     '';
     extraConfig = ''
-      include "${config.sops.secrets.bindDnsKey.path}";
+      # This file is overwritten by bind-pre-start with the sops path.
+      include "/etc/bind/local-keys.conf";
 
       # logging {
       #   channel dnssec_log {
@@ -32,6 +36,7 @@ in {
       #   category dnssec { dnssec_log; };
       # };
     '';
+    directory = "/var/lib/named";
     zones = {
       "synapze.fr" = {
         master = true;
@@ -53,12 +58,15 @@ in {
     };
   };
 
+  # Placeholder for named-checkconf
+  environment.etc."bind/local-keys.conf".text = "";
+
   systemd.services."bind-pre-start" = {
     enable = config.services.bind.enable;
 
     wantedBy = ["bind.service"];
     requiredBy = ["bind.service"];
-    restartTriggers = [ germondOrgZone ];
+    restartTriggers = [germondOrgZone];
 
     script = ''
       mkdir -m 0755 -p /etc/bind
@@ -67,6 +75,14 @@ in {
       # Copy germond.org zone in /etc/bind
       ${pkgs.coreutils}/bin/cp ${germondOrgZone} /etc/bind/germond.org.zone
       chown named:named /etc/bind/germond.org.zone
+
+      # Overwrite the file with sops path
+      cat > /etc/bind/local-keys.conf <<EOF
+      include "${config.sops.secrets.bindDnsKey.path}";
+      EOF
+
+      chown named:named /etc/bind/local-keys.conf
+      chmod 0640 /etc/bind/local-keys.conf
     '';
   };
 

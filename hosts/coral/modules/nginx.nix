@@ -84,7 +84,7 @@ in {
       "komga.germond.org" = importHost ./nginx/komga.germond.org.nix {};
       "minio.germond.org" = importHost ./nginx/minio.germond.org.nix {};
       "newsso.germond.org" = importHost ./nginx/newsso.germond.org.nix {};
-      "paperless.germond.org" = importHost ./nginx/paperless.germond.org.nix {};
+      # "paperless.germond.org" = importHost ./nginx/paperless.germond.org.nix {};
       "prometheus.germond.org" = importHost ./nginx/prometheus.germond.org.nix {};
       "s3-garage.germond.org" = importHost ./nginx/s3.garage.germond.org.nix {};
       "s3.germond.org" = importHost ./nginx/s3.germond.org.nix {};

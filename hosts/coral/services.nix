@@ -16,7 +16,7 @@
     prometheus.enable = true;
     prometheus.exporters.dmarc.enable = true;
     prometheus.exporters.node.enable = true;
-    promtail.enable = true;
+    # promtail.enable = true;
     scrutiny.collector.enable = false; # This is a VPS.
     scrutiny.enable = true;
     transfer_sh.enable = true;
