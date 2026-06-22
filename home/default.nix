@@ -9,16 +9,20 @@
 
         imports = [
           ../hosts/${config.networking.hostName}/home
-          ./terminal.nix
           ./dunst.nix
-          ./polybar.nix
-          ./i3.nix
-          ./helix.nix
           ./git.nix
           ./gpg.nix
+          ./helix.nix
+          ./i3.nix
+          ./mako.nix
           ./neovim.nix
           ./packages.nix
+          ./polybar.nix
           ./shell.nix
+          ./sway.nix
+          ./terminal.nix
+          ./waybar.nix
+          ./wofi.nix
           ./xdg.nix
         ];
       };

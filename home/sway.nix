@@ -4,8 +4,45 @@
   my,
   ...
 }: {
-  config = lib.mkIf my.windowManager.i3.enable {
-    xsession.windowManager.i3 = let
+  config = lib.mkIf my.windowManager.sway.enable {
+    services.kanshi = {
+      enable = true;
+
+      settings = [
+        {
+          profile.name = "laptop";
+          profile.outputs = [
+            {
+              criteria = "eDP-1";
+              scale = 1.5;
+              position = "0,0";
+              status = "enable";
+            }
+          ];
+        }
+
+        {
+          profile.name = "home";
+          profile.outputs = [
+            {
+              criteria = "Dell Inc. DELL U2414H 9TG465784LAS";
+              # scale = 1.0;
+              position = "0,0";
+              status = "enable";
+            }
+
+            {
+              criteria = "eDP-1";
+              scale = 1.5;
+              position = "0,1080";
+              status = "enable";
+            }
+          ];
+        }
+      ];
+    };
+
+    wayland.windowManager.sway = let
       workspaceMap = {
         "1" = "term";
         "2" = "www";
@@ -33,55 +70,71 @@
           ]
         )
         workspaceNumbers);
+
+      mod = config.wayland.windowManager.sway.config.modifier;
     in {
       enable = true;
+
       config = {
         modifier = "Mod4";
         terminal = "alacritty";
+
         fonts = {
           names = ["monospace"];
           size = 13.0;
         };
+
         keybindings =
           {
-            "${config.xsession.windowManager.i3.config.modifier}+Return" = "exec ${config.xsession.windowManager.i3.config.terminal}";
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+q" = "kill";
-            "${config.xsession.windowManager.i3.config.modifier}+d" = "exec rofi -show drun -font 'FiraCode Nerd Font 15'";
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+Return" = "exec $BROWSER";
+            "${mod}+Return" = "exec ${config.wayland.windowManager.sway.config.terminal}";
+            "${mod}+Shift+q" = "kill";
+            "${mod}+d" = "exec wofi --show drun";
+            "${mod}+Shift+Return" = "exec $BROWSER";
+
+            # Audio
             "XF86AudioRaiseVolume" = "exec amixer -q set Master 5%+ unmute";
             "XF86AudioLowerVolume" = "exec amixer -q set Master 5%- unmute";
             "XF86AudioMute" = "exec amixer -q set Master toggle";
+
+            # Screenshot
+            # "Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
             "Print" = "exec flameshot gui";
-            "${config.xsession.windowManager.i3.config.modifier}+0" = "exec dunstctl history-pop";
-            "${config.xsession.windowManager.i3.config.modifier}+p" = "move workspace to output up";
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+c" = "reload";
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+r" = "restart";
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+e" = ''exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"'';
 
-            "${config.xsession.windowManager.i3.config.modifier}+r" = "mode resize";
+            # Notifications
+            "${mod}+0" = "exec makoctl history";
 
-            # Change layout
-            "${config.xsession.windowManager.i3.config.modifier}+s" = "layout stacking";
-            "${config.xsession.windowManager.i3.config.modifier}+w" = "layout tabbed";
-            "${config.xsession.windowManager.i3.config.modifier}+e" = "layout toggle split";
-            "${config.xsession.windowManager.i3.config.modifier}+f" = "fullscreen toggle";
-            "${config.xsession.windowManager.i3.config.modifier}+v" = "split vertical";
-            "${config.xsession.windowManager.i3.config.modifier}+h" = "split horizontal";
+            "${mod}+p" = "move workspace to output up";
+
+            "${mod}+Shift+c" = "reload";
+            "${mod}+Shift+r" = "restart";
+
+            # Exit
+            "${mod}+Shift+e" = "exec swaymsg exit";
+
+            "${mod}+r" = "mode resize";
+
+            # Layout
+            "${mod}+s" = "layout stacking";
+            "${mod}+w" = "layout tabbed";
+            "${mod}+e" = "layout toggle split";
+            "${mod}+f" = "fullscreen toggle";
+            "${mod}+v" = "split vertical";
+            "${mod}+h" = "split horizontal";
 
             # Focus
-            "${config.xsession.windowManager.i3.config.modifier}+Left" = "focus left";
-            "${config.xsession.windowManager.i3.config.modifier}+Right" = "focus right";
-            "${config.xsession.windowManager.i3.config.modifier}+Down" = "focus down";
-            "${config.xsession.windowManager.i3.config.modifier}+Up" = "focus up";
+            "${mod}+Left" = "focus left";
+            "${mod}+Right" = "focus right";
+            "${mod}+Down" = "focus down";
+            "${mod}+Up" = "focus up";
 
             # Move
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+Left" = "move left";
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+Right" = "move right";
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+Down" = "move down";
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+Up" = "move up";
+            "${mod}+Shift+Left" = "move left";
+            "${mod}+Shift+Right" = "move right";
+            "${mod}+Shift+Down" = "move down";
+            "${mod}+Shift+Up" = "move up";
 
-            # Toggle floating
-            "${config.xsession.windowManager.i3.config.modifier}+Shift+space" = "floating toggle";
+            # Floating
+            "${mod}+Shift+space" = "floating toggle";
           }
           // builtins.listToAttrs (builtins.map (b: {
               name = b.key;
@@ -90,22 +143,21 @@
             workspaceKeybindings);
 
         workspaceAutoBackAndForth = true;
+
         startup = [
-          {command = "xss-lock --transfer-sleep-lock -- i3lock --nofork";}
           {command = "nm-applet";}
+          {command = "mako";}
+          {command = "kanshi";}
+          {command = "waybar";}
           {command = "flameshot";}
-          {
-            command = "systemctl --user restart polybar";
-            always = true;
-          }
         ];
 
         assigns = {
-          "2:www" = [{class = "librewolf";}];
+          "2:www" = [{app_id = "librewolf";}];
           "3:social" = [
-            {class = "thunderbird";}
-            {class = "discord";}
-            {class = "Slack";}
+            {app_id = "thunderbird";}
+            {app_id = "discord";}
+            {app_id = "Slack";}
           ];
         };
 
@@ -136,6 +188,13 @@
           (makeMatchWindowRole "About" "floating enable")
           (makeMatchWindowRole "EventSummaryDialog" "floating enable")
           (makeMatchWindowRole "pop-up" "floating enable")
+          {
+            criteria = {
+              app_id = "thunderbird";
+              title =  ".*[Pp]assword.*";
+            };
+            command = "floating enable";
+          }
         ];
 
         modes = {
@@ -149,7 +208,26 @@
           };
         };
 
-        bars = []; # Let polybar handle this
+        input = {
+          "type:keyboard" = {
+            xkb_layout = "us";
+            xkb_variant = "alt-intl";
+          };
+
+          "type:touchpad" = {
+            natural_scroll = "enabled";
+            tap = "enabled";
+            drag_lock = "disabled";
+            pointer_accel = "1.0";
+          };
+
+          "type:mouse" = {
+            tap = "disabled";
+            drag_lock = "disabled";
+          };
+        };
+
+        bars = [];
       };
     };
   };

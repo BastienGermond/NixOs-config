@@ -17,6 +17,8 @@
     };
 
   mkEnabledByDefaultOption = mkEnabledByDefaultIfOption true;
+
+  myWindowManagerEnabled = my.windowManager.i3.enable || my.windowManager.i3.enable;
 in {
   options.my = {
     hostname = mkOption {
@@ -108,13 +110,19 @@ in {
       };
     };
 
-    i3 = {
-      enable = mkEnabledByDefaultIfOption (!my.isAServer) "i3 basic configuration with polybar";
+    windowManager = {
+      i3 = {
+        enable = mkEnabledByDefaultIfOption (!my.isAServer) "i3 basic configuration with polybar";
+      };
 
-      dunst.enable = mkEnabledByDefaultIfOption my.i3.enable "Dunst support";
+      sway = {
+        enable = mkEnableOption "Sway system-wide configuration";
+      };
+
+      dunst.enable = mkEnabledByDefaultIfOption myWindowManagerEnabled "Dunst support";
     };
 
-    alacritty.enable = mkEnabledByDefaultIfOption my.i3.enable "Alacritty support";
+    alacritty.enable = mkEnabledByDefaultIfOption myWindowManagerEnabled "Alacritty support";
 
     enableDocker = mkEnableOption "Docker support";
     enableVirtualBox = mkEnableOption "VirtualBox support";
@@ -161,7 +169,7 @@ in {
 
       # Fonts use in my dunst configuration
       fonts.packages = mkMerge [
-        (mkIf my.i3.dunst.enable [pkgs.nerd-fonts.fira-code])
+        (mkIf my.windowManager.dunst.enable [pkgs.nerd-fonts.fira-code])
       ];
 
       # Required to use smart card mode (CCID)
@@ -228,7 +236,77 @@ in {
       };
     }
 
-    (mkIf my.i3.enable {
+    # Configuration for any window manager enabled
+    (mkIf myWindowManagerEnabled {
+      services.displayManager.autoLogin = {
+        enable = mkDefault (!my.isAServer);
+        user = my.mainUser;
+      };
+    })
+
+    (mkIf my.windowManager.sway.enable {
+      services.xserver.enable = false;
+
+      users.groups.greeter = {};
+
+      users.users.greeter = {
+        isSystemUser = true;
+        group = "greeter";
+        home = "/var/empty";
+        createHome = true;
+        description = "Login greeter user";
+      };
+
+      services.greetd = {
+        enable = true;
+
+        settings.default_session = {
+          user = "greeter";
+          command = "${pkgs.tuigreet}/bin/tuigreet --cmd sway";
+        };
+      };
+
+      services.pipewire = {
+        enable = true;
+        pulse.enable = true;
+        alsa.enable = true;
+      };
+
+      programs.sway = {
+        enable = true;
+        wrapperFeatures.gtk = true;
+        xwayland.enable = true;
+        extraPackages = with pkgs; [
+          alsa-utils
+          flameshot
+          mako
+          waybar
+          wl-clipboard
+          wofi
+        ];
+      };
+
+      xdg.portal = {
+        enable = true;
+
+        wlr.enable = true;
+
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-gtk
+        ];
+      };
+
+      environment.systemPackages = with pkgs; [
+        xdg-desktop-portal
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
+
+      security.polkit.enable = true;
+      services.dbus.enable = true;
+    })
+
+    (mkIf my.windowManager.i3.enable {
       # Enable the X11 windowing system.
       services.xserver = {
         enable = true;
@@ -247,17 +325,18 @@ in {
         };
       };
 
-      services.displayManager.autoLogin = {
-        enable = mkDefault (!my.isAServer);
-        user = my.mainUser;
-      };
-
       services.libinput = {
         enable = true;
         touchpad = {
           naturalScrolling = true;
+          tapping = true;
           tappingDragLock = false;
           accelSpeed = "1.5";
+        };
+
+        mouse = {
+          tapping = false;
+          tappingDragLock = false;
         };
       };
 
@@ -295,7 +374,7 @@ in {
       environment.variables.TERM = "alacritty";
     })
 
-    (mkIf (my.autorandr.enable)
+    (mkIf my.autorandr.enable
       {
         services.autorandr = {
           enable = mkDefault true;

@@ -10,8 +10,8 @@
     # };
   };
 
-  services.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
+  # services.pulseaudio = {
+  #   enable = true;
+  #   package = pkgs.pulseaudioFull;
+  # };
 }

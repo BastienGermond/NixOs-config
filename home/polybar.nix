@@ -7,7 +7,7 @@
   ...
 }: {
   services.polybar = {
-    enable = my.i3.enable;
+    enable = my.windowManager.i3.enable;
     package = pkgs.polybarFull;
     script = ''
       # Find the right thermal zone number

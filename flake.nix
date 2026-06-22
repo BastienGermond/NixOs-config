@@ -117,7 +117,7 @@
           ./hosts/nautilus
           ./home
           ./modules
-          ./modules/xorg.nix
+          # ./modules/xorg.nix
         ];
 
         "capucine".modules = [

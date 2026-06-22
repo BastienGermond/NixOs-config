@@ -8,7 +8,6 @@
       cmake-language-server
       # cura
       discord
-      docker-buildx
       drawio
       dunst
       firefox
@@ -20,19 +19,20 @@
       kicad
       languagetool
       libreoffice
-      eslint
       prettier
-      typescript-language-server
       rofi
       scrot
       signal-desktop
-      slack
-      # spotibar
       spotify
       stm32cubemx
-      # super-slicer
       teams-for-linux
       texlab
     ];
+
+    programs.waybar.settings.mainBar = {
+      temperature = {
+        hwmon-path = "/sys/class/hwmon/hwmon6/temp1_input";
+      };
+    };
   };
 }

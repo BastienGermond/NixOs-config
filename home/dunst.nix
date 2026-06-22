@@ -4,7 +4,7 @@
   ...
 }: {
   services.dunst = {
-    enable = my.i3.dunst.enable;
+    enable = my.windowManager.i3.enable;
     settings = {
       global = {
         monitor = 0;
