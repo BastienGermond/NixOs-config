@@ -125,7 +125,6 @@
           ./hosts/capucine
           ./home
           ./modules
-          ./modules/xorg.nix
         ];
 
         "anemone".modules = [
@@ -160,7 +159,7 @@
         devShells.default = channels.nixpkgs.mkShell {
           buildInputs =
             (builtins.attrValues {
-              inherit (channels.nixpkgs) age-plugin-yubikey sops just deploy-rs;
+              inherit (channels.nixpkgs) age-plugin-yubikey sops just deploy-rs claude-code rtk;
             });
         };
       };

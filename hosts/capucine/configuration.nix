@@ -28,6 +28,13 @@
 
   my = {
     hostname = "capucine";
+
+    windowManager = {
+      i3.enable = false;
+      sway.enable = true;
+      dunst.enable = false;
+    };
+
     enableDocker = true;
     enableInfraVpn = false;
     networking = {

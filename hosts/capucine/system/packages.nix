@@ -58,7 +58,6 @@ in {
     with pkgs; [
       adapta-gtk-theme
       alacritty
-      arandr
       arduino
       aspell
       aspellDicts.en
@@ -71,8 +70,6 @@ in {
       curl
       dconf-editor
       evince
-      feh
-      flameshot
       fritzing
       gcc
       git
@@ -104,7 +101,6 @@ in {
       wget
       whois
       xsane
-      xsel
       zip
       zsh
     ];

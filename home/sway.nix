@@ -5,42 +5,7 @@
   ...
 }: {
   config = lib.mkIf my.windowManager.sway.enable {
-    services.kanshi = {
-      enable = true;
-
-      settings = [
-        {
-          profile.name = "laptop";
-          profile.outputs = [
-            {
-              criteria = "eDP-1";
-              scale = 1.5;
-              position = "0,0";
-              status = "enable";
-            }
-          ];
-        }
-
-        {
-          profile.name = "home";
-          profile.outputs = [
-            {
-              criteria = "Dell Inc. DELL U2414H 9TG465784LAS";
-              # scale = 1.0;
-              position = "0,0";
-              status = "enable";
-            }
-
-            {
-              criteria = "eDP-1";
-              scale = 1.5;
-              position = "0,1080";
-              status = "enable";
-            }
-          ];
-        }
-      ];
-    };
+    services.kanshi.enable = true;
 
     wayland.windowManager.sway = let
       workspaceMap = {
@@ -80,7 +45,7 @@
         terminal = "alacritty";
 
         fonts = {
-          names = ["monospace"];
+          names = ["FiraCode Nerd Font"];
           size = 13.0;
         };
 
@@ -91,10 +56,10 @@
             "${mod}+d" = "exec wofi --show drun";
             "${mod}+Shift+Return" = "exec $BROWSER";
 
-            # Audio
-            "XF86AudioRaiseVolume" = "exec amixer -q set Master 5%+ unmute";
-            "XF86AudioLowerVolume" = "exec amixer -q set Master 5%- unmute";
-            "XF86AudioMute" = "exec amixer -q set Master toggle";
+            # Audio (wpctl talks to wireplumber/pipewire)
+            "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+            "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+            "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
 
             # Screenshot
             # "Print" = "exec grim -g \"$(slurp)\" - | wl-copy";
@@ -107,6 +72,9 @@
 
             "${mod}+Shift+c" = "reload";
             "${mod}+Shift+r" = "restart";
+
+            # Lock
+            "${mod}+l" = "exec swaylock -f -c 000000";
 
             # Exit
             "${mod}+Shift+e" = "exec swaymsg exit";
@@ -174,13 +142,14 @@
 
           makeMatchTitle = makeMatch "title";
           makeMatchClass = makeMatch "class";
+          makeMatchAppId = makeMatch "app_id";
           makeMatchWindowRole = makeMatch "window_role";
           makeMatchInstance = makeMatch "instance";
         in [
           (makeMatchClass "GParted" "floating enable border normal")
           (makeMatchClass "Nm-connection-editor" "floating enable")
-          (makeMatchClass "org.gnome.Nautilus" "floating enable resize set 50ppt 60ppt")
-          (makeMatchClass "pavucontrol" "floating enable resize set 50ppt 60ppt move position center")
+          (makeMatchAppId "org.gnome.Nautilus" "floating enable resize set 50ppt 60ppt")
+          (makeMatchAppId "pavucontrol" "floating enable resize set 50ppt 60ppt move position center")
           (makeMatchClass "Qemu-system-x86_64" "floating enable")
           (makeMatchInstance "flameshot" "floating enable")
           (makeMatchTitle "^3D Viewer.*$" "floating enable border normal resize set 50ppt 60ppt")

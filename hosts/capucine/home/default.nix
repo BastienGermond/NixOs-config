@@ -1,5 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  my,
+  ...
+}: {
   imports = [
+    ./kanshi.nix
   ];
 
   config = {
@@ -11,7 +17,6 @@
       discord
       docker-buildx
       drawio
-      dunst
       firefox
       freecad
       gimp
@@ -25,8 +30,6 @@
       eslint
       prettier
       typescript-language-server
-      rofi
-      scrot
       signal-desktop
       slack
       # spotibar
@@ -36,5 +39,7 @@
       teams-for-linux
       texlab
     ];
+
+    wayland.windowManager.sway.config.input."type:touchpad".pointer_accel = lib.mkForce "0.70";
   };
 }

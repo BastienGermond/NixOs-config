@@ -18,7 +18,7 @@
 
   mkEnabledByDefaultOption = mkEnabledByDefaultIfOption true;
 
-  myWindowManagerEnabled = my.windowManager.i3.enable || my.windowManager.i3.enable;
+  myWindowManagerEnabled = my.windowManager.i3.enable || my.windowManager.sway.enable;
 in {
   options.my = {
     hostname = mkOption {
@@ -236,8 +236,8 @@ in {
       };
     }
 
-    # Configuration for any window manager enabled
-    (mkIf myWindowManagerEnabled {
+    # Auto-login only for i3 (sway uses greetd instead)
+    (mkIf my.windowManager.i3.enable {
       services.displayManager.autoLogin = {
         enable = mkDefault (!my.isAServer);
         user = my.mainUser;
@@ -272,6 +272,9 @@ in {
         alsa.enable = true;
       };
 
+      # Required for Nautilus file manager (trash, mount, etc.)
+      services.gvfs.enable = true;
+
       programs.sway = {
         enable = true;
         wrapperFeatures.gtk = true;
@@ -280,6 +283,7 @@ in {
           alsa-utils
           flameshot
           mako
+          swaylock
           waybar
           wl-clipboard
           wofi
