@@ -40,7 +40,7 @@
         profile.outputs = [
           {
             # HP V27e — verify exact string with: swaymsg -t get_outputs | jq '.[] | .make + " " + .model'
-            criteria = "HP HP V27e";
+            criteria = "HP Inc. HP V27e 1CR14203LJ";
             position = "0,0";
             status = "enable";
           }
