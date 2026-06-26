@@ -115,7 +115,6 @@
         startup = [
           {command = "nm-applet";}
           {command = "mako";}
-          {command = "kanshi";}
           {command = "waybar";}
           {command = "flameshot";}
         ];
