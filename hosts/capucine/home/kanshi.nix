@@ -10,7 +10,7 @@
         profile.outputs = [
           {
             criteria = "eDP-1";
-            scale = 1.0;
+            scale = 1.5;
             position = "0,0";
             status = "enable";
           }
@@ -28,7 +28,7 @@
           }
           {
             criteria = "eDP-1";
-            scale = 1.0;
+            scale = 1.5;
             position = "0,1080";
             status = "enable";
           }
@@ -46,7 +46,7 @@
           }
           {
             criteria = "eDP-1";
-            scale = 1.0;
+            scale = 1.5;
             position = "0,1080";
             status = "enable";
           }
