@@ -103,7 +103,19 @@
 
           nixd = nixd.packages.${prev.system}.nixd;
 
-          kicad = kicad-nixpkgs.legacyPackages.${prev.system}.kicad;
+          kicad = let
+            unwrapped = kicad-nixpkgs.legacyPackages.${prev.system}.kicad;
+          in
+            final.symlinkJoin {
+              name = "kicad-wrapped";
+              paths = [unwrapped];
+              nativeBuildInputs = [final.makeWrapper];
+              postBuild = ''
+                for bin in $out/bin/*; do
+                  wrapProgram "$bin" --set GDK_BACKEND x11
+                done
+              '';
+            };
 
           nginxStable = prev.nginxStable.override {openssl = prev.pkgs.libressl;};
           # immich-pinned = immich-nixpkgs.legacyPackages.${prev.system}.immich;
